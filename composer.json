@@ -1,0 +1,30 @@
+{
+  "name": "skuio/sku-sdk",
+  "description": "SKU.io User API.",
+  "keywords": [
+    "sku.io",
+    "sdk",
+    "api"
+  ],
+  "license": "",
+  "authors": [
+    {
+      "name": "SKU.io",
+      "email": "dev@sku.io"
+    }
+  ],
+  "type": "project",
+  "require": {
+    "ext-json": "*",
+    "ext-curl": "*",
+    "php": ">=7.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "6.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Skuio\\Sdk\\": "src/"
+    }
+  }
+}
