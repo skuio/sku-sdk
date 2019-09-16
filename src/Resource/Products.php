@@ -17,7 +17,7 @@ use Skuio\Sdk\Sdk;
  */
 class Products extends Sdk
 {
-  private $endpoint = 'products';
+  protected $endpoint = 'products';
 
   /**
    * Retrieve products according to your request

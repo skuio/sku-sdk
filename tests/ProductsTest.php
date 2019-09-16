@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Skuio\Sdk\Model\Attribute;
+use Skuio\Sdk\Model\ProductAttribute;
 use Skuio\Sdk\Model\ImportProducts;
 use Skuio\Sdk\Model\Product;
 use Skuio\Sdk\Model\Variation;
@@ -79,7 +79,7 @@ class ProductsTest extends TestCase
     $variation      = new Product();
     $variation->sku = '7894654';
 
-    $attribute          = new Attribute();
+    $attribute          = new ProductAttribute();
     $attribute->name    = 'size';
     $attribute->value   = 'S';
     $attribute->variant = true;

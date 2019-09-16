@@ -27,6 +27,11 @@ class Sdk
   private $baseUrl;
 
   /**
+   * @var string
+   */
+  protected $endpoint = '';
+
+  /**
    * Sdk constructor.
    *
    * @param string $username

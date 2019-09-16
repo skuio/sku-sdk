@@ -9,7 +9,7 @@ use Skuio\Sdk\ValidationException;
 /**
  * Class Product
  *
- * @package Skuio\Sdk\Resources
+ * @package Skuio\Sdk\Model
  *
  * @property int $id - sku.io id
  * @property int $parent_id - parent sku.io id
@@ -27,7 +27,7 @@ use Skuio\Sdk\ValidationException;
  * @property string $image
  * @property bool $download_image - store image on the server if you sent image url.
  * @property string $description
- * @property Attribute[] $attributes
+ * @property ProductAttribute[] $attributes
  * @property string[] $tags
  * @property Product[] $variations
  */
