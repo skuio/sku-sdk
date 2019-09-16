@@ -124,4 +124,14 @@ class Products extends Sdk
 
     return $this->authorizedRequest( $this->endpoint . '/import', $importProducts->toArray(), self::METHOD_POST );
   }
+
+  /**
+   * Retrieve product constants data
+   *
+   * @return Response
+   */
+  public function constants()
+  {
+    return $this->authorizedRequest( $this->endpoint . '/constants' );
+  }
 }
