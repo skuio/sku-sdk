@@ -6,7 +6,7 @@
     "sdk",
     "api"
   ],
-  "license": "",
+  "license": "MIT",
   "authors": [
     {
       "name": "SKU.io",
