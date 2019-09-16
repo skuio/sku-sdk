@@ -6,6 +6,14 @@ class Sdk
   const SKU_DEV_URL = 'https://ord4.test/api';
 
   /**
+   * Http method
+   */
+  const METHOD_GET    = 'GET';
+  const METHOD_POST   = 'POST';
+  const METHOD_PUT    = 'PUT';
+  const METHOD_DELETE = 'DELETE';
+
+  /**
    * @var string
    */
   private $username;
@@ -36,12 +44,12 @@ class Sdk
    * Make authorized request to the sku.io server
    *
    * @param string $endpoint
-   * @param array $body
+   * @param array|string(json) $body
    * @param string $method
    *
    * @return Response
    */
-  public function authorizedRequest( string $endpoint, array $body = [], string $method = 'GET' )
+  public function authorizedRequest( string $endpoint, $body = null, string $method = self::METHOD_GET )
   {
     $curl = curl_init();
 
@@ -52,13 +60,13 @@ class Sdk
       CURLOPT_TIMEOUT        => 30,
       CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
       CURLOPT_CUSTOMREQUEST  => $method,
-      CURLOPT_POSTFIELDS     => json_encode( $body ),
+      CURLOPT_POSTFIELDS     => $body,
       CURLOPT_SSL_VERIFYHOST => 0,
-      CURLOPT_HTTPHEADER     => [
-        "Accept: application/json",
-        "Content-type: application/json",
-        "Authorization: Basic " . $this->getBasicToken(),
-      ],
+      CURLOPT_HTTPHEADER     => array_filter( [
+                                                "Accept: application/json",
+                                                is_array( $body ) ? null : "Content-type: application/json",
+                                                "Authorization: Basic " . $this->getBasicToken(),
+                                              ] ),
     ] );
 
     $response  = curl_exec( $curl );
