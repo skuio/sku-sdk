@@ -76,7 +76,7 @@ class ProductsTest extends TestCase
     $product->length         = 2.4;
     $product->dimension_unit = 'cm';
 
-    $variation      = new Variation();
+    $variation      = new Product();
     $variation->sku = '7894654';
 
     $attribute          = new Attribute();

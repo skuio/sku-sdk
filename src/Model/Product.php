@@ -29,7 +29,7 @@ use Skuio\Sdk\ValidationException;
  * @property string $description
  * @property Attribute[] $attributes
  * @property string[] $tags
- * @property Variation[] $variations
+ * @property Product[] $variations
  */
 class Product extends Model
 {
