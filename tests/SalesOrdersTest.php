@@ -6,6 +6,7 @@ use Skuio\Sdk\Model\Import;
 use Skuio\Sdk\Model\SalesOrder;
 use Skuio\Sdk\Model\SalesOrderLine;
 use Skuio\Sdk\Request;
+use Skuio\Sdk\Resource\SalesOrderLines;
 use Skuio\Sdk\Resource\SalesOrders;
 
 class SalesOrdersTest extends TestCase
@@ -121,5 +122,15 @@ class SalesOrdersTest extends TestCase
     print_r( $salesOrders->getResponse() );
 
     $this->assertEquals( 200, $salesOrders->getCode(), json_encode( $salesOrders->getResponse() ) );
+  }
+
+  public function deleteSalesOrderLine()
+  {
+    $salesOrderLineId = 1;
+
+    $salesOrderLines = new SalesOrderLines( $this->username, $this->password, true );
+    $salesOrderLines = $salesOrderLines->delete( $salesOrderLineId );
+
+    $this->assertEquals( 200, $salesOrderLines->getCode(), json_encode( $salesOrderLines->getResponse() ) );
   }
 }
