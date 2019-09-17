@@ -36,7 +36,7 @@ class Request
     $this->sort[] = [ 'column' => $key, 'ascending' => $ascending ];
   }
 
-  public function getRequest()
+  public function toArray()
   {
     $response = [];
     if ( ! empty( $this->filters ) )
@@ -59,6 +59,6 @@ class Request
 
   public function getParams()
   {
-    return http_build_query( $this->getRequest() );
+    return http_build_query( $this->toArray() );
   }
 }
