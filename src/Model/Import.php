@@ -14,7 +14,7 @@ use Skuio\Sdk\Model;
  * @property string $csv_enclosure
  * @property bool $override - Override a product if exists?. Default value is 1.
  */
-class ImportProducts extends Model
+class Import extends Model
 {
   public function __set( $name, $value )
   {

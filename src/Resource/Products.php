@@ -2,7 +2,7 @@
 
 namespace Skuio\Sdk\Resource;
 
-use Skuio\Sdk\Model\ImportProducts;
+use Skuio\Sdk\Model\Import;
 use Skuio\Sdk\Model\Product;
 use Skuio\Sdk\Request;
 use Skuio\Sdk\Response;
@@ -111,11 +111,11 @@ class Products extends Sdk
   /**
    * Import products from a CSV file
    *
-   * @param ImportProducts $importProducts
+   * @param Import $importProducts
    *
    * @return Response
    */
-  public function import( ImportProducts $importProducts )
+  public function import( Import $importProducts )
   {
     if ( empty( $importProducts->csv_file ) )
     {

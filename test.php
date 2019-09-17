@@ -2,7 +2,7 @@
 
 include 'vendor/autoload.php';
 
-use Skuio\Sdk\Model\ImportProducts;
+use Skuio\Sdk\Model\Import;
 use Skuio\Sdk\Model\Product;
 use Skuio\Sdk\Model\ProductAttribute;
 use Skuio\Sdk\Resource\Products;
@@ -44,7 +44,7 @@ function createProduct( $username, $password )
 
 function importProducts( $username, $password )
 {
-  $import           = new ImportProducts();
+  $import           = new Import();
   $import->csv_file = './tests/import_products_test2.csv';
 
   $products = new Products( $username, $password, true );

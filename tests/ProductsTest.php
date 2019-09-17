@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Skuio\Sdk\Model\ProductAttribute;
-use Skuio\Sdk\Model\ImportProducts;
+use Skuio\Sdk\Model\Import;
 use Skuio\Sdk\Model\Product;
 use Skuio\Sdk\Model\Variation;
 use Skuio\Sdk\Request;
@@ -128,7 +128,7 @@ class ProductsTest extends TestCase
 
   public function testImportProducts()
   {
-    $import           = new ImportProducts();
+    $import           = new Import();
     $import->csv_file = './tests/import_products_test2.csv';
 
     $products = new Products( $this->username, $this->password, true );
