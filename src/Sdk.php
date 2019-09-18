@@ -17,7 +17,7 @@ class Sdk
    */
   public static $config = [
     'url'         => 'https://sku.io/api',
-    'dev_url'     => 'https://ord4.test/api',
+    'dev_url'     => 'https://dev.sku.io/api',
     'environment' => self::PRODUCTION,
     'username'    => null,
     'password'    => null,

@@ -6,6 +6,7 @@ use Skuio\Sdk\Model\Import;
 use Skuio\Sdk\Model\Product;
 use Skuio\Sdk\Model\ProductAttribute;
 use Skuio\Sdk\Resource\Products;
+use Skuio\Sdk\Sdk;
 
 function createProduct( $username, $password )
 {
@@ -34,7 +35,7 @@ function createProduct( $username, $password )
 
   $product->variations = [ $variation ];
 
-  $products = new Products( $username, $password, true );
+  $products = new Products();
 
   $products = $products->store( $product );
 
@@ -47,7 +48,7 @@ function importProducts( $username, $password )
   $import           = new Import();
   $import->csv_file = './tests/import_products_test2.csv';
 
-  $products = new Products( $username, $password, true );
+  $products = new Products();
   $products = $products->import( $import );
 
   echo $products->getCode() . '<br>';
@@ -56,6 +57,8 @@ function importProducts( $username, $password )
 
 $username = '49a683831249ef6a37158f1e1b86e6d5';
 $password = 'd002707ff6867c1c545adf40ab06bbdf';
+
+Sdk::config( [ 'username' => $username, 'password' => $password, 'environment' => Sdk::DEVELOPMENT ] );
 
 createProduct( $username, $password );
 echo '<br>----------------<br>';
