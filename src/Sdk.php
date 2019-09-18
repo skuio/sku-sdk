@@ -3,7 +3,7 @@
 class Sdk
 {
   const SKU_URL     = 'https://sku.io/api';
-  const SKU_DEV_URL = 'https://ord4.test/api';
+  const SKU_DEV_URL = 'https://dev.sku.io/api';
 
   /**
    * Http method

@@ -22,13 +22,13 @@ class Response
   /**
    * @var array
    */
-  private $errors;
+  private $error;
 
-  public function __construct( int $code, array $response, $errors )
+  public function __construct( int $code, array $response, $error )
   {
     $this->code     = $code;
     $this->response = $response;
-    $this->errors   = is_array( $errors ) ? $errors : [ $errors ];
+    $this->error    = $error;
   }
 
   /**
@@ -50,9 +50,9 @@ class Response
   /**
    * @return array
    */
-  public function getErrors(): array
+  public function getCurlError(): array
   {
-    return $this->errors;
+    return $this->error;
   }
 
 }
