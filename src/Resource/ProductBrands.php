@@ -2,6 +2,7 @@
 
 namespace Skuio\Sdk\Resource;
 
+use Exception;
 use Skuio\Sdk\Request;
 use Skuio\Sdk\Response;
 use Skuio\Sdk\Sdk;
@@ -16,6 +17,7 @@ class ProductBrands extends Sdk
    * @param Request $request
    *
    * @return Response
+   * @throws Exception
    */
   public function get( Request $request )
   {
@@ -28,6 +30,7 @@ class ProductBrands extends Sdk
    * @param int $id
    *
    * @return Response
+   * @throws Exception
    */
   public function show( int $id )
   {
@@ -40,6 +43,7 @@ class ProductBrands extends Sdk
    * @param string $brandName
    *
    * @return Response
+   * @throws Exception
    */
   public function store( string $brandName )
   {
@@ -53,12 +57,21 @@ class ProductBrands extends Sdk
    * @param string $brandName - the new brand name
    *
    * @return Response
+   * @throws Exception
    */
   public function update( int $id, string $brandName )
   {
     return $this->authorizedRequest( $this->endpoint . '/' . $id, json_encode( [ 'name' => $brandName ] ), self::METHOD_PUT );
   }
 
+  /**
+   * Delete a product brand by id
+   *
+   * @param int $id
+   *
+   * @return Response
+   * @throws Exception
+   */
   public function delete( int $id )
   {
     return $this->authorizedRequest( $this->endpoint . '/' . $id, null, self::METHOD_DELETE );

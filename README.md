@@ -31,12 +31,16 @@ Usage
       "secret": "0a9be418866a453cb9...."
     }
     ```
-- Use this credentials to connect with sku.io user api by this library (`username`, `password`)
-- Resources need `username`, `password` and optional parameter to use the development domain or not
-- All functions return a `Response` instance that have three functions:
-    - `getCode()`: returns http code of response.
-    - `getResponse()`: returns the response.
-    - `getCurlError()`: returns the `curl` error only. 
+- Use this credentials to connect with sku.io user api (`username`, `password`).
+- Set the SDK configurations:
+    - username
+    - password
+    - environment
+    > you can set `url` or `dev_url` if you want to change your testing domains.
+- the SDK handle response automatically and you code get the results using these three functions:
+    - `getCode()`: returns http response status of  i.e (200,500 ..).
+    - `getResponse()`: returns the JSON format response (response also return errors like validation errors ..etc).
+    - `getCurlError()`: returns the `curl` error. 
 
 Example Usage
 ------------
@@ -44,15 +48,21 @@ Example Usage
 Here is an example of a function used to get products from sku.io:
 
 ```php
+use Skuio\Sdk\Sdk;
+use Skuio\Sdk\Request;
+use Skuio\Sdk\Resource\Products;
+
 public function getProducts()
 {
+    Sdk::config( [ 'username' => $username, 'password' => $password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $productsRequest = new Request();
     $productsRequest->setConjunction( 'and' );
     $productsRequest->addFilter( 'sku', '=', '5333180491623' );
     $productsRequest->setLimit( 15 );
     $productsRequest->setPage( 1 );
     
-    $products = new Products( $username, $password, true );
+    $products = new Products();
     $products = $products->get( $productsRequest );
     
     return $products->getResponse();
@@ -62,9 +72,13 @@ public function getProducts()
 And you can use the base `Sdk` class
 
 ```php
+use Skuio\Sdk\Sdk;
+
 public function testConnection()
 {
-    $sdk = new Sdk( $username, $password, true );
+    Sdk::config( [ 'username' => $username, 'password' => $password, 'environment' => Sdk::DEVELOPMENT ] );
+
+    $sdk = new Sdk();
     $res = $sdk->authorizedRequest( '/vendors' );
     
     return $res->getResponse();

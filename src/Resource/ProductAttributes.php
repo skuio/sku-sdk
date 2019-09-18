@@ -2,6 +2,7 @@
 
 namespace Skuio\Sdk\Resource;
 
+use Exception;
 use Skuio\Sdk\Model\ProductAttribute;
 use Skuio\Sdk\Response;
 use Skuio\Sdk\Sdk;
@@ -17,6 +18,7 @@ class ProductAttributes extends Sdk
    * @param ProductAttribute[] $attributes
    *
    * @return Response
+   * @throws Exception
    */
   public function store( int $productId, array $attributes )
   {
@@ -42,6 +44,7 @@ class ProductAttributes extends Sdk
    * @param string[] $attributes
    *
    * @return Response
+   * @throws Exception
    */
   public function delete( int $productId, array $attributes )
   {

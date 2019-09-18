@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Skuio\Sdk\Resource\Warehouses;
+use Skuio\Sdk\Sdk;
 
 class WarehousesTest extends TestCase
 {
@@ -10,9 +11,11 @@ class WarehousesTest extends TestCase
 
   public function testGetWarehouses()
   {
-    $warehouses = new Warehouses( $this->username, $this->password, true );
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
+    $warehouses = new Warehouses();
     $warehouses = $warehouses->get();
-    
+
     $this->assertEquals( 200, $warehouses->getCode(), json_encode( $warehouses->getResponse() ) );
   }
 }

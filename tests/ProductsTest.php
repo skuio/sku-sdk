@@ -1,10 +1,9 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Skuio\Sdk\Model\ProductAttribute;
 use Skuio\Sdk\Model\Import;
 use Skuio\Sdk\Model\Product;
-use Skuio\Sdk\Model\Variation;
+use Skuio\Sdk\Model\ProductAttribute;
 use Skuio\Sdk\Request;
 use Skuio\Sdk\Resource\Products;
 use Skuio\Sdk\Response;
@@ -17,7 +16,9 @@ class ProductsTest extends TestCase
 
   public function testConnection()
   {
-    $sdk = new Sdk( $this->username, $this->password, true );
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
+    $sdk = new Sdk();
     $res = $sdk->authorizedRequest( '/products', [] );
 
     $this->assertInstanceOf( Response::class, $res );
@@ -27,20 +28,24 @@ class ProductsTest extends TestCase
 
   public function testGetProducts()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $productsRequest = new Request();
     $productsRequest->setConjunction( 'and' );
     $productsRequest->addFilter( 'sku', '=', '5333180491623' );
 
-    $products = new Products( $this->username, $this->password, true );
+    $products = new Products();
     $products = $products->get( $productsRequest );
 
-    $this->assertEquals( 200, $products->getCode() );
+    $this->assertEquals( 200, $products->getCode(), json_encode( $products->getResponse() ) );
   }
 
   public function testShowProductById()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $productId = 1;
-    $products  = new Products( $this->username, $this->password, true );
+    $products  = new Products();
     $products  = $products->showById( $productId );
 
     $this->assertEquals( 200, $products->getCode() );
@@ -51,8 +56,10 @@ class ProductsTest extends TestCase
 
   public function testShowProductBySku()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $productSku = '5333180491623';
-    $products   = new Products( $this->username, $this->password, true );
+    $products   = new Products();
     $products   = $products->showBySku( $productSku );
 
     $this->assertEquals( 200, $products->getCode() );
@@ -64,6 +71,8 @@ class ProductsTest extends TestCase
 
   public function testStoreProduct()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $product                 = new Product();
     $product->sku            = '123456789';
     $product->name           = 'my first test';
@@ -88,7 +97,7 @@ class ProductsTest extends TestCase
 
     $product->variations = [ $variation ];
 
-    $products = new Products( $this->username, $this->password, true );
+    $products = new Products();
 
     $products = $products->store( $product );
 
@@ -97,11 +106,13 @@ class ProductsTest extends TestCase
 
   public function testUpdateProduct()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $product         = new Product();
     $product->id     = 2;
     $product->weight = 20.5;
 
-    $products = new Products( $this->username, $this->password, true );
+    $products = new Products();
 
     $products = $products->update( $product );
 
@@ -110,8 +121,10 @@ class ProductsTest extends TestCase
 
   public function testArchiveProduct()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $productId = 1;
-    $products  = new Products( $this->username, $this->password, true );
+    $products  = new Products();
     $products  = $products->archive( $productId );
 
     $this->assertEquals( 200, $products->getCode(), json_encode( $products->getResponse() ) );
@@ -119,8 +132,10 @@ class ProductsTest extends TestCase
 
   public function testDeleteProduct()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $productId = 1;
-    $products  = new Products( $this->username, $this->password, true );
+    $products  = new Products();
     $products  = $products->delete( $productId );
 
     $this->assertEquals( 200, $products->getCode(), json_encode( $products->getResponse() ) );
@@ -128,10 +143,12 @@ class ProductsTest extends TestCase
 
   public function testImportProducts()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $import           = new Import();
     $import->csv_file = './tests/import_products_test2.csv';
 
-    $products = new Products( $this->username, $this->password, true );
+    $products = new Products();
     $products = $products->import( $import );
 
     print_r( $products->getResponse() );

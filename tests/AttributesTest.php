@@ -4,6 +4,7 @@ use PHPUnit\Framework\TestCase;
 use Skuio\Sdk\Model\Attribute;
 use Skuio\Sdk\Request;
 use Skuio\Sdk\Resource\Attributes;
+use Skuio\Sdk\Sdk;
 
 class AttributesTest extends TestCase
 {
@@ -12,9 +13,11 @@ class AttributesTest extends TestCase
 
   public function testGetAttributes()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $request = new Request();
 
-    $attributes = new Attributes( $this->username, $this->password, true );
+    $attributes = new Attributes();
     $attributes = $attributes->get( $request );
 
     $this->assertEquals( 200, $attributes->getCode(), json_encode( $attributes->getResponse() ) );
@@ -22,6 +25,8 @@ class AttributesTest extends TestCase
 
   public function testStoreAttribute()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $attribute                   = new Attribute();
     $attribute->name             = 'Color';
     $attribute->type             = 'string';
@@ -29,7 +34,7 @@ class AttributesTest extends TestCase
     $attribute->update_if_exists = true;
     $attribute->values           = [ 'Yallow', 'Red' ];
 
-    $attributes = new Attributes( $this->username, $this->password, true );
+    $attributes = new Attributes();
     $attributes = $attributes->store( $attribute );
 
     $this->assertLessThanOrEqual( 201, $attributes->getCode(), json_encode( $attributes->getResponse() ) );
@@ -37,8 +42,10 @@ class AttributesTest extends TestCase
 
   public function testDeleteAttribute()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $attributeId = 1;
-    $attributes  = new Attributes( $this->username, $this->password, true );
+    $attributes  = new Attributes();
     $attributes  = $attributes->delete( $attributeId );
 
     $this->assertEquals( 200, $attributes->getCode(), json_encode( $attributes->getResponse() ) );

@@ -2,6 +2,7 @@
 
 namespace Skuio\Sdk\Resource;
 
+use Exception;
 use Skuio\Sdk\Response;
 use Skuio\Sdk\Sdk;
 
@@ -13,6 +14,7 @@ class SalesChannels extends Sdk
    * Retrieve sales channels
    *
    * @return Response
+   * @throws Exception
    */
   public function get()
   {

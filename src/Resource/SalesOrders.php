@@ -2,6 +2,8 @@
 
 namespace Skuio\Sdk\Resource;
 
+use Exception;
+use InvalidArgumentException;
 use Skuio\Sdk\Model\Import;
 use Skuio\Sdk\Model\SalesOrder;
 use Skuio\Sdk\Request;
@@ -18,6 +20,7 @@ class SalesOrders extends Sdk
    * @param Request $request
    *
    * @return Response
+   * @throws Exception
    */
   public function get( Request $request )
   {
@@ -30,6 +33,7 @@ class SalesOrders extends Sdk
    * @param int $id
    *
    * @return Response
+   * @throws Exception
    */
   public function show( int $id )
   {
@@ -42,6 +46,7 @@ class SalesOrders extends Sdk
    * @param SalesOrder $salesOrder
    *
    * @return Response
+   * @throws Exception
    */
   public function store( SalesOrder $salesOrder )
   {
@@ -54,12 +59,13 @@ class SalesOrders extends Sdk
    * @param SalesOrder $salesOrder
    *
    * @return Response
+   * @throws Exception
    */
   public function update( SalesOrder $salesOrder )
   {
     if ( empty( $salesOrder->id ) )
     {
-      throw new \InvalidArgumentException( 'The "id" field is required' );
+      throw new InvalidArgumentException( 'The "id" field is required' );
     }
 
     return $this->authorizedRequest( $this->endpoint . '/' . $salesOrder->id, $salesOrder->toJson(), self::METHOD_PUT );
@@ -71,6 +77,7 @@ class SalesOrders extends Sdk
    * @param int $id
    *
    * @return Response
+   * @throws Exception
    */
   public function delete( int $id )
   {
@@ -83,12 +90,13 @@ class SalesOrders extends Sdk
    * @param Import $import
    *
    * @return Response
+   * @throws Exception
    */
   public function import( Import $import )
   {
     if ( empty( $import->csv_file ) )
     {
-      throw new \InvalidArgumentException( 'The csv_file field is required' );
+      throw new InvalidArgumentException( 'The csv_file field is required' );
     }
 
     return $this->authorizedRequest( $this->endpoint . '/import', $import->toArray(), self::METHOD_POST );
@@ -98,6 +106,7 @@ class SalesOrders extends Sdk
    * Retrieve sales order constants data
    *
    * @return Response
+   * @throws Exception
    */
   public function constants()
   {

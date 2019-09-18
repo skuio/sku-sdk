@@ -2,6 +2,8 @@
 
 namespace Skuio\Sdk\Resource;
 
+use Exception;
+use InvalidArgumentException;
 use Skuio\Sdk\Model\Import;
 use Skuio\Sdk\Model\Product;
 use Skuio\Sdk\Request;
@@ -25,6 +27,7 @@ class Products extends Sdk
    * @param Request $request
    *
    * @return Response
+   * @throws Exception
    */
   public function get( Request $request )
   {
@@ -37,6 +40,7 @@ class Products extends Sdk
    * @param int $id
    *
    * @return Response
+   * @throws Exception
    */
   public function showById( int $id )
   {
@@ -49,6 +53,7 @@ class Products extends Sdk
    * @param string $sku
    *
    * @return Response
+   * @throws Exception
    */
   public function showBySku( string $sku )
   {
@@ -61,6 +66,7 @@ class Products extends Sdk
    * @param Product $product
    *
    * @return Response
+   * @throws Exception
    */
   public function store( Product $product )
   {
@@ -73,12 +79,13 @@ class Products extends Sdk
    * @param Product $product
    *
    * @return Response
+   * @throws Exception
    */
   public function update( Product $product )
   {
     if ( empty( $product->id ) )
     {
-      throw new \InvalidArgumentException( 'The "id" field is required' );
+      throw new InvalidArgumentException( 'The "id" field is required' );
     }
 
     return $this->authorizedRequest( $this->endpoint . '/' . $product->id, $product->toJson(), self::METHOD_PUT );
@@ -90,6 +97,7 @@ class Products extends Sdk
    * @param int $id
    *
    * @return Response
+   * @throws Exception
    */
   public function archive( int $id )
   {
@@ -102,6 +110,7 @@ class Products extends Sdk
    * @param int $id
    *
    * @return Response
+   * @throws Exception
    */
   public function delete( int $id )
   {
@@ -114,12 +123,13 @@ class Products extends Sdk
    * @param Import $importProducts
    *
    * @return Response
+   * @throws Exception
    */
   public function import( Import $importProducts )
   {
     if ( empty( $importProducts->csv_file ) )
     {
-      throw new \InvalidArgumentException( 'The csv_file field is required' );
+      throw new InvalidArgumentException( 'The csv_file field is required' );
     }
 
     return $this->authorizedRequest( $this->endpoint . '/import', $importProducts->toArray(), self::METHOD_POST );
@@ -129,6 +139,7 @@ class Products extends Sdk
    * Retrieve product constants data
    *
    * @return Response
+   * @throws Exception
    */
   public function constants()
   {

@@ -1,9 +1,27 @@
 <?php namespace Skuio\Sdk;
 
+use Exception;
+
 class Sdk
 {
-  const SKU_URL     = 'https://sku.io/api';
-  const SKU_DEV_URL = 'https://dev.sku.io/api';
+  /**
+   * Environments
+   */
+  const PRODUCTION  = 'production';
+  const DEVELOPMENT = 'development';
+
+  /**
+   * API configurations
+   *
+   * @var array
+   */
+  public static $config = [
+    'url'         => 'https://sku.io/api',
+    'dev_url'     => 'https://ord4.test/api',
+    'environment' => self::PRODUCTION,
+    'username'    => null,
+    'password'    => null,
+  ];
 
   /**
    * Http method
@@ -16,33 +34,16 @@ class Sdk
   /**
    * @var string
    */
-  private $username;
-  /**
-   * @var string
-   */
-  private $password;
-  /**
-   * @var string
-   */
-  private $baseUrl;
-
-  /**
-   * @var string
-   */
   protected $endpoint = '';
 
   /**
    * Sdk constructor.
    *
-   * @param string $username
-   * @param string $password
-   * @param bool $dev on development server
+   * @param array $config
    */
-  public function __construct( string $username, string $password, bool $dev = false )
+  public function __construct( array $config = [] )
   {
-    $this->username = $username;
-    $this->password = $password;
-    $this->baseUrl  = $dev ? self::SKU_DEV_URL : self::SKU_URL;
+    self::config( $config );
   }
 
   /**
@@ -53,13 +54,16 @@ class Sdk
    * @param string $method
    *
    * @return Response
+   * @throws Exception
    */
   public function authorizedRequest( string $endpoint, $body = null, string $method = self::METHOD_GET )
   {
+    $baseUrl = self::$config['environment'] == self::PRODUCTION ? self::$config['url'] : self::$config['dev_url'];
+
     $curl = curl_init();
 
     curl_setopt_array( $curl, [
-      CURLOPT_URL            => $this->baseUrl . '/' . ltrim( $endpoint, '/' ),
+      CURLOPT_URL            => $baseUrl . '/' . ltrim( $endpoint, '/' ),
       CURLOPT_RETURNTRANSFER => true,
       CURLOPT_MAXREDIRS      => 10,
       CURLOPT_TIMEOUT        => 30,
@@ -93,9 +97,28 @@ class Sdk
    * build "Basic Auth" token from username and password
    *
    * @return string
+   * @throws Exception
    */
   private function getBasicToken()
   {
-    return base64_encode( $this->username . ':' . $this->password );
+    if ( empty( self::$config['username'] ) or empty( self::$config['password'] ) )
+    {
+      throw new Exception( 'The username and password fields are required. Set on SDK config' );
+    }
+
+    return base64_encode( self::$config['username'] . ':' . self::$config['password'] );
+  }
+
+  /**
+   * Set API configurations
+   *
+   * @param array $config
+   */
+  public static function config( array $config )
+  {
+    foreach ( $config as $key => $value )
+    {
+      self::$config[ $key ] = $value;
+    }
   }
 }

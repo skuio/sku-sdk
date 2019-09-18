@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Skuio\Sdk\Resource\Vendors;
+use Skuio\Sdk\Sdk;
 
 class VendorsTest extends TestCase
 {
@@ -10,7 +11,9 @@ class VendorsTest extends TestCase
 
   public function testGetVendors()
   {
-    $vendors = new Vendors( $this->username, $this->password, true );
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
+    $vendors = new Vendors();
     $vendors = $vendors->get();
 
     $this->assertEquals( 200, $vendors->getCode(), json_encode( $vendors->getResponse() ) );

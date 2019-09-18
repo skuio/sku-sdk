@@ -3,6 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use Skuio\Sdk\Model\ProductAttribute;
 use Skuio\Sdk\Resource\ProductAttributes;
+use Skuio\Sdk\Sdk;
 
 class ProductAttributesTest extends TestCase
 {
@@ -11,6 +12,8 @@ class ProductAttributesTest extends TestCase
 
   public function testStoreProductAttributes()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $productId = 1;
 
     $productAttribute        = new ProductAttribute();
@@ -18,7 +21,7 @@ class ProductAttributesTest extends TestCase
     $productAttribute->type  = 'string';
     $productAttribute->value = 'test value';
 
-    $productAttributes = new ProductAttributes( $this->username, $this->password, true );
+    $productAttributes = new ProductAttributes();
     $productAttributes = $productAttributes->store( $productId, [ $productAttribute ] );
 
     $this->assertEquals( 200, $productAttributes->getCode(), json_encode( $productAttributes->getResponse() ) );
@@ -26,10 +29,12 @@ class ProductAttributesTest extends TestCase
 
   public function testDeleteProductAttributes()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $productId  = 2;
     $attributes = [ 'test attribute', 'color' ];
 
-    $productAttributes = new ProductAttributes( $this->username, $this->password, true );
+    $productAttributes = new ProductAttributes();
     $productAttributes = $productAttributes->delete( $productId, $attributes );
 
     $this->assertEquals( 200, $productAttributes->getCode(), json_encode( $productAttributes->getResponse() ) );

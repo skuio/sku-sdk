@@ -8,6 +8,7 @@ use Skuio\Sdk\Model\SalesOrderLine;
 use Skuio\Sdk\Request;
 use Skuio\Sdk\Resource\SalesOrderLines;
 use Skuio\Sdk\Resource\SalesOrders;
+use Skuio\Sdk\Sdk;
 
 class SalesOrdersTest extends TestCase
 {
@@ -16,9 +17,11 @@ class SalesOrdersTest extends TestCase
 
   public function testGetSalesOrders()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $request = new Request();
 
-    $salesOrders = new SalesOrders( $this->username, $this->password, true );
+    $salesOrders = new SalesOrders();
     $salesOrders = $salesOrders->get( $request );
 
     $this->assertEquals( 200, $salesOrders->getCode(), json_encode( $salesOrders->getResponse() ) );
@@ -26,9 +29,11 @@ class SalesOrdersTest extends TestCase
 
   public function testShowSalesOrder()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $salesOrderId = 1;
 
-    $salesOrders = new SalesOrders( $this->username, $this->password, true );
+    $salesOrders = new SalesOrders();
     $salesOrders = $salesOrders->show( $salesOrderId );
 
     $this->assertEquals( 200, $salesOrders->getCode(), json_encode( $salesOrders->getResponse() ) );
@@ -36,6 +41,8 @@ class SalesOrdersTest extends TestCase
 
   public function testStoreSalesOrder()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $salesOrder                     = new SalesOrder();
     $salesOrder->sales_channel_id   = 1;
     $salesOrder->customer_reference = '789456-123456';
@@ -61,7 +68,7 @@ class SalesOrdersTest extends TestCase
 
     $salesOrder->customer_address = $customerAddress;
 
-    $salesOrders = new SalesOrders( $this->username, $this->password, true );
+    $salesOrders = new SalesOrders();
     $salesOrders = $salesOrders->store( $salesOrder );
 
     $this->assertLessThanOrEqual( 201, $salesOrders->getCode(), json_encode( $salesOrders->getResponse() ) );
@@ -69,6 +76,8 @@ class SalesOrdersTest extends TestCase
 
   public function testUpdateSalesOrder()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $salesOrder                     = new SalesOrder();
     $salesOrder->id                 = 2;
     $salesOrder->sales_channel_id   = 1;
@@ -95,7 +104,7 @@ class SalesOrdersTest extends TestCase
 
     $salesOrder->customer_address = $customerAddress;
 
-    $salesOrders = new SalesOrders( $this->username, $this->password, true );
+    $salesOrders = new SalesOrders();
     $salesOrders = $salesOrders->update( $salesOrder );
 
     $this->assertEquals( 200, $salesOrders->getCode(), json_encode( $salesOrders->getResponse() ) );
@@ -103,9 +112,11 @@ class SalesOrdersTest extends TestCase
 
   public function testDeleteSalesOrder()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $salesOrderId = 1;
 
-    $salesOrders = new SalesOrders( $this->username, $this->password, true );
+    $salesOrders = new SalesOrders();
     $salesOrders = $salesOrders->delete( $salesOrderId );
 
     $this->assertEquals( 200, $salesOrders->getCode(), json_encode( $salesOrders->getResponse() ) );
@@ -113,10 +124,12 @@ class SalesOrdersTest extends TestCase
 
   public function testImportSalesOrders()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $import           = new Import();
     $import->csv_file = './tests/import_sales_orders_test.csv';
 
-    $salesOrders = new SalesOrders( $this->username, $this->password, true );
+    $salesOrders = new SalesOrders();
     $salesOrders = $salesOrders->import( $import );
 
     print_r( $salesOrders->getResponse() );
@@ -126,9 +139,11 @@ class SalesOrdersTest extends TestCase
 
   public function deleteSalesOrderLine()
   {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
     $salesOrderLineId = 1;
 
-    $salesOrderLines = new SalesOrderLines( $this->username, $this->password, true );
+    $salesOrderLines = new SalesOrderLines();
     $salesOrderLines = $salesOrderLines->delete( $salesOrderLineId );
 
     $this->assertEquals( 200, $salesOrderLines->getCode(), json_encode( $salesOrderLines->getResponse() ) );

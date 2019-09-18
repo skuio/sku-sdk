@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Skuio\Sdk\Resource\SalesChannels;
+use Skuio\Sdk\Sdk;
 
 class SalesChannelsTest extends TestCase
 {
@@ -10,7 +11,9 @@ class SalesChannelsTest extends TestCase
 
   public function testGetSalesChannels()
   {
-    $salesChannels = new SalesChannels( $this->username, $this->password, true );
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
+    $salesChannels = new SalesChannels();
     $salesChannels = $salesChannels->get();
 
     $this->assertEquals( 200, $salesChannels->getCode(), json_encode( $salesChannels->getResponse() ) );

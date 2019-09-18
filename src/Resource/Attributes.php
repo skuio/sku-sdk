@@ -2,6 +2,7 @@
 
 namespace Skuio\Sdk\Resource;
 
+use Exception;
 use Skuio\Sdk\Model\Attribute;
 use Skuio\Sdk\Request;
 use Skuio\Sdk\Response;
@@ -17,6 +18,7 @@ class Attributes extends Sdk
    * @param Request $request
    *
    * @return Response
+   * @throws Exception
    */
   public function get( Request $request )
   {
@@ -29,6 +31,7 @@ class Attributes extends Sdk
    * @param Attribute $attribute
    *
    * @return Response
+   * @throws Exception
    */
   public function store( Attribute $attribute )
   {
@@ -41,6 +44,7 @@ class Attributes extends Sdk
    * @param $id
    *
    * @return Response
+   * @throws Exception
    */
   public function delete( $id )
   {

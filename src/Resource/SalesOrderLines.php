@@ -2,6 +2,7 @@
 
 namespace Skuio\Sdk\Resource;
 
+use Exception;
 use Skuio\Sdk\Response;
 use Skuio\Sdk\Sdk;
 
@@ -15,6 +16,7 @@ class SalesOrderLines extends Sdk
    * @param int $id
    *
    * @return Response
+   * @throws Exception
    */
   public function delete( int $id )
   {

@@ -4,6 +4,11 @@ namespace Skuio\Sdk;
 
 abstract class Model
 {
+  /**
+   * Properties to array
+   *
+   * @return mixed
+   */
   public function toArray()
   {
     $properties = get_object_vars( $this );
@@ -11,11 +16,23 @@ abstract class Model
     return $this->propertiesToArray( $properties );
   }
 
+  /**
+   * Properties to JSON
+   *
+   * @return false|string
+   */
   public function toJson()
   {
     return json_encode( $this->toArray() );
   }
 
+  /**
+   * Recursive function to convert properties to array
+   *
+   * @param $properties
+   *
+   * @return mixed
+   */
   private function propertiesToArray( $properties )
   {
     foreach ( $properties as $key => $value )

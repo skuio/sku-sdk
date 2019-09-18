@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Skuio\Sdk\Resource\NominalCodes;
+use Skuio\Sdk\Sdk;
 
 class NominalCodesTest extends TestCase
 {
@@ -10,7 +11,9 @@ class NominalCodesTest extends TestCase
 
   public function testGetNominalCodes()
   {
-    $nominalCodes = new NominalCodes( $this->username, $this->password, true );
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
+    $nominalCodes = new NominalCodes();
     $nominalCodes = $nominalCodes->get();
 
     $this->assertEquals( 200, $nominalCodes->getCode(), json_encode( $nominalCodes->getResponse() ) );

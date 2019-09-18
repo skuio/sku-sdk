@@ -7,7 +7,6 @@ namespace Skuio\Sdk;
  *
  * @package Skuio\Sdk\Products
  *
- *
  */
 class Request
 {
