@@ -71,6 +71,7 @@ class Sdk
       CURLOPT_CUSTOMREQUEST  => $method,
       CURLOPT_POSTFIELDS     => $body,
       CURLOPT_SSL_VERIFYHOST => 0,
+      CURLOPT_FOLLOWLOCATION => true,
       CURLOPT_HTTPHEADER     => array_filter( [
                                                 "Accept: application/json",
                                                 is_array( $body ) ? null : "Content-type: application/json",
@@ -86,10 +87,10 @@ class Sdk
 
     if ( $curlError )
     {
-      return new Response( $httpCode, [], $curlError );
+      return new Response( $httpCode, null, $curlError );
     } else
     {
-      return new Response( $httpCode, json_decode( $response, true ), [] );
+      return new Response( $httpCode, json_decode( $response, true ) );
     }
   }
 

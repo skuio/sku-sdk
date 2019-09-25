@@ -16,15 +16,22 @@ class Response
    */
   private $code;
   /**
-   * @var array
+   * @var array|null
    */
   private $response;
   /**
-   * @var array
+   * @var array|null
    */
   private $error;
 
-  public function __construct( int $code, array $response, $error )
+  /**
+   * Response constructor.
+   *
+   * @param int $code
+   * @param array|null $response
+   * @param null $error
+   */
+  public function __construct( int $code, $response = null, $error = null )
   {
     $this->code     = $code;
     $this->response = $response;
@@ -40,17 +47,17 @@ class Response
   }
 
   /**
-   * @return array
+   * @return array|null
    */
-  public function getResponse(): array
+  public function getResponse(): ?array
   {
     return $this->response;
   }
 
   /**
-   * @return array
+   * @return array|null
    */
-  public function getCurlError(): array
+  public function getCurlError(): ?array
   {
     return $this->error;
   }
