@@ -11,8 +11,8 @@ use Skuio\Sdk\Sdk;
 
 class ProductsTest extends TestCase
 {
-  private $username = '49a683831249ef6a37158f1e1b86e6d5';
-  private $password = 'd002707ff6867c1c545adf40ab06bbdf';
+  private $username = '86be828e14eec146b3bd45ef72ece6c3';
+  private $password = '28380a285cb463a3bad45d6f608395b1';
 
   public function testConnection()
   {
@@ -130,6 +130,17 @@ class ProductsTest extends TestCase
     $this->assertEquals( 200, $products->getCode(), json_encode( $products->getResponse() ) );
   }
 
+  public function testUnArchiveProduct()
+  {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
+    $productId = 1;
+    $products  = new Products();
+    $products  = $products->unArchive( $productId );
+
+    $this->assertEquals( 200, $products->getCode(), json_encode( $products->getResponse() ) );
+  }
+
   public function testDeleteProduct()
   {
     Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
@@ -137,6 +148,17 @@ class ProductsTest extends TestCase
     $productId = 1;
     $products  = new Products();
     $products  = $products->delete( $productId );
+
+    $this->assertEquals( 200, $products->getCode(), json_encode( $products->getResponse() ) );
+  }
+
+  public function testRestoreProduct()
+  {
+    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
+    $productSKU = '1123410-FBA11';
+    $products   = new Products();
+    $products   = $products->restore( $productSKU );
 
     $this->assertEquals( 200, $products->getCode(), json_encode( $products->getResponse() ) );
   }

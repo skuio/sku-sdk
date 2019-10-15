@@ -10,12 +10,15 @@ namespace Skuio\Sdk;
  */
 class Request
 {
-  private $filters     = [];
-  private $sort        = [];
-  private $conjunction = 'and';
-  private $query       = '';
-  private $limit       = 10;
-  private $page        = 1;
+  private $filters          = [];
+  private $sort             = [];
+  private $conjunction      = 'and';
+  private $query            = '';
+  private $limit            = 10;
+  private $page             = 1;
+  private $exclude          = [];
+  private $archived         = false;
+  private $include_archived = false;
 
   /**
    * Filter between columns "and" or "or"
@@ -81,6 +84,30 @@ class Request
   }
 
   /**
+   * @param array $exclude
+   */
+  public function setExclude( array $exclude ): void
+  {
+    $this->exclude = $exclude;
+  }
+
+  /**
+   * @param bool $archived
+   */
+  public function setArchived( bool $archived ): void
+  {
+    $this->archived = $archived;
+  }
+
+  /**
+   * @param bool $include_archived
+   */
+  public function setIncludeArchived( bool $include_archived ): void
+  {
+    $this->include_archived = $include_archived;
+  }
+
+  /**
    * @return array
    */
   public function toArray()
@@ -100,6 +127,21 @@ class Request
     if ( ! empty( $this->query ) )
     {
       $response['query'] = $this->query;
+    }
+
+    if ( ! empty( $this->exclude ) )
+    {
+      $response['excluded'] = json_encode( $this->exclude );
+    }
+
+    if ( ! empty( $this->archived ) )
+    {
+      $response['archived'] = $this->archived ? '1' : '0';
+    }
+
+    if ( ! empty( $this->include_archived ) )
+    {
+      $response['include_archived'] = $this->include_archived ? '1' : '0';
     }
 
     return $response;

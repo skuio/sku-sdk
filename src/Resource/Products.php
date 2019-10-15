@@ -105,6 +105,19 @@ class Products extends Sdk
   }
 
   /**
+   * UnArchived a product
+   *
+   * @param int $id
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function unArchive( int $id )
+  {
+    return $this->authorizedRequest( $this->endpoint . '/un-archive/' . $id, null, self::METHOD_PUT );
+  }
+
+  /**
    * Delete a product
    *
    * @param int $id
@@ -115,6 +128,19 @@ class Products extends Sdk
   public function delete( int $id )
   {
     return $this->authorizedRequest( $this->endpoint . '/' . $id, null, self::METHOD_DELETE );
+  }
+
+  /**
+   * Restore a deleted product
+   *
+   * @param string $sku
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function restore( string $sku )
+  {
+    return $this->authorizedRequest( $this->endpoint . '/restore/' . $sku, null, self::METHOD_GET );
   }
 
   /**
