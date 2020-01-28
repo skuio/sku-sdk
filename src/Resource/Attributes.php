@@ -3,6 +3,7 @@
 namespace Skuio\Sdk\Resource;
 
 use Exception;
+use InvalidArgumentException;
 use Skuio\Sdk\Model\Attribute;
 use Skuio\Sdk\Request;
 use Skuio\Sdk\Response;
@@ -26,7 +27,7 @@ class Attributes extends Sdk
   }
 
   /**
-   * Update or create a new attribute
+   * Create a new attribute
    *
    * @param Attribute $attribute
    *
@@ -36,6 +37,50 @@ class Attributes extends Sdk
   public function store( Attribute $attribute )
   {
     return $this->authorizedRequest( $this->endpoint, $attribute->toJson(), self::METHOD_POST );
+  }
+
+  /**
+   * Update an attribute
+   *
+   * @param Attribute $attribute
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function update( Attribute $attribute )
+  {
+    if ( empty( $attribute->id ) )
+    {
+      throw new InvalidArgumentException( 'The "id" field is required' );
+    }
+
+    return $this->authorizedRequest( "{$this->endpoint}/$attribute->id", $attribute->toJson(), self::METHOD_PUT );
+  }
+
+  /**
+   * Archive an attribute
+   *
+   * @param int $id
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function archive( int $id )
+  {
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}/archive", null, self::METHOD_GET );
+  }
+
+  /**
+   * unarchived an attribute
+   *
+   * @param int $id
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function unarchived( int $id )
+  {
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}/unarchived", null, self::METHOD_GET );
   }
 
   /**

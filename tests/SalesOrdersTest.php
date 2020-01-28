@@ -24,7 +24,7 @@ class SalesOrdersTest extends TestCase
     $salesOrders = new SalesOrders();
     $salesOrders = $salesOrders->get( $request );
 
-    $this->assertEquals( 200, $salesOrders->getCode(), json_encode( $salesOrders->getResponse() ) );
+    $this->assertEquals( 200, $salesOrders->getStatusCode(), json_encode( $salesOrders->getResponse() ) );
   }
 
   public function testShowSalesOrder()
@@ -36,7 +36,7 @@ class SalesOrdersTest extends TestCase
     $salesOrders = new SalesOrders();
     $salesOrders = $salesOrders->show( $salesOrderId );
 
-    $this->assertEquals( 200, $salesOrders->getCode(), json_encode( $salesOrders->getResponse() ) );
+    $this->assertEquals( 200, $salesOrders->getStatusCode(), json_encode( $salesOrders->getResponse() ) );
   }
 
   public function testStoreSalesOrder()
@@ -71,7 +71,7 @@ class SalesOrdersTest extends TestCase
     $salesOrders = new SalesOrders();
     $salesOrders = $salesOrders->store( $salesOrder );
 
-    $this->assertLessThanOrEqual( 201, $salesOrders->getCode(), json_encode( $salesOrders->getResponse() ) );
+    $this->assertLessThanOrEqual( 201, $salesOrders->getStatusCode(), json_encode( $salesOrders->getResponse() ) );
   }
 
   public function testUpdateSalesOrder()
@@ -107,7 +107,7 @@ class SalesOrdersTest extends TestCase
     $salesOrders = new SalesOrders();
     $salesOrders = $salesOrders->update( $salesOrder );
 
-    $this->assertEquals( 200, $salesOrders->getCode(), json_encode( $salesOrders->getResponse() ) );
+    $this->assertEquals( 200, $salesOrders->getStatusCode(), json_encode( $salesOrders->getResponse() ) );
   }
 
   public function testDeleteSalesOrder()
@@ -119,7 +119,7 @@ class SalesOrdersTest extends TestCase
     $salesOrders = new SalesOrders();
     $salesOrders = $salesOrders->delete( $salesOrderId );
 
-    $this->assertEquals( 200, $salesOrders->getCode(), json_encode( $salesOrders->getResponse() ) );
+    $this->assertEquals( 200, $salesOrders->getStatusCode(), json_encode( $salesOrders->getResponse() ) );
   }
 
   public function testImportSalesOrders()
@@ -134,7 +134,7 @@ class SalesOrdersTest extends TestCase
 
     print_r( $salesOrders->getResponse() );
 
-    $this->assertEquals( 200, $salesOrders->getCode(), json_encode( $salesOrders->getResponse() ) );
+    $this->assertEquals( 200, $salesOrders->getStatusCode(), json_encode( $salesOrders->getResponse() ) );
   }
 
   public function deleteSalesOrderLine()
@@ -146,6 +146,6 @@ class SalesOrdersTest extends TestCase
     $salesOrderLines = new SalesOrderLines();
     $salesOrderLines = $salesOrderLines->delete( $salesOrderLineId );
 
-    $this->assertEquals( 200, $salesOrderLines->getCode(), json_encode( $salesOrderLines->getResponse() ) );
+    $this->assertEquals( 200, $salesOrderLines->getStatusCode(), json_encode( $salesOrderLines->getResponse() ) );
   }
 }

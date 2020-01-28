@@ -2,6 +2,8 @@
 
 namespace Skuio\Sdk;
 
+use InvalidArgumentException;
+
 /**
  * Class Request
  *
@@ -10,15 +12,37 @@ namespace Skuio\Sdk;
  */
 class Request
 {
-  private $filters          = [];
-  private $sort             = [];
-  private $conjunction      = 'and';
-  private $query            = '';
-  private $limit            = 10;
-  private $page             = 1;
-  private $exclude          = [];
-  private $archived         = false;
-  private $include_archived = false;
+  /**
+   * Archived Status
+   */
+  const ARCHIVED_EXCLUDED = 0; // without archived
+  const ARCHIVED_ONLY     = 1; // only archived
+  const ARCHIVED_INCLUDED = 2; // both archived and unarchived
+
+  /**
+   * Table Specifications Status
+   */
+  const TS_EXCLUDED = 0; // without table specifications
+  const TS_ONLY     = 1; // only table specifications without data
+  const TS_INCLUDED = 2; // both table specifications and data
+  /**
+   * Total Status
+   */
+  const TOTAL_EXCLUDED = 0; // data without total(count)
+  const TOTAL_ONLY     = 1; // only pagination info without data
+  const TOTAL_INCLUDED = 2; // include total(count) to pagination info
+
+  private $filters             = [];
+  private $sort                = [];
+  private $conjunction         = 'and';
+  private $query               = '';
+  private $limit               = 10;
+  private $page                = 1;
+  private $excluded            = [];
+  private $included            = [];
+  private $archived            = self::ARCHIVED_EXCLUDED;
+  private $tableSpecifications = self::TS_EXCLUDED;
+  private $total               = self::TOTAL_EXCLUDED;
 
   /**
    * Filter between columns "and" or "or"
@@ -86,25 +110,56 @@ class Request
   /**
    * @param array $exclude
    */
-  public function setExclude( array $exclude ): void
+  public function setExcluded( array $exclude ): void
   {
-    $this->exclude = $exclude;
+    $this->excluded = $exclude;
   }
 
   /**
-   * @param bool $archived
+   * @param array $include
    */
-  public function setArchived( bool $archived ): void
+  public function setIncluded( array $include ): void
   {
+    $this->included = $include;
+  }
+
+  /**
+   * @param int $archived
+   */
+  public function setArchivedStatus( int $archived ): void
+  {
+    if ( $archived < 1 && $archived > 2 )
+    {
+      throw new InvalidArgumentException( 'invalid archived status' );
+    }
+
     $this->archived = $archived;
   }
 
   /**
-   * @param bool $include_archived
+   * @param int $tableSpecifications
    */
-  public function setIncludeArchived( bool $include_archived ): void
+  public function setTableSpecificationsStatus( int $tableSpecifications ): void
   {
-    $this->include_archived = $include_archived;
+    if ( $tableSpecifications < 1 && $tableSpecifications > 2 )
+    {
+      throw new InvalidArgumentException( 'invalid table specifications status' );
+    }
+
+    $this->tableSpecifications = $tableSpecifications;
+  }
+
+  /**
+   * @param int $total
+   */
+  public function setTotalStatus( int $total ): void
+  {
+    if ( $total < 1 && $total > 2 )
+    {
+      throw new InvalidArgumentException( 'invalid total status' );
+    }
+
+    $this->total = $total;
   }
 
   /**
@@ -129,19 +184,34 @@ class Request
       $response['query'] = $this->query;
     }
 
-    if ( ! empty( $this->exclude ) )
+    if ( ! empty( $this->excluded ) )
     {
-      $response['excluded'] = json_encode( $this->exclude );
+      $response['excluded'] = json_encode( $this->excluded );
+    }
+
+    if ( ! empty( $this->included ) )
+    {
+      $response['included'] = json_encode( $this->included );
+    }
+
+    if ( ! empty( $this->excluded ) && ! empty( $this->included ) )
+    {
+      throw new InvalidArgumentException( 'You can specify either included or excluded fields, but not both.' );
     }
 
     if ( ! empty( $this->archived ) )
     {
-      $response['archived'] = $this->archived ? '1' : '0';
+      $response['archived'] = $this->archived;
     }
 
-    if ( ! empty( $this->include_archived ) )
+    if ( ! empty( $this->tableSpecifications ) )
     {
-      $response['include_archived'] = $this->include_archived ? '1' : '0';
+      $response['table_specifications'] = $this->tableSpecifications;
+    }
+
+    if ( ! empty( $this->total ) )
+    {
+      $response['total'] = $this->total;
     }
 
     return $response;

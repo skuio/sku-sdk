@@ -24,7 +24,7 @@ class ProductAttributesTest extends TestCase
     $productAttributes = new ProductAttributes();
     $productAttributes = $productAttributes->store( $productId, [ $productAttribute ] );
 
-    $this->assertEquals( 200, $productAttributes->getCode(), json_encode( $productAttributes->getResponse() ) );
+    $this->assertEquals( 200, $productAttributes->getStatusCode(), json_encode( $productAttributes->getResponse() ) );
   }
 
   public function testDeleteProductAttributes()
@@ -37,6 +37,6 @@ class ProductAttributesTest extends TestCase
     $productAttributes = new ProductAttributes();
     $productAttributes = $productAttributes->delete( $productId, $attributes );
 
-    $this->assertEquals( 200, $productAttributes->getCode(), json_encode( $productAttributes->getResponse() ) );
+    $this->assertEquals( 200, $productAttributes->getStatusCode(), json_encode( $productAttributes->getResponse() ) );
   }
 }

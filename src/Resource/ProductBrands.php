@@ -65,15 +65,15 @@ class ProductBrands extends Sdk
   }
 
   /**
-   * Delete a product brand by id
+   * Archive a product brand by id
    *
    * @param int $id
    *
    * @return Response
    * @throws Exception
    */
-  public function delete( int $id )
+  public function archive( int $id )
   {
-    return $this->authorizedRequest( $this->endpoint . '/' . $id, null, self::METHOD_DELETE );
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}/archive", null, self::METHOD_DELETE );
   }
 }

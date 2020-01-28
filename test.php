@@ -23,23 +23,11 @@ function createProduct( $username, $password )
   $product->length         = 2.4;
   $product->dimension_unit = 'cm';
 
-  $variation      = new Product();
-  $variation->sku = '789465432';
-
-  $attribute          = new ProductAttribute();
-  $attribute->name    = 'size';
-  $attribute->value   = 'S';
-  $attribute->variant = true;
-
-  $variation->attributes = [ $attribute ];
-
-  $product->variations = [ $variation ];
-
   $products = new Products();
 
   $products = $products->store( $product );
 
-  echo $products->getCode() . '<br>';
+  echo $products->getStatusCode() . '<br>';
   print_r( $products->getResponse() );
 }
 
@@ -51,15 +39,18 @@ function importProducts( $username, $password )
   $products = new Products();
   $products = $products->import( $import );
 
-  echo $products->getCode() . '<br>';
+  echo $products->getStatusCode() . '<br>';
   print_r( $products->getResponse() );
 }
 
-$username = '49a683831249ef6a37158f1e1b86e6d5';
-$password = 'd002707ff6867c1c545adf40ab06bbdf';
+$username = '86be828e14eec146b3bd45ef72ece6c3';
+$password = '28380a285cb463a3bad45d6f608395b1';
 
 Sdk::config( [ 'username' => $username, 'password' => $password, 'environment' => Sdk::DEVELOPMENT ] );
 
+print_r(is_null(json_decode(null, true)));
+
+exit;
 createProduct( $username, $password );
 echo '<br>----------------<br>';
 importProducts( $username, $password );

@@ -16,6 +16,6 @@ class WarehousesTest extends TestCase
     $warehouses = new Warehouses();
     $warehouses = $warehouses->get();
 
-    $this->assertEquals( 200, $warehouses->getCode(), json_encode( $warehouses->getResponse() ) );
+    $this->assertEquals( 200, $warehouses->getStatusCode(), json_encode( $warehouses->getResponse() ) );
   }
 }

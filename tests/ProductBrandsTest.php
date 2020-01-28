@@ -19,7 +19,7 @@ class ProductBrandsTest extends TestCase
     $brands = new ProductBrands();
     $brands = $brands->get( $request );
 
-    $this->assertEquals( 200, $brands->getCode(), json_encode( $brands->getResponse() ) );
+    $this->assertEquals( 200, $brands->getStatusCode(), json_encode( $brands->getResponse() ) );
   }
 
   public function testShowProductBrand()
@@ -30,7 +30,7 @@ class ProductBrandsTest extends TestCase
     $brands  = new ProductBrands();
     $brands  = $brands->show( $brandId );
 
-    $this->assertEquals( 200, $brands->getCode(), json_encode( $brands->getResponse() ) );
+    $this->assertEquals( 200, $brands->getStatusCode(), json_encode( $brands->getResponse() ) );
     $this->assertEquals( $brandId, $brands->getResponse()['id'] );
   }
 
@@ -42,7 +42,7 @@ class ProductBrandsTest extends TestCase
     $brands    = new ProductBrands();
     $brands    = $brands->store( $brandName );
 
-    $this->assertLessThanOrEqual( 201, $brands->getCode(), json_encode( $brands->getResponse() ) );
+    $this->assertLessThanOrEqual( 201, $brands->getStatusCode(), json_encode( $brands->getResponse() ) );
   }
 
   public function testUpdateProductBrand()
@@ -55,7 +55,7 @@ class ProductBrandsTest extends TestCase
     $brands = new ProductBrands();
     $brands = $brands->update( $brandId, $brandName );
 
-    $this->assertEquals( 200, $brands->getCode(), json_encode( $brands->getResponse() ) );
+    $this->assertEquals( 200, $brands->getStatusCode(), json_encode( $brands->getResponse() ) );
     $this->assertEquals( $brandId, $brands->getResponse()['id'] );
     $this->assertEquals( $brandName, $brands->getResponse()['name'] );
   }
@@ -68,6 +68,6 @@ class ProductBrandsTest extends TestCase
     $brands  = new ProductBrands();
     $brands  = $brands->delete( $brandId );
 
-    $this->assertEquals( 200, $brands->getCode(), json_encode( $brands->getResponse() ) );
+    $this->assertEquals( 200, $brands->getStatusCode(), json_encode( $brands->getResponse() ) );
   }
 }

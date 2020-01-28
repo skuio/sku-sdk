@@ -4,6 +4,9 @@ use PHPUnit\Framework\TestCase;
 use Skuio\Sdk\Model\Import;
 use Skuio\Sdk\Model\Product;
 use Skuio\Sdk\Model\ProductAttribute;
+use Skuio\Sdk\Model\ProductPricing;
+use Skuio\Sdk\Model\VendorProduct;
+use Skuio\Sdk\Model\VendorProductPricing;
 use Skuio\Sdk\Request;
 use Skuio\Sdk\Resource\Products;
 use Skuio\Sdk\Response;
@@ -23,21 +26,36 @@ class ProductsTest extends TestCase
 
     $this->assertInstanceOf( Response::class, $res );
 
-    $this->assertEquals( 200, $res->getCode() );
+    $this->assertEquals( 200, $res->getStatusCode() );
   }
 
   public function testGetProducts()
   {
     Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
 
+    $product                 = new Product();
+    $product->sku            = '123';
+    $product->name           = 'Product Test';
+    $product->brand_name     = 'Brand Test';
+    $product->type           = Product::TYPE_STANDARD;
+    $product->weight         = 15.2;
+    $product->weight_unit    = Product::WEIGHT_UNIT_LB;
+    $product->height         = 5.4;
+    $product->width          = 3.4;
+    $product->length         = 2.4;
+    $product->dimension_unit = Product::DIMENSION_UNIT_INCH;
+
+    ( new Products() )->store( $product );
+
     $productsRequest = new Request();
     $productsRequest->setConjunction( 'and' );
-    $productsRequest->addFilter( 'sku', '=', '5333180491623' );
+    $productsRequest->addFilter( 'sku', '=', '123' );
 
     $products = new Products();
     $products = $products->get( $productsRequest );
 
-    $this->assertEquals( 200, $products->getCode(), json_encode( $products->getResponse() ) );
+    $this->assertEquals( 200, $products->getStatusCode() );
+    $this->assertEquals( 1, count( $products->getData() ) );
   }
 
   public function testShowProductById()
@@ -48,10 +66,9 @@ class ProductsTest extends TestCase
     $products  = new Products();
     $products  = $products->showById( $productId );
 
-    $this->assertEquals( 200, $products->getCode() );
+    $this->assertEquals( 200, $products->getStatusCode() );
 
-    $this->assertEquals( $products->getResponse()['data']['id'], $productId );
-    echo "\n" . $products->getResponse()['data']['name'] . "\n";
+    $this->assertEquals( $products->getData()['id'], $productId );
   }
 
   public function testShowProductBySku()
@@ -62,7 +79,7 @@ class ProductsTest extends TestCase
     $products   = new Products();
     $products   = $products->showBySku( $productSku );
 
-    $this->assertEquals( 200, $products->getCode() );
+    $this->assertEquals( 200, $products->getStatusCode() );
 
     $this->assertEquals( $products->getResponse()['data']['sku'], $productSku );
 
@@ -84,24 +101,36 @@ class ProductsTest extends TestCase
     $product->width          = 3.4;
     $product->length         = 2.4;
     $product->dimension_unit = 'cm';
+    $product->description    = 'first test description';
+    $product->image          = 'https://homepages.cae.wisc.edu/~ece533/images/cat.png';
+    $product->download_image = true;
+    $product->tags           = [ 'Test', 'First', 'Brand' ];
 
-    $variation      = new Product();
-    $variation->sku = '7894654';
+    // Pricing
+    $product->pricing = [ new ProductPricing( [ 'product_pricing_tier_name' => 'Retail', 'price' => 58.5 ] ) ];
 
-    $attribute          = new ProductAttribute();
-    $attribute->name    = 'size';
-    $attribute->value   = 'S';
-    $attribute->variant = true;
+    // Source
+    $vendorProduct               = new VendorProduct();
+    $vendorProduct->vendor_id    = 1;
+    $vendorProduct->is_default   = true;
+    $vendorProduct->supplier_sku = 'AABB';
+    $vendorProduct->pricing      = [ new VendorProductPricing( [ 'vendor_pricing_tier_id' => 1, 'price' => 50.5 ] ) ];
 
-    $variation->attributes = [ $attribute ];
+    $product->vendors = [ $vendorProduct ];
 
-    $product->variations = [ $variation ];
+    // Taxonomy
+    $attribute              = new ProductAttribute();
+    $attribute->name        = 'test attribute';
+    $attribute->value       = 'attribute value';
+    $attribute->has_options = false;
+
+    $product->attributes = [ $attribute ];
 
     $products = new Products();
 
     $products = $products->store( $product );
 
-    $this->assertEquals( 201, $products->getCode(), json_encode( $products->getResponse() ) );
+    $this->assertEquals( 201, $products->getStatusCode(), json_encode( $products->getResponse() ) );
   }
 
   public function testUpdateProduct()
@@ -116,7 +145,7 @@ class ProductsTest extends TestCase
 
     $products = $products->update( $product );
 
-    $this->assertEquals( 200, $products->getCode(), json_encode( $products->getResponse() ) );
+    $this->assertEquals( 200, $products->getStatusCode(), json_encode( $products->getResponse() ) );
   }
 
   public function testArchiveProduct()
@@ -127,7 +156,7 @@ class ProductsTest extends TestCase
     $products  = new Products();
     $products  = $products->archive( $productId );
 
-    $this->assertEquals( 200, $products->getCode(), json_encode( $products->getResponse() ) );
+    $this->assertEquals( 200, $products->getStatusCode(), json_encode( $products->getResponse() ) );
   }
 
   public function testUnArchiveProduct()
@@ -136,9 +165,9 @@ class ProductsTest extends TestCase
 
     $productId = 1;
     $products  = new Products();
-    $products  = $products->unArchive( $productId );
+    $products  = $products->unarchived( $productId );
 
-    $this->assertEquals( 200, $products->getCode(), json_encode( $products->getResponse() ) );
+    $this->assertEquals( 200, $products->getStatusCode(), json_encode( $products->getResponse() ) );
   }
 
   public function testDeleteProduct()
@@ -149,7 +178,7 @@ class ProductsTest extends TestCase
     $products  = new Products();
     $products  = $products->delete( $productId );
 
-    $this->assertEquals( 200, $products->getCode(), json_encode( $products->getResponse() ) );
+    $this->assertEquals( 200, $products->getStatusCode(), json_encode( $products->getResponse() ) );
   }
 
   public function testRestoreProduct()
@@ -160,7 +189,7 @@ class ProductsTest extends TestCase
     $products   = new Products();
     $products   = $products->restore( $productSKU );
 
-    $this->assertEquals( 200, $products->getCode(), json_encode( $products->getResponse() ) );
+    $this->assertEquals( 200, $products->getStatusCode(), json_encode( $products->getResponse() ) );
   }
 
   public function testImportProducts()
@@ -175,6 +204,6 @@ class ProductsTest extends TestCase
 
     print_r( $products->getResponse() );
 
-    $this->assertEquals( 200, $products->getCode(), json_encode( $products->getResponse() ) );
+    $this->assertEquals( 200, $products->getStatusCode(), json_encode( $products->getResponse() ) );
   }
 }

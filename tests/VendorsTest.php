@@ -16,6 +16,6 @@ class VendorsTest extends TestCase
     $vendors = new Vendors();
     $vendors = $vendors->get();
 
-    $this->assertEquals( 200, $vendors->getCode(), json_encode( $vendors->getResponse() ) );
+    $this->assertEquals( 200, $vendors->getStatusCode(), json_encode( $vendors->getResponse() ) );
   }
 }

@@ -16,6 +16,6 @@ class NominalCodesTest extends TestCase
     $nominalCodes = new NominalCodes();
     $nominalCodes = $nominalCodes->get();
 
-    $this->assertEquals( 200, $nominalCodes->getCode(), json_encode( $nominalCodes->getResponse() ) );
+    $this->assertEquals( 200, $nominalCodes->getStatusCode(), json_encode( $nominalCodes->getResponse() ) );
   }
 }

@@ -4,6 +4,14 @@ namespace Skuio\Sdk;
 
 abstract class Model
 {
+  public function __construct( array $attributes = null )
+  {
+    foreach ( $attributes ?: [] as $key => $value )
+    {
+      $this->$key = $value;
+    }
+  }
+
   /**
    * Properties to array
    *

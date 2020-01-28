@@ -101,7 +101,7 @@ class Products extends Sdk
    */
   public function archive( int $id )
   {
-    return $this->authorizedRequest( $this->endpoint . '/archive/' . $id, null, self::METHOD_PUT );
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}/archive", null, self::METHOD_PUT );
   }
 
   /**
@@ -112,9 +112,9 @@ class Products extends Sdk
    * @return Response
    * @throws Exception
    */
-  public function unArchive( int $id )
+  public function unarchived( int $id )
   {
-    return $this->authorizedRequest( $this->endpoint . '/un-archive/' . $id, null, self::METHOD_PUT );
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}/unarchived", null, self::METHOD_PUT );
   }
 
   /**
@@ -127,7 +127,7 @@ class Products extends Sdk
    */
   public function delete( int $id )
   {
-    return $this->authorizedRequest( $this->endpoint . '/' . $id, null, self::METHOD_DELETE );
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}", null, self::METHOD_DELETE );
   }
 
   /**
@@ -140,7 +140,7 @@ class Products extends Sdk
    */
   public function restore( string $sku )
   {
-    return $this->authorizedRequest( $this->endpoint . '/restore/' . $sku, null, self::METHOD_GET );
+    return $this->authorizedRequest( "{$this->endpoint}/{$sku}/restore", null, self::METHOD_GET );
   }
 
   /**
@@ -159,6 +159,32 @@ class Products extends Sdk
     }
 
     return $this->authorizedRequest( $this->endpoint . '/import', $importProducts->toArray(), self::METHOD_POST );
+  }
+
+  /**
+   * Display product vendors
+   *
+   * @param int $id
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function vendors( int $id )
+  {
+    return $this->authorizedRequest( "{$this->endpoint}/$id/vendors", null, self::METHOD_GET );
+  }
+
+  /**
+   * Display all possible attributes for the product
+   *
+   * @param int $id
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function attributes( int $id )
+  {
+    return $this->authorizedRequest( "{$this->endpoint}/$id/attributes", null, self::METHOD_GET );
   }
 
   /**

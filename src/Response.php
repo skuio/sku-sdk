@@ -14,7 +14,7 @@ class Response
   /**
    * @var int
    */
-  private $code;
+  private $statusCode;
   /**
    * @var array|null
    */
@@ -22,28 +22,28 @@ class Response
   /**
    * @var array|null
    */
-  private $error;
+  private $curlError;
 
   /**
    * Response constructor.
    *
-   * @param int $code
+   * @param int $statusCode
    * @param array|null $response
-   * @param null $error
+   * @param null $curlError
    */
-  public function __construct( int $code, $response = null, $error = null )
+  public function __construct( int $statusCode, $response = null, $curlError = null )
   {
-    $this->code     = $code;
-    $this->response = $response;
-    $this->error    = $error;
+    $this->statusCode = $statusCode;
+    $this->response   = $response;
+    $this->curlError  = $curlError;
   }
 
   /**
    * @return int
    */
-  public function getCode(): int
+  public function getStatusCode(): int
   {
-    return $this->code;
+    return $this->statusCode;
   }
 
   /**
@@ -57,9 +57,33 @@ class Response
   /**
    * @return array|null
    */
+  public function getData(): ?array
+  {
+    return $this->response['data'] ?? null;
+  }
+
+  /**
+   * @return array|null
+   */
+  public function getWarnings(): ?array
+  {
+    return $this->response['warnings'] ?? null;
+  }
+
+  /**
+   * @return array|null
+   */
+  public function getErrors(): ?array
+  {
+    return $this->response['errors'] ?? null;
+  }
+
+  /**
+   * @return array|null
+   */
   public function getCurlError(): ?array
   {
-    return $this->error;
+    return $this->curlError;
   }
 
 }

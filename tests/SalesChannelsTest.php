@@ -16,6 +16,6 @@ class SalesChannelsTest extends TestCase
     $salesChannels = new SalesChannels();
     $salesChannels = $salesChannels->get();
 
-    $this->assertEquals( 200, $salesChannels->getCode(), json_encode( $salesChannels->getResponse() ) );
+    $this->assertEquals( 200, $salesChannels->getStatusCode(), json_encode( $salesChannels->getResponse() ) );
   }
 }

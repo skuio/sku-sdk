@@ -17,7 +17,7 @@ class Sdk
    */
   public static $config = [
     'url'         => 'https://sku.io/api',
-    'dev_url'     => 'https://dev.sku.io/api',
+    'dev_url'     => 'https://ord4.test/api',
     'environment' => self::PRODUCTION,
     'username'    => null,
     'password'    => null,
@@ -85,13 +85,7 @@ class Sdk
 
     curl_close( $curl );
 
-    if ( $curlError )
-    {
-      return new Response( $httpCode, null, $curlError );
-    } else
-    {
-      return new Response( $httpCode, json_decode( $response, true ) );
-    }
+    return new Response( $httpCode, json_decode( $response, true ), $curlError );
   }
 
   /**
@@ -117,9 +111,6 @@ class Sdk
    */
   public static function config( array $config )
   {
-    foreach ( $config as $key => $value )
-    {
-      self::$config[ $key ] = $value;
-    }
+    self::$config = array_merge( self::$config, $config );
   }
 }
