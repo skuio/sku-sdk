@@ -144,6 +144,17 @@ class Products extends Sdk
   }
 
   /**
+   * Retrieve deleted products
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function getDeleted()
+  {
+    return $this->authorizedRequest( "{$this->endpoint}/deleted" );
+  }
+
+  /**
    * Import products from a CSV file
    *
    * @param Import $importProducts
@@ -171,7 +182,7 @@ class Products extends Sdk
    */
   public function vendors( int $id )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/$id/vendors", null, self::METHOD_GET );
+    return $this->authorizedRequest( "{$this->endpoint}/$id/vendors" );
   }
 
   /**
@@ -184,7 +195,49 @@ class Products extends Sdk
    */
   public function attributes( int $id )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/$id/attributes", null, self::METHOD_GET );
+    return $this->authorizedRequest( "{$this->endpoint}/$id/attributes" );
+  }
+
+  /**
+   * Display inventory movements for the product
+   *
+   * @param int $id
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function inventoryMovements( int $id )
+  {
+    return $this->authorizedRequest( "{$this->endpoint}/$id/inventory-movements" );
+  }
+
+  /**
+   * Set default vendor to the product
+   *
+   * @param int $id
+   *
+   * @param int $vendorId
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function setDefaultVendor( int $id, int $vendorId )
+  {
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}/set-default-vendor/{$vendorId}" );
+  }
+
+  /**
+   * Assign attribute groups to the product
+   *
+   * @param int $id
+   * @param array $attributeGroupIds
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function assignAttributeGroups( int $id, array $attributeGroupIds )
+  {
+    return $this->authorizedRequest( "$this->endpoint/{$id}/assign-attribute-groups", json_encode( [ 'attribute_groups_ids' => $attributeGroupIds ] ), Sdk::METHOD_PUT );
   }
 
   /**
@@ -196,5 +249,31 @@ class Products extends Sdk
   public function constants()
   {
     return $this->authorizedRequest( $this->endpoint . '/constants' );
+  }
+
+  /**
+   * Storing image to the server
+   *
+   * @param string $image image url or base64
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function storeImage( string $image )
+  {
+    return $this->authorizedRequest( "store-image", json_encode( [ 'image' => $image ] ), Sdk::METHOD_POST );
+  }
+
+  /**
+   * Removing image from the server
+   *
+   * @param string $imagePath
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function deleteImage( string $imagePath )
+  {
+    return $this->authorizedRequest( "delete-image", json_encode( [ 'url' => $imagePath ] ), Sdk::METHOD_DELETE );
   }
 }

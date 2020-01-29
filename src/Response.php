@@ -54,6 +54,11 @@ class Response
     return $this->response;
   }
 
+  public function getMessage(): ?string
+  {
+    return $this->response['message'] ?? null;
+  }
+
   /**
    * @return array|null
    */
