@@ -81,7 +81,7 @@ class ProductsTest extends TestCase
 
     $this->assertEquals( 200, $products->getStatusCode() );
 
-    $this->assertEquals( $products->getResponse()['data']['sku'], $productSku );
+    $this->assertEquals( $products->getData()['sku'], $productSku );
 
     echo "\n" . $products->getResponse()['data']['name'] . "\n";
   }
@@ -91,7 +91,7 @@ class ProductsTest extends TestCase
     Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
 
     $product                 = new Product();
-    $product->sku            = '123456789';
+    $product->sku            = '1234567891';
     $product->name           = 'my first test';
     $product->brand_name     = 'test brand';
     $product->type           = 'standard';
@@ -113,7 +113,7 @@ class ProductsTest extends TestCase
     $vendorProduct               = new VendorProduct();
     $vendorProduct->vendor_id    = 1;
     $vendorProduct->is_default   = true;
-    $vendorProduct->supplier_sku = 'AABB';
+    $vendorProduct->supplier_sku = 'AABB1';
     $vendorProduct->pricing      = [ new VendorProductPricing( [ 'vendor_pricing_tier_id' => 1, 'price' => 50.5 ] ) ];
 
     $product->vendors = [ $vendorProduct ];

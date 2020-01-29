@@ -7,8 +7,8 @@ use Skuio\Sdk\Sdk;
 
 class ProductBrandsTest extends TestCase
 {
-  private $username = '49a683831249ef6a37158f1e1b86e6d5';
-  private $password = 'd002707ff6867c1c545adf40ab06bbdf';
+  private $username = '86be828e14eec146b3bd45ef72ece6c3';
+  private $password = '28380a285cb463a3bad45d6f608395b1';
 
   public function testGetProductBrands()
   {
@@ -31,7 +31,7 @@ class ProductBrandsTest extends TestCase
     $brands  = $brands->show( $brandId );
 
     $this->assertEquals( 200, $brands->getStatusCode(), json_encode( $brands->getResponse() ) );
-    $this->assertEquals( $brandId, $brands->getResponse()['id'] );
+    $this->assertEquals( $brandId, $brands->getData()['id'] );
   }
 
   public function testStoreProductBrand()
@@ -56,18 +56,19 @@ class ProductBrandsTest extends TestCase
     $brands = $brands->update( $brandId, $brandName );
 
     $this->assertEquals( 200, $brands->getStatusCode(), json_encode( $brands->getResponse() ) );
-    $this->assertEquals( $brandId, $brands->getResponse()['id'] );
-    $this->assertEquals( $brandName, $brands->getResponse()['name'] );
+    $this->assertEquals( $brandId, $brands->getData()['id'] );
+    $this->assertEquals( $brandName, $brands->getData()['name'] );
   }
 
-  public function testDeleteProductBrand()
+  public function testArchiveProductBrand()
   {
     Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
 
     $brandId = 1;
     $brands  = new ProductBrands();
-    $brands  = $brands->delete( $brandId );
+    $brands  = $brands->archive( $brandId );
 
-    $this->assertEquals( 200, $brands->getStatusCode(), json_encode( $brands->getResponse() ) );
+    // for warning
+    $this->assertLessThan( 300, $brands->getStatusCode(), json_encode( $brands->getResponse() ) );
   }
 }

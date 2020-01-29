@@ -74,6 +74,6 @@ class ProductBrands extends Sdk
    */
   public function archive( int $id )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/{$id}/archive", null, self::METHOD_DELETE );
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}/archive" );
   }
 }
