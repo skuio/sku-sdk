@@ -99,14 +99,14 @@ class ProductCategories extends Sdk
    *
    * @param int $categoryId
    * @param int $productId
-   * @param int $primaryCategory
+   * @param bool $isPrimaryCategory
    *
    * @return Response
    * @throws Exception
    */
-  public function assignToProduct( int $categoryId, int $productId, $primaryCategory = 0 )
+  public function assignToProduct( int $categoryId, int $productId, bool $isPrimaryCategory = false )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/{$categoryId}/assign-to-product/{$productId}?is_primary={$primaryCategory}", null, self::METHOD_GET );
+    return $this->authorizedRequest( "{$this->endpoint}/{$categoryId}/assign-to-product/{$productId}?is_primary=".($isPrimaryCategory?1:0), null, self::METHOD_GET );
   }
 
   /**
@@ -126,19 +126,14 @@ class ProductCategories extends Sdk
   /**
    * Retrieve Product Categories for manage (in edit product when assign)
    *
-   * @param Request|null $request
+   * @param int|null $parentId
    *
    * @return Response
    * @throws Exception
    */
-  public function getProductCategoriesForManage( Request $request = null )
+  public function getProductCategoriesForManage( int $parentId = null )
   {
-    if ( ! $request )
-    {
-      $request = new Request();
-    }
-
-    return $this->authorizedRequest( "{$this->endpoint}/for-manage?" . $request->getParams(), null, self::METHOD_GET );
+    return $this->authorizedRequest( "{$this->endpoint}/for-manage?parent_id=$parentId", null, self::METHOD_GET );
   }
 
   /**
@@ -163,5 +158,18 @@ class ProductCategories extends Sdk
   public function archiveCategory(int $categoryId)
   {
     return $this->authorizedRequest( "{$this->endpoint}/{$categoryId}/archive", null, self::METHOD_GET );
+  }
+
+  /**
+   * Un-archive Category
+   *
+   * @param int $categoryId
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function unArchiveCategory(int $categoryId)
+  {
+    return $this->authorizedRequest( "{$this->endpoint}/{$categoryId}/unarchived", null, self::METHOD_GET );
   }
 }
