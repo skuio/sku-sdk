@@ -29,8 +29,13 @@ class Products extends Sdk
    * @return Response
    * @throws Exception
    */
-  public function get( Request $request )
+  public function get( Request $request = null )
   {
+    if ( ! $request )
+    {
+      $request = new Request();
+    }
+
     return $this->authorizedRequest( $this->endpoint . '?' . $request->getParams() );
   }
 
@@ -38,26 +43,38 @@ class Products extends Sdk
    * Retrieve a product by id
    *
    * @param int $id
+   * @param Request|null $request
    *
    * @return Response
    * @throws Exception
    */
-  public function showById( int $id )
+  public function showById( int $id, Request $request = null )
   {
-    return $this->authorizedRequest( $this->endpoint . '/' . $id );
+    if ( ! $request )
+    {
+      $request = new Request();
+    }
+
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}?{$request->getParams()}" );
   }
 
   /**
    * Retrieve a product by sku
    *
    * @param string $sku
+   * @param Request $request
    *
    * @return Response
    * @throws Exception
    */
-  public function showBySku( string $sku )
+  public function showBySku( string $sku, Request $request = null )
   {
-    return $this->authorizedRequest( $this->endpoint . '/by-sku/' . $sku );
+    if ( ! $request )
+    {
+      $request = new Request();
+    }
+
+    return $this->authorizedRequest( "{$this->endpoint}/by-sku/{$sku}?{$request->getParams()}" );
   }
 
   /**

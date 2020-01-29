@@ -21,6 +21,11 @@ class ProductBrands extends Sdk
    */
   public function get( Request $request )
   {
+    if ( ! $request )
+    {
+      $request = new Request();
+    }
+
     return $this->authorizedRequest( $this->endpoint . '?' . $request->getParams() );
   }
 
@@ -28,13 +33,19 @@ class ProductBrands extends Sdk
    * Show a product brand by id
    *
    * @param int $id
+   * @param Request $request
    *
    * @return Response
    * @throws Exception
    */
-  public function show( int $id )
+  public function show( int $id, Request $request )
   {
-    return $this->authorizedRequest( $this->endpoint . '/' . $id );
+    if ( ! $request )
+    {
+      $request = new Request();
+    }
+
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}?{$request->getParams()}" );
   }
 
   /**
