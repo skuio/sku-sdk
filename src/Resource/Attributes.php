@@ -86,12 +86,12 @@ class Attributes extends Sdk
   /**
    * Delete an attribute
    *
-   * @param $id
+   * @param int $id
    *
    * @return Response
    * @throws Exception
    */
-  public function delete( $id )
+  public function delete( int $id )
   {
     return $this->authorizedRequest( $this->endpoint . '/' . $id, null, self::METHOD_DELETE );
   }

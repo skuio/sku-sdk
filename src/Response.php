@@ -86,7 +86,7 @@ class Response
   /**
    * @return array|null
    */
-  public function getCurlError(): ?array
+  public function getCurlError()
   {
     return $this->curlError;
   }

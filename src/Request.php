@@ -43,6 +43,7 @@ class Request
   private $archived            = self::ARCHIVED_EXCLUDED;
   private $tableSpecifications = self::TS_EXCLUDED;
   private $total               = self::TOTAL_EXCLUDED;
+  private $params              = [];
 
   /**
    * Filter between columns "and" or "or"
@@ -214,6 +215,14 @@ class Request
       $response['total'] = $this->total;
     }
 
+    if ( ! empty( $this->params ) )
+    {
+      foreach ( $this->params as $key => $value )
+      {
+        $response[ $key ] = $value;
+      }
+    }
+
     return $response;
   }
 
@@ -223,5 +232,13 @@ class Request
   public function getParams()
   {
     return http_build_query( $this->toArray() );
+  }
+
+  /**
+   * @return string
+   */
+  public function setParam( $key, $value )
+  {
+    $this->params[ $key ] = $value;
   }
 }
