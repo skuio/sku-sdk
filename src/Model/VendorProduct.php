@@ -9,6 +9,7 @@ use Skuio\Sdk\Model;
  *
  * @package Skuio\Sdk\Model
  *
+ * @property int $id
  * @property int $product_id
  * @property int $vendor_id
  * @property bool $is_default
