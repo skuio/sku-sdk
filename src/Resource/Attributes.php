@@ -67,7 +67,7 @@ class Attributes extends Sdk
    */
   public function archive( int $id )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/{$id}/archive", null, self::METHOD_GET );
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}/archive" );
   }
 
   /**
@@ -80,7 +80,7 @@ class Attributes extends Sdk
    */
   public function unarchived( int $id )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/{$id}/unarchived", null, self::METHOD_GET );
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}/unarchived" );
   }
 
   /**

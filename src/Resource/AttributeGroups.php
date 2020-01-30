@@ -4,7 +4,6 @@ namespace Skuio\Sdk\Resource;
 
 use Exception;
 use InvalidArgumentException;
-use Skuio\Sdk\Model\Attribute;
 use Skuio\Sdk\Model\AttributeGroup;
 use Skuio\Sdk\Request;
 use Skuio\Sdk\Response;
@@ -69,7 +68,7 @@ class AttributeGroups extends Sdk
       throw new InvalidArgumentException( 'The "id" field is required' );
     }
 
-    return $this->authorizedRequest( "{$this->endpoint}/$attributeGroup->id", $attributeGroup->toJson(), self::METHOD_PUT );
+    return $this->authorizedRequest( "{$this->endpoint}/{$attributeGroup->id}", $attributeGroup->toJson(), self::METHOD_PUT );
   }
 
   /**
