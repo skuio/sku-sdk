@@ -56,6 +56,32 @@ class Vendors extends Sdk
   }
 
   /**
+   * Archive a vendor
+   *
+   * @param int $id
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function archive( int $id )
+  {
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}/archive" );
+  }
+
+  /**
+   * Unarchived a vendor
+   *
+   * @param int $id
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function unarchived( int $id )
+  {
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}/unarchived" );
+  }
+
+  /**
    * View a list of vendor products
    *
    * @param int $id vendor id
