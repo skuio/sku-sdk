@@ -4,7 +4,7 @@ namespace Skuio\Sdk\Resource;
 
 use Exception;
 use InvalidArgumentException;
-use Skuio\Sdk\Model\ProductPricingTier;
+use Skuio\Sdk\Model\PricingTier;
 use Skuio\Sdk\Request;
 use Skuio\Sdk\Response;
 use Skuio\Sdk\Sdk;
@@ -47,12 +47,12 @@ class ProductPricingTiers extends Sdk
   /**
    * Create a new product pricing tier
    *
-   * @param ProductPricingTier $productPricingTier
+   * @param PricingTier $productPricingTier
    *
    * @return Response
    * @throws Exception
    */
-  public function store( ProductPricingTier $productPricingTier )
+  public function store( PricingTier $productPricingTier )
   {
     return $this->authorizedRequest( $this->endpoint, $productPricingTier->toJson(), Sdk::METHOD_POST );
   }
@@ -60,12 +60,12 @@ class ProductPricingTiers extends Sdk
   /**
    * Update a product pricing tier
    *
-   * @param ProductPricingTier $productPricingTier
+   * @param PricingTier $productPricingTier
    *
    * @return Response
    * @throws Exception
    */
-  public function update( ProductPricingTier $productPricingTier )
+  public function update( PricingTier $productPricingTier )
   {
     if ( empty( $productPricingTier->id ) )
     {

@@ -81,11 +81,13 @@ class Vendors extends Sdk
     return $this->authorizedRequest( "vendor-products", $vendorProduct->toJson(), Sdk::METHOD_POST );
   }
 
-//  public function updateVendorProduct( VendorProduct $vendorProduct )
-//  {
-//    if ( empty( $vendorProduct->id ) )
-//    {
-//      throw new InvalidArgumentException( 'The "id" field is required' );
-//    }
-//  }
+  public function updateVendorProduct( VendorProduct $vendorProduct )
+  {
+    if ( empty( $vendorProduct->id ) )
+    {
+      throw new InvalidArgumentException( 'The "id" field is required' );
+    }
+
+    return $this->authorizedRequest( "vendor-products/{$vendorProduct->id}", $vendorProduct->toJson(), Sdk::METHOD_PUT );
+  }
 }

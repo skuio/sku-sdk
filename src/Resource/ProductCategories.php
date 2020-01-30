@@ -4,7 +4,8 @@ namespace Skuio\Sdk\Resource;
 
 use Exception;
 use InvalidArgumentException;
-use Skuio\Sdk\Model\Category;
+use Skuio\Sdk\Model\ProductCategory;
+use Skuio\Sdk\Model\ProductToCategory;
 use Skuio\Sdk\Request;
 use Skuio\Sdk\Response;
 use Skuio\Sdk\Sdk;
@@ -53,12 +54,12 @@ class ProductCategories extends Sdk
   /**
    * Create a new category
    *
-   * @param Category $category
+   * @param ProductCategory $category
    *
    * @return Response
    * @throws Exception
    */
-  public function store( Category $category )
+  public function store( ProductCategory $category )
   {
     return $this->authorizedRequest( $this->endpoint, $category->toJson(), self::METHOD_POST );
   }
@@ -66,12 +67,12 @@ class ProductCategories extends Sdk
   /**
    * Update a category
    *
-   * @param Category $category
+   * @param ProductCategory $category
    *
    * @return Response
    * @throws Exception
    */
-  public function update( Category $category )
+  public function update( ProductCategory $category )
   {
     if ( empty( $category->id ) )
     {
@@ -97,16 +98,19 @@ class ProductCategories extends Sdk
   /**
    * Assign Category to Product
    *
-   * @param int $categoryId
-   * @param int $productId
-   * @param bool $isPrimaryCategory
+   * @param ProductToCategory $productToCategory
    *
    * @return Response
    * @throws Exception
    */
-  public function assignToProduct( int $categoryId, int $productId, bool $isPrimaryCategory = false )
+  public function assignToProduct( ProductToCategory $productToCategory )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/{$categoryId}/assign-to-product/{$productId}?is_primary=".($isPrimaryCategory?1:0), null, self::METHOD_GET );
+    if ( empty( $productToCategory->product_id ) || empty( $productToCategory->category_id ) )
+    {
+      throw new InvalidArgumentException( "The product_id and category_id are required" );
+    }
+
+    return $this->authorizedRequest( "{$this->endpoint}/{$productToCategory->category_id}/assign-to-product/{$productToCategory->product_id}" . ( $productToCategory->is_primary ? "?is_primary=1" : '' ) );
   }
 
   /**
@@ -120,7 +124,7 @@ class ProductCategories extends Sdk
    */
   public function reassignNewCategoryToProducts( int $oldCategoryId, int $newCategoryId )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/{$oldCategoryId}/reassign-to-products/{$newCategoryId}", null, self::METHOD_GET );
+    return $this->authorizedRequest( "{$this->endpoint}/{$oldCategoryId}/reassign-to-products/{$newCategoryId}" );
   }
 
   /**
@@ -133,7 +137,7 @@ class ProductCategories extends Sdk
    */
   public function getProductCategoriesForManage( int $parentId = null )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/for-manage?parent_id=$parentId", null, self::METHOD_GET );
+    return $this->authorizedRequest( "{$this->endpoint}/for-manage?parent_id=$parentId" );
   }
 
   /**
@@ -144,7 +148,7 @@ class ProductCategories extends Sdk
    */
   public function productCategoriesTree()
   {
-    return $this->authorizedRequest( "{$this->endpoint}/tree", null, self::METHOD_GET );
+    return $this->authorizedRequest( "{$this->endpoint}/tree" );
   }
 
   /**
@@ -155,21 +159,21 @@ class ProductCategories extends Sdk
    * @return Response
    * @throws Exception
    */
-  public function archiveCategory(int $categoryId)
+  public function archiveCategory( int $categoryId )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/{$categoryId}/archive", null, self::METHOD_GET );
+    return $this->authorizedRequest( "{$this->endpoint}/{$categoryId}/archive" );
   }
 
   /**
-   * Un-archive Category
+   * unarchived Category
    *
    * @param int $categoryId
    *
    * @return Response
    * @throws Exception
    */
-  public function unArchiveCategory(int $categoryId)
+  public function unarchivedCategory( int $categoryId )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/{$categoryId}/unarchived", null, self::METHOD_GET );
+    return $this->authorizedRequest( "{$this->endpoint}/{$categoryId}/unarchived" );
   }
 }

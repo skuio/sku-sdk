@@ -13,7 +13,7 @@ use Skuio\Sdk\Model;
  * @property string $name
  * @property string $currency_code
  */
-class ProductPricingTier extends Model
+class PricingTier extends Model
 {
 
 }

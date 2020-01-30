@@ -34,7 +34,7 @@ use Skuio\Sdk\Model;
  * @property VendorProduct[] $vendors
  *
  * Taxonomy
- * @property ProductCategory[] $categories
+ * @property ProductToCategory[] $categories
  * @property int[] $attribute_groups
  * @property ProductAttribute[] $attributes
  *

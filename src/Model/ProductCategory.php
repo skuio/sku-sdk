@@ -9,8 +9,10 @@ use Skuio\Sdk\Model;
  *
  * @package Skuio\Sdk\Model
  *
- * @property int $category_id
- * @property bool $is_primary
+ * @property int $id
+ * @property int|null $parent_id
+ * @property string $name
+ * @property int[]|null $attribute_groups
  */
 class ProductCategory extends Model
 {

@@ -4,7 +4,7 @@ include 'vendor/autoload.php';
 
 use Skuio\Sdk\Model\Import;
 use Skuio\Sdk\Model\Product;
-use Skuio\Sdk\Model\ProductAttribute;
+use Skuio\Sdk\Resource\ProductCategories;
 use Skuio\Sdk\Resource\Products;
 use Skuio\Sdk\Sdk;
 
@@ -48,7 +48,17 @@ $password = '28380a285cb463a3bad45d6f608395b1';
 
 Sdk::config( [ 'username' => $username, 'password' => $password, 'environment' => Sdk::DEVELOPMENT ] );
 
-print_r(is_null(json_decode(null, true)));
+$products = new \Skuio\Sdk\Resource\VendorPricingTier();
+
+$inventoryMovements = $products->get();
+
+print_r( $inventoryMovements->getStatusCode() );
+echo "\n";
+print_r( $inventoryMovements->getMessage() );
+echo "\n";
+print_r( $inventoryMovements->getResponse() );
+echo "\n";
+print_r( $inventoryMovements->getErrors() );
 
 exit;
 createProduct( $username, $password );
