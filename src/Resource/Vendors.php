@@ -6,6 +6,7 @@ use Exception;
 use InvalidArgumentException;
 use Skuio\Sdk\Model\Vendor;
 use Skuio\Sdk\Model\VendorProduct;
+use Skuio\Sdk\Request;
 use Skuio\Sdk\Response;
 use Skuio\Sdk\Sdk;
 
@@ -16,12 +17,19 @@ class Vendors extends Sdk
   /**
    * Retrieve vendors
    *
+   * @param Request|null $request
+   *
    * @return Response
    * @throws Exception
    */
-  public function get()
+  public function get( Request $request = null )
   {
-    return $this->authorizedRequest( $this->endpoint );
+    if ( ! $request )
+    {
+      $request = new Request();
+    }
+
+    return $this->authorizedRequest( $this->endpoint . '?' . $request->getParams() );
   }
 
   /**
@@ -107,6 +115,14 @@ class Vendors extends Sdk
     return $this->authorizedRequest( "vendor-products", $vendorProduct->toJson(), Sdk::METHOD_POST );
   }
 
+  /**
+   * Update a vendor product
+   *
+   * @param VendorProduct $vendorProduct
+   *
+   * @return Response
+   * @throws Exception
+   */
   public function updateVendorProduct( VendorProduct $vendorProduct )
   {
     if ( empty( $vendorProduct->id ) )

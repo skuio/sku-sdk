@@ -89,6 +89,19 @@ class ProductPricingTiers extends Sdk
   }
 
   /**
+   * Unarchived a product pricing tier
+   *
+   * @param int $id
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function unarchived( int $id )
+  {
+    return $this->authorizedRequest( "{$this->endpoint}/$id/unarchived" );
+  }
+
+  /**
    * Mark a product pricing tier as default tier
    *
    * @param int $id
