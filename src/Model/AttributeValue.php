@@ -10,7 +10,7 @@ use Skuio\Sdk\Model;
  * @package Skuio\Sdk\Model
  *
  * @property string $value
- * @property string $sort_order
+ * @property int $sort_order
  */
 class AttributeValue extends Model
 {
