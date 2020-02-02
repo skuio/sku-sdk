@@ -9,6 +9,7 @@ use Skuio\Sdk\Model;
  *
  * @package Skuio\Sdk\Model
  *
+ * @property int $id
  * @property string $name
  * @property mixed $value
  */

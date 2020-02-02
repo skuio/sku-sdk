@@ -14,7 +14,6 @@ use Skuio\Sdk\Model;
  * @property string $type
  * @property array $display_options
  * @property array $validation
- * @property string $archived_at
  * @property AttributeValue[] $option_values
  *
  * @property bool $has_options

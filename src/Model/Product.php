@@ -22,10 +22,16 @@ use Skuio\Sdk\Model;
  * @property float $width
  * @property float $height
  * @property string $dimension_unit - in,cm
+ * @property string|null $fba_prep_instructions
+ * @property float|null $case_quantity
+ * @property float|null $case_length
+ * @property float|null $case_width
+ * @property float|null $case_height
+ * @property string|null $case_dimension_unit
  * @property string $name
- * @property string $description
- * @property string $image
- * @property bool $download_image - store image on the server if you sent image url.
+ * @property string|null $description
+ * @property string|null $image
+ * @property bool|null $download_image - store image on the server if you sent image url.
  * @property string[] $tags
  *
  * Pricing
