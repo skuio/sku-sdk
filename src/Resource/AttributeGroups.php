@@ -14,16 +14,22 @@ class AttributeGroups extends Sdk
   protected $endpoint = 'attribute-groups';
 
   /**
-   * Retrieve attribute groups according to your request
+   * Retrieve a list of attribute groups
    *
-   * @param null $parentId
+   * @param int|null $parentId
+   * @param Request|null $request
    *
    * @return Response
    * @throws Exception
    */
-  public function get( $parentId = null )
+  public function get( int $parentId = null, Request $request = null )
   {
-    return $this->authorizedRequest( $this->endpoint . "?parent_id={$parentId}" );
+    if ( ! $request )
+    {
+      $request = new Request();
+    }
+
+    return $this->authorizedRequest( $this->endpoint . "?parent_id={$parentId}&" . $request->getParams() );
   }
 
   /**
@@ -35,9 +41,14 @@ class AttributeGroups extends Sdk
    * @return Response
    * @throws Exception
    */
-  public function show( int $id )
+  public function show( int $id, Request $request = null )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/{$id}" );
+    if ( ! $request )
+    {
+      $request = new Request();
+    }
+
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}?{$request->getParams()}" );
   }
 
   /**
@@ -74,12 +85,12 @@ class AttributeGroups extends Sdk
   /**
    * Delete an attribute group
    *
-   * @param $id
+   * @param int $id
    *
    * @return Response
    * @throws Exception
    */
-  public function delete( $id )
+  public function delete( int $id )
   {
     return $this->authorizedRequest( $this->endpoint . '/' . $id, null, self::METHOD_DELETE );
   }

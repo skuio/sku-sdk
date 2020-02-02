@@ -30,5 +30,58 @@ use Skuio\Sdk\Model;
  */
 class SalesOrder extends Model
 {
+  /**
+   * Set shipping address
+   *
+   * @param Address $shippingAddress
+   *
+   * @return $this
+   */
+  public function setShippingAddress(Address $shippingAddress){
+    $this->shipping_address = $shippingAddress;
+    return $this;
+  }
 
+  /**
+   * Set billing address
+   *
+   * @param Address $billingAddress
+   *
+   * @return $this
+   */
+  public function setBillingAddress(Address $billingAddress){
+    $this->shipping_address = $billingAddress;
+    return $this;
+  }
+
+  /**
+   * Set customer address
+   *
+   * @param Address $customerAddress
+   *
+   * @return $this
+   */
+  public function setCustomerAddress(Address $customerAddress){
+    $this->shipping_address = $customerAddress;
+    return $this;
+  }
+
+  /**
+   * Add sales order line
+   *
+   * @param SalesOrderLine $salesOrderLine
+   *
+   * @return $this
+   */
+  public function addSalesOrderLine( SalesOrderLine $salesOrderLine )
+  {
+    if ( ! isset( $this->sales_order_lines ) )
+    {
+      $this->sales_order_lines = [];
+    }
+
+    $this->sales_order_lines[] = $salesOrderLine;
+
+    return $this;
+  }
 }

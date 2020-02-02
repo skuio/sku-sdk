@@ -12,6 +12,8 @@ use Skuio\Sdk\Model;
  * @property int $id
  * @property string $name
  * @property string $type
+ * @property string $email
+ * @property string $phone
  */
 class Warehouse extends Model
 {

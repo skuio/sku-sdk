@@ -19,7 +19,7 @@ class ProductBrands extends Sdk
    * @return Response
    * @throws Exception
    */
-  public function get( Request $request )
+  public function get( Request $request = null )
   {
     if ( ! $request )
     {
@@ -38,7 +38,7 @@ class ProductBrands extends Sdk
    * @return Response
    * @throws Exception
    */
-  public function show( int $id, Request $request )
+  public function show( int $id, Request $request = null )
   {
     if ( ! $request )
     {

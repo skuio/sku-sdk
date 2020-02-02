@@ -10,7 +10,7 @@ use Skuio\Sdk\Model;
  * @package Skuio\Sdk\Model
  *
  * @property int $id
- * @property int $location_id
+ * @property int $warehouse_id
  * @property string $aisle
  * @property string|null $bay
  * @property string|null $shelf
