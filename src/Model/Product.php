@@ -29,9 +29,7 @@ use Skuio\Sdk\Model;
  * @property float|null $case_height
  * @property string|null $case_dimension_unit
  * @property string $name
- * @property string|null $description
- * @property string|null $image
- * @property bool|null $download_image - store image on the server if you sent image url.
+ * @property ProductImage[] $images
  * @property string[] $tags
  *
  * Pricing
@@ -145,18 +143,62 @@ class Product extends Model
   }
 
   /**
-   * Set image attribute
+   * Set Primary image
    *
-   * @param string $image
+   * @param string $imageUrl
    * @param bool $downloadToServer
    *
    * @return $this
    */
-  public function setImage( string $image, bool $downloadToServer = false )
+  public function setPrimaryImage( string $imageUrl, bool $downloadToServer = false )
   {
-    $this->image = $image;
+    if ( ! isset( $this->images ) )
+    {
+      $this->images = [];
+    }
 
-    $this->download_image = $downloadToServer;
+    $this->images[] = [ 'url' => $imageUrl, 'is_primary' => true, 'download' => $downloadToServer ];
+
+    return $this;
+  }
+
+  /**
+   * Set primary image
+   *
+   * @param ProductImage $productImage
+   *
+   * @return $this
+   */
+  public function setPrimaryProductImage( ProductImage $productImage )
+  {
+    if ( ! isset( $this->images ) )
+    {
+      $this->images = [];
+    }
+
+    // set as primary image
+    $productImage->is_primary = true;
+
+    $this->images[] = $productImage;
+
+    return $this;
+  }
+
+  /**
+   * Add image
+   *
+   * @param ProductImage $productImage
+   *
+   * @return $this
+   */
+  public function addProductImage( ProductImage $productImage )
+  {
+    if ( ! isset( $this->images ) )
+    {
+      $this->images = [];
+    }
+
+    $this->images[] = $productImage;
 
     return $this;
   }
@@ -170,7 +212,12 @@ class Product extends Model
    */
   public function setDescription( string $description )
   {
-    $this->description = $description;
+    if ( ! isset( $this->attributes ) )
+    {
+      $this->attributes = [];
+    }
+
+    $this->attributes[] = [ 'name' => 'description', 'value' => $description ];
 
     return $this;
   }

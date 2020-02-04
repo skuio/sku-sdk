@@ -5,7 +5,6 @@ namespace Skuio\Sdk\Resource;
 use Exception;
 use InvalidArgumentException;
 use Skuio\Sdk\Model\AttributeGroup;
-use Skuio\Sdk\Request;
 use Skuio\Sdk\Response;
 use Skuio\Sdk\Sdk;
 
@@ -17,38 +16,26 @@ class AttributeGroups extends Sdk
    * Retrieve a list of attribute groups
    *
    * @param int|null $parentId
-   * @param Request|null $request
    *
    * @return Response
    * @throws Exception
    */
-  public function get( int $parentId = null, Request $request = null )
+  public function get( int $parentId = null )
   {
-    if ( ! $request )
-    {
-      $request = new Request();
-    }
-
-    return $this->authorizedRequest( $this->endpoint . "?parent_id={$parentId}&" . $request->getParams() );
+    return $this->authorizedRequest( $this->endpoint . "?parent_id={$parentId}" );
   }
 
   /**
    * Get attribute group by id
    *
    * @param int $id
-   * @param Request|null $request
    *
    * @return Response
    * @throws Exception
    */
-  public function show( int $id, Request $request = null )
+  public function show( int $id )
   {
-    if ( ! $request )
-    {
-      $request = new Request();
-    }
-
-    return $this->authorizedRequest( "{$this->endpoint}/{$id}?{$request->getParams()}" );
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}" );
   }
 
   /**
