@@ -41,7 +41,7 @@ class ProductAttributes extends Sdk
    * Unset attributes to a product
    *
    * @param int $productId
-   * @param string[] $attributes
+   * @param int[] $attributes
    *
    * @return Response
    * @throws Exception

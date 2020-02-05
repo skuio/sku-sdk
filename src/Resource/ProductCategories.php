@@ -159,7 +159,7 @@ class ProductCategories extends Sdk
    * @return Response
    * @throws Exception
    */
-  public function archiveCategory( int $categoryId )
+  public function archive( int $categoryId )
   {
     return $this->authorizedRequest( "{$this->endpoint}/{$categoryId}/archive" );
   }
@@ -172,7 +172,7 @@ class ProductCategories extends Sdk
    * @return Response
    * @throws Exception
    */
-  public function unarchivedCategory( int $categoryId )
+  public function unarchived( int $categoryId )
   {
     return $this->authorizedRequest( "{$this->endpoint}/{$categoryId}/unarchived" );
   }
