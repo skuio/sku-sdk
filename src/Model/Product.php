@@ -28,6 +28,8 @@ use Skuio\Sdk\Model;
  * @property float|null $case_width
  * @property float|null $case_height
  * @property string|null $case_dimension_unit
+ * @property float|null $case_weight
+ * @property string|null $case_weight_unit
  * @property string $name
  * @property ProductImage[] $images
  * @property string[] $tags
@@ -134,7 +136,7 @@ class Product extends Model
   {
     if ( ! in_array( $dimensionUnit, self::DIMENSION_UNITS ) )
     {
-      throw new InvalidArgumentException( 'The weight_unit field must be one of ' . implode( ',', self::DIMENSION_UNITS ) );
+      throw new InvalidArgumentException( 'The dimension_unit field must be one of ' . implode( ',', self::DIMENSION_UNITS ) );
     }
 
     $this->dimension_unit = $dimensionUnit;
@@ -393,5 +395,35 @@ class Product extends Model
     $this->variations[] = $variant;
 
     return $this;
+  }
+
+  public function __set( $name, $value )
+  {
+    if ( $name == 'type' )
+    {
+      return $this->setProductType( $value );
+    }
+
+    if ( $name == 'weight_unit' )
+    {
+      return $this->setWeightUnit( $value );
+    }
+
+    if ( $name == 'dimension_unit' )
+    {
+      return $this->setDimensionUnit( $value );
+    }
+
+    if ( $name == 'case_dimension_unit' && ! in_array( $value, self::DIMENSION_UNITS ) )
+    {
+      throw new InvalidArgumentException( 'The case_dimension_unit field must be one of ' . implode( ',', self::DIMENSION_UNITS ) );
+    }
+
+    if ( $name == 'case_weight_unit' && ! in_array( $value, self::WEIGHT_UNITS ) )
+    {
+      throw new InvalidArgumentException( 'The case_weight_unit field must be one of ' . implode( ',', self::WEIGHT_UNITS ) );
+    }
+
+    $this->$name = $value;
   }
 }

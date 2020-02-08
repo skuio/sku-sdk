@@ -2,6 +2,7 @@
 
 namespace Skuio\Sdk\Model;
 
+use InvalidArgumentException;
 use Skuio\Sdk\Model;
 
 /**
@@ -31,4 +32,14 @@ class NominalCode extends Model
     self::TYPE_LIABILITY,
     self::TYPE_EQUITY,
   ];
+
+  public function __set( $name, $value )
+  {
+    if ( $name == 'type' && ! in_array( $value, self::TYPES ) )
+    {
+      throw new InvalidArgumentException( 'The nominal code type field must be one of ' . implode( ',', self::TYPES ) );
+    }
+
+    $this->$name = $value;
+  }
 }

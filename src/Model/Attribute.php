@@ -2,6 +2,7 @@
 
 namespace Skuio\Sdk\Model;
 
+use InvalidArgumentException;
 use Skuio\Sdk\Model;
 
 /**
@@ -40,7 +41,7 @@ class Attribute extends Model
     self::TYPE_INTEGER,
     self::TYPE_CHECKBOX,
   ];
-  
+
   public function __set( $name, $value )
   {
     if ( $name == 'has_options' || $name == 'sort_order' )
@@ -53,6 +54,11 @@ class Attribute extends Model
       $this->display_options[ $name ] = $value;
     } else
     {
+      if ( $name == 'type' && ! in_array( $value, self::TYPES ) )
+      {
+        throw new InvalidArgumentException( 'The attribute type field must be one of ' . implode( ',', self::TYPES ) );
+      }
+
       $this->$name = $value;
     }
   }

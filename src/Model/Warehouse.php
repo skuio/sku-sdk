@@ -2,6 +2,7 @@
 
 namespace Skuio\Sdk\Model;
 
+use InvalidArgumentException;
 use Skuio\Sdk\Model;
 
 /**
@@ -28,4 +29,14 @@ class Warehouse extends Model
     self::TYPE_3PL,
     self::TYPE_SUPPLIER,
   ];
+
+  public function __set( $name, $value )
+  {
+    if ( $name == 'type' && ! in_array( $value, self::TYPES ) )
+    {
+      throw new InvalidArgumentException( 'The warehouse type field must be one of ' . implode( ',', self::TYPES ) );
+    }
+
+    $this->$name = $value;
+  }
 }
