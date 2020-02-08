@@ -13,8 +13,8 @@ use Skuio\Sdk\Model;
  * @property int $id
  * @property string $name
  * @property string $type
- * @property array $display_options
- * @property array $validation
+ * @property array|null $display_options
+ * @property array|null $validation
  * @property AttributeValue[] $option_values
  *
  * @property bool $has_options
