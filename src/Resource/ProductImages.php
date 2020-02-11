@@ -69,4 +69,30 @@ class ProductImages extends Sdk
   {
     return $this->authorizedRequest( "{$this->endpoint}/{$productImageId}", null, Sdk::METHOD_DELETE );
   }
+
+  /**
+   * Storing image to the server
+   *
+   * @param string $image image url or base64
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function storeImage( string $image )
+  {
+    return $this->authorizedRequest( "{$this->endpoint}/store-image", json_encode( [ 'image' => $image ] ), Sdk::METHOD_POST );
+  }
+
+  /**
+   * Removing image from the server
+   *
+   * @param string $imagePath
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function deleteImage( string $imagePath )
+  {
+    return $this->authorizedRequest( "{$this->endpoint}/delete-image", json_encode( [ 'url' => $imagePath ] ), Sdk::METHOD_DELETE );
+  }
 }

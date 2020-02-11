@@ -269,28 +269,15 @@ class Products extends Sdk
   }
 
   /**
-   * Storing image to the server
+   * Display a list of product activity log
    *
-   * @param string $image image url or base64
-   *
-   * @return Response
-   * @throws Exception
-   */
-  public function storeImage( string $image )
-  {
-    return $this->authorizedRequest( "store-image", json_encode( [ 'image' => $image ] ), Sdk::METHOD_POST );
-  }
-
-  /**
-   * Removing image from the server
-   *
-   * @param string $imagePath
+   * @param int $id
    *
    * @return Response
    * @throws Exception
    */
-  public function deleteImage( string $imagePath )
+  public function activityLog( int $id )
   {
-    return $this->authorizedRequest( "delete-image", json_encode( [ 'url' => $imagePath ] ), Sdk::METHOD_DELETE );
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}/activity-log" );
   }
 }
