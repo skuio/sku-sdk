@@ -36,18 +36,4 @@ class ProductAttributes extends Sdk
 
     return $this->authorizedRequest( $this->endpoint . '/' . $productId, json_encode( $body ), self::METHOD_PUT );
   }
-
-  /**
-   * Unset attributes to a product
-   *
-   * @param int $productId
-   * @param int[] $attributes
-   *
-   * @return Response
-   * @throws Exception
-   */
-  public function delete( int $productId, array $attributes )
-  {
-    return $this->authorizedRequest( $this->endpoint . '/' . $productId, json_encode( [ 'attributes' => $attributes ] ), self::METHOD_DELETE );
-  }
 }

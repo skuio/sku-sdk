@@ -75,7 +75,7 @@ class PaymentTerms extends Sdk
    */
   public function archive( int $id )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/{$id}/archive" );
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}/archive", null, self::METHOD_PUT );
   }
 
   /**
@@ -86,6 +86,6 @@ class PaymentTerms extends Sdk
    */
   public function unarchived( int $id )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/{$id}/unarchived" );
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}/unarchived", null, self::METHOD_PUT );
   }
 }

@@ -73,7 +73,7 @@ class Vendors extends Sdk
    */
   public function archive( int $id )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/{$id}/archive" );
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}/archive", null, self::METHOD_PUT );
   }
 
   /**
@@ -86,7 +86,7 @@ class Vendors extends Sdk
    */
   public function unarchived( int $id )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/{$id}/unarchived" );
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}/unarchived", null, self::METHOD_PUT );
   }
 
   /**
@@ -99,7 +99,7 @@ class Vendors extends Sdk
    */
   public function products( int $id )
   {
-    return $this->authorizedRequest( "vendor-products/{$id}" );
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}/products" );
   }
 
   /**

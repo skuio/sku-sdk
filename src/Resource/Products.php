@@ -6,6 +6,7 @@ use Exception;
 use InvalidArgumentException;
 use Skuio\Sdk\Model\Import;
 use Skuio\Sdk\Model\Product;
+use Skuio\Sdk\Model\ProductImage;
 use Skuio\Sdk\Request;
 use Skuio\Sdk\Response;
 use Skuio\Sdk\Sdk;
@@ -157,7 +158,7 @@ class Products extends Sdk
    */
   public function restore( string $sku )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/{$sku}/restore", null, self::METHOD_GET );
+    return $this->authorizedRequest( "{$this->endpoint}/{$sku}/restore", null, self::METHOD_PUT );
   }
 
   /**
@@ -216,6 +217,20 @@ class Products extends Sdk
   }
 
   /**
+   * Unset attributes to a product
+   *
+   * @param int $productId
+   * @param int[] $attributes
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function deleteAttributes( int $productId, array $attributes )
+  {
+    return $this->authorizedRequest( "{$this->endpoint}/{$productId}/attributes", json_encode( [ 'attributes' => $attributes ] ), self::METHOD_DELETE );
+  }
+
+  /**
    * Display inventory movements for the product
    *
    * @param int $id
@@ -240,7 +255,7 @@ class Products extends Sdk
    */
   public function setDefaultVendor( int $id, int $vendorId )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/{$id}/set-default-vendor/{$vendorId}" );
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}/set-default-vendor/{$vendorId}", null, self::METHOD_PUT );
   }
 
   /**
@@ -279,5 +294,32 @@ class Products extends Sdk
   public function activityLog( int $id )
   {
     return $this->authorizedRequest( "{$this->endpoint}/{$id}/activity-log" );
+  }
+
+  /**
+   * Retrieve product images
+   *
+   * @param int $productId
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function images( int $productId )
+  {
+    return $this->authorizedRequest( "{$this->endpoint}/{$productId}/images" );
+  }
+
+  /**
+   * Add a new image to product
+   *
+   * @param int $productId
+   * @param ProductImage $productImage
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function addImage( int $productId, ProductImage $productImage )
+  {
+    return $this->authorizedRequest( "{$this->endpoint}/{$productId}/images", $productImage->toJson(), Sdk::METHOD_POST );
   }
 }

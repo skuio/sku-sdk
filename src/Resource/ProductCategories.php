@@ -110,7 +110,7 @@ class ProductCategories extends Sdk
       throw new InvalidArgumentException( "The product_id and category_id are required" );
     }
 
-    return $this->authorizedRequest( "{$this->endpoint}/{$productToCategory->category_id}/assign-to-product/{$productToCategory->product_id}" . ( $productToCategory->is_primary ? "?is_primary=1" : '' ) );
+    return $this->authorizedRequest( "{$this->endpoint}/{$productToCategory->category_id}/assign-to-product/{$productToCategory->product_id}" . ( $productToCategory->is_primary ? "?is_primary=1" : '' ), null, self::METHOD_POST );
   }
 
   /**
@@ -124,7 +124,7 @@ class ProductCategories extends Sdk
    */
   public function reassignNewCategoryToProducts( int $oldCategoryId, int $newCategoryId )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/{$oldCategoryId}/reassign-to-products/{$newCategoryId}" );
+    return $this->authorizedRequest( "{$this->endpoint}/{$oldCategoryId}/reassign-to-products/{$newCategoryId}", null, self::METHOD_PUT );
   }
 
   /**
@@ -161,7 +161,7 @@ class ProductCategories extends Sdk
    */
   public function archive( int $categoryId )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/{$categoryId}/archive" );
+    return $this->authorizedRequest( "{$this->endpoint}/{$categoryId}/archive", null, self::METHOD_PUT );
   }
 
   /**
@@ -174,6 +174,6 @@ class ProductCategories extends Sdk
    */
   public function unarchived( int $categoryId )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/{$categoryId}/unarchived" );
+    return $this->authorizedRequest( "{$this->endpoint}/{$categoryId}/unarchived", null, self::METHOD_PUT );
   }
 }

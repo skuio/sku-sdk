@@ -13,33 +13,6 @@ class ProductImages extends Sdk
   protected $endpoint = 'product-images';
 
   /**
-   * Retrieve product images
-   *
-   * @param int $productId
-   *
-   * @return Response
-   * @throws Exception
-   */
-  public function get( int $productId )
-  {
-    return $this->authorizedRequest( "{$this->endpoint}/{$productId}" );
-  }
-
-  /**
-   * Add a new image to product
-   *
-   * @param int $productId
-   * @param ProductImage $productImage
-   *
-   * @return Response
-   * @throws Exception
-   */
-  public function store( int $productId, ProductImage $productImage )
-  {
-    return $this->authorizedRequest( "{$this->endpoint}/{$productId}", $productImage->toJson(), Sdk::METHOD_POST );
-  }
-
-  /**
    * Update product image
    *
    * @param ProductImage $productImage
