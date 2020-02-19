@@ -110,7 +110,7 @@ class ProductCategories extends Sdk
       throw new InvalidArgumentException( "The product_id and category_id are required" );
     }
 
-    return $this->authorizedRequest( "{$this->endpoint}/{$productToCategory->category_id}/assign-to-product/{$productToCategory->product_id}" . ( $productToCategory->is_primary ? "?is_primary=1" : '' ), null, self::METHOD_POST );
+    return $this->authorizedRequest( "{$this->endpoint}/assign-category-to-product", $productToCategory->toJson(), self::METHOD_POST );
   }
 
   /**
