@@ -16,7 +16,7 @@ class Attributes extends Sdk
   /**
    * Retrieve attributes according to your request
    *
-   * @param Request $request
+   * @param Request|null $request
    *
    * @return Response
    * @throws Exception
