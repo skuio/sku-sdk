@@ -30,8 +30,9 @@ class Response
    * @param int $statusCode
    * @param array|null $response
    * @param null $curlError
+   * @param array $requestBody
    */
-  public function __construct( int $statusCode, $response = null, $curlError = null )
+  public function __construct( int $statusCode, $response = null, $curlError = null, $requestBody = [] )
   {
     $this->statusCode = $statusCode;
     $this->response   = $response;
@@ -68,19 +69,33 @@ class Response
   }
 
   /**
+   * @param bool $withoutKeys
+   *
    * @return array|null
    */
-  public function getWarnings(): ?array
+  public function getWarnings( $withoutKeys = true ): ?array
   {
-    return $this->response['warnings'] ?? null;
+    if ( ! isset( $this->response['warnings'] ) )
+    {
+      return null;
+    }
+
+    return $withoutKeys ? array_values( $this->response['warnings'] ) : $this->response['warnings'];
   }
 
   /**
+   * @param bool $withoutKeys
+   *
    * @return array|null
    */
-  public function getErrors(): ?array
+  public function getErrors( $withoutKeys = true ): ?array
   {
-    return $this->response['errors'] ?? null;
+    if ( ! isset( $this->response['errors'] ) )
+    {
+      return null;
+    }
+
+    return $withoutKeys ? array_values( $this->response['errors'] ) : $this->response['errors'];
   }
 
   /**
@@ -89,6 +104,11 @@ class Response
   public function getCurlError()
   {
     return $this->curlError;
+  }
+
+  public function getStatus()
+  {
+    return $this->response['status'] ?? 'success';
   }
 
 }
