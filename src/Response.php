@@ -25,6 +25,13 @@ class Response
   private $curlError;
 
   /**
+   * Response Status
+   */
+  const STATUS_SUCCESS = 'success';
+  const STATUS_FAILURE = 'failure';
+  const STATUS_WARNING = 'warning';
+
+  /**
    * Response constructor.
    *
    * @param int $statusCode
@@ -69,33 +76,33 @@ class Response
   }
 
   /**
-   * @param bool $withoutKeys
+   * @param bool $withKeys
    *
    * @return array|null
    */
-  public function getWarnings( $withoutKeys = true ): ?array
+  public function getWarnings( $withKeys = false ): ?array
   {
     if ( ! isset( $this->response['warnings'] ) )
     {
       return null;
     }
 
-    return $withoutKeys ? array_values( $this->response['warnings'] ) : $this->response['warnings'];
+    return $withKeys ? $this->response['warnings'] : $this->flattenArray( $this->response['warnings'] );
   }
 
   /**
-   * @param bool $withoutKeys
+   * @param bool $withKeys
    *
    * @return array|null
    */
-  public function getErrors( $withoutKeys = true ): ?array
+  public function getErrors( $withKeys = false ): ?array
   {
     if ( ! isset( $this->response['errors'] ) )
     {
       return null;
     }
 
-    return $withoutKeys ? array_values( $this->response['errors'] ) : $this->response['errors'];
+    return $withKeys ? $this->response['errors'] : $this->flattenArray( $this->response['errors'] );
   }
 
   /**
@@ -108,7 +115,47 @@ class Response
 
   public function getStatus()
   {
-    return $this->response['status'] ?? 'success';
+    return $this->response['status'] ?? self::STATUS_SUCCESS;
   }
 
+  /**
+   * Determined if the response succeeded
+   *
+   * @return bool
+   */
+  public function isSuccess()
+  {
+    return $this->getStatus() === self::STATUS_SUCCESS;
+  }
+
+  /**
+   * Determined if the response failure
+   *
+   * @return bool
+   */
+  public function isFailure()
+  {
+    return $this->getStatus() === self::STATUS_FAILURE;
+  }
+
+  /**
+   * Determined if the response succeeded but have warnings
+   *
+   * @return bool
+   */
+  public function isWarning()
+  {
+    return $this->getStatus() === self::STATUS_WARNING;
+  }
+
+  private function flattenArray( array $array )
+  {
+    $result = [];
+    foreach ( $array as $item )
+    {
+      $result = array_merge( $result, $item );
+    }
+
+    return $result;
+  }
 }
