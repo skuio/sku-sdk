@@ -14,6 +14,7 @@ use Skuio\Sdk\Model;
  * @property int $parent_id - parent sku.io id
  * @property string $sku
  * @property string $barcode
+ * @property string $mpn
  * @property string $brand_name
  * @property string $type
  * @property float $weight
