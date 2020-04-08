@@ -33,6 +33,8 @@ class Warehouses extends Sdk
   }
 
   /**
+   * create new warehouse
+   *
    * @param Warehouse $warehouse
    *
    * @return Response

@@ -30,6 +30,20 @@ use Skuio\Sdk\Model;
  */
 class SalesOrder extends Model
 {
+
+  /**
+   * Order Status
+   */
+  const STATUS_DRAFT  = 'draft';
+  const STATUS_OPEN   = 'open';
+  const STATUS_CLOSED = 'closed';
+  const STATUSES      = [
+    self::STATUS_DRAFT,
+    self::STATUS_OPEN,
+    self::STATUS_CLOSED,
+  ];
+
+
   /**
    * Set shipping address
    *
@@ -50,7 +64,7 @@ class SalesOrder extends Model
    * @return $this
    */
   public function setBillingAddress(Address $billingAddress){
-    $this->shipping_address = $billingAddress;
+    $this->billing_address = $billingAddress;
     return $this;
   }
 
@@ -62,7 +76,7 @@ class SalesOrder extends Model
    * @return $this
    */
   public function setCustomerAddress(Address $customerAddress){
-    $this->shipping_address = $customerAddress;
+    $this->customer_address = $customerAddress;
     return $this;
   }
 

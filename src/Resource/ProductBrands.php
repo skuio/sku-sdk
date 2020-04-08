@@ -87,4 +87,18 @@ class ProductBrands extends Sdk
   {
     return $this->authorizedRequest( "{$this->endpoint}/{$id}/archive", null, self::METHOD_PUT );
   }
+
+  /**
+   * Unarchived a product brand by id
+   *
+   * @param int $id
+   *
+   * @return Response
+   * @throws Exception
+   *
+   */
+  public function unarchived( int $id )
+  {
+    return $this->authorizedRequest("{$this->endpoint}/{$id}/unarchived", null, self::METHOD_PUT);
+  }
 }

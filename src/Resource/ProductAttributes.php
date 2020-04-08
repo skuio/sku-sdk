@@ -36,4 +36,18 @@ class ProductAttributes extends Sdk
 
     return $this->authorizedRequest( $this->endpoint . '/' . $productId, json_encode( $body ), self::METHOD_PUT );
   }
+
+  /**
+   * get product attributes grouped by id
+   *
+   * @param int $productId
+   *
+   * @return Response
+   * @throws Exception
+   *
+   */
+  public function getAttributesGrouped( int $productId )
+  {
+    return $this->authorizedRequest("products/${productId}/attributes-grouped");
+  }
 }

@@ -322,4 +322,24 @@ class Products extends Sdk
   {
     return $this->authorizedRequest( "{$this->endpoint}/{$productId}/images", $productImage->toJson(), Sdk::METHOD_POST );
   }
+
+  /**
+   * get product inventory details by product id
+   *
+   * @param int $productId
+   *
+   * @return Response
+   * @throws Exception
+   *
+   */
+  public function inventory( int $productId )
+  {
+    return $this->authorizedRequest( "{$this->endpoint}/{$productId}/inventory" );
+  }
+
+  public function bulkArchive( array $productIds )
+  {
+    return $this->authorizedRequest( $this->endpoint . '/' . 'archive', json_encode( [ 'ids' => $productIds ] ), self::METHOD_PUT );
+  }
+
 }
