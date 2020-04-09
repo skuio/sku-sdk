@@ -25,7 +25,7 @@ class SalesChannelBrands extends Sdk
   public function get( Request $request = null )
   {
 
-    if (! $request )
+    if ( ! $request )
     {
       $request = new Request();
     }
@@ -77,7 +77,5 @@ class SalesChannelBrands extends Sdk
 
     return $this->authorizedRequest( $this->endpoint . '/' . $salesChannelBrand->id, $salesChannelBrand->toJson(), self::METHOD_PUT );
   }
-
-
 
 }

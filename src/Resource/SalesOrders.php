@@ -118,13 +118,29 @@ class SalesOrders extends Sdk
     return $this->authorizedRequest( $this->endpoint . '/constants' );
   }
 
-  public function archive( int $id  )
+  /**
+   * Archive sales order
+   *
+   * @param int $id
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function archive( int $id )
   {
     return $this->authorizedRequest( "{$this->endpoint}/{$id}/archive", null, self::METHOD_PUT );
 
   }
 
-  public function unarchived( int $id  )
+  /**
+   * Unarchived sales order
+   *
+   * @param int $id
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function unarchived( int $id )
   {
     return $this->authorizedRequest( "{$this->endpoint}/{$id}/unarchived", null, self::METHOD_PUT );
 

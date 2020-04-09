@@ -324,7 +324,7 @@ class Products extends Sdk
   }
 
   /**
-   * get product inventory details by product id
+   * Get product inventory details by product id
    *
    * @param int $productId
    *
@@ -337,9 +337,64 @@ class Products extends Sdk
     return $this->authorizedRequest( "{$this->endpoint}/{$productId}/inventory" );
   }
 
-  public function bulkArchive( array $productIds )
+  /**
+   * Bulk archive products
+   *
+   * @param Request|null $filters
+   * @param array|null $productIds
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function bulkArchive( Request $filters = null, array $productIds = null )
   {
-    return $this->authorizedRequest( $this->endpoint . '/' . 'archive', json_encode( [ 'ids' => $productIds ] ), self::METHOD_PUT );
+    return $this->bulkOperation( "{$this->endpoint}/archive", self::METHOD_PUT, $filters, $productIds );
   }
 
+  /**
+   * Bulk delete products
+   *
+   * @param Request|null $filters
+   * @param array|null $productIds
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function bulkDelete( Request $filters = null, array $productIds = null )
+  {
+    return $this->bulkOperation( $this->endpoint, self::METHOD_DELETE, $filters, $productIds );
+  }
+
+  /**
+   * Bulk operation
+   *
+   * @param string $endpoint
+   * @param string $method
+   * @param Request|null $filters
+   * @param array|null $productIds
+   *
+   * @return Response
+   * @throws Exception
+   */
+  private function bulkOperation( string $endpoint, string $method, Request $filters = null, array $productIds = null )
+  {
+    if ( ( $filters && ! empty( $productIds ) ) || ( ! $filters && empty( $productIds ) ) )
+    {
+      throw new InvalidArgumentException( 'You must specify either filters or productIds parameters, but not both.' );
+    }
+
+    // bulk operation by request filters
+    if ( $filters )
+    {
+      if ( empty( $filters->toArray()['filters'] ) )
+      {
+        throw new InvalidArgumentException( 'Yuu must specify filters in request' );
+      }
+
+      return $this->authorizedRequest( $endpoint . '?' . $filters->getParams(), null, $method );
+    }
+
+    // bulk operation by product ids
+    return $this->authorizedRequest( $endpoint, json_encode( [ 'ids' => $productIds ] ), $method );
+  }
 }
