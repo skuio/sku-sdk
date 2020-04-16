@@ -388,7 +388,7 @@ class Products extends Sdk
     {
       if ( empty( $filters->toArray()['filters'] ) )
       {
-        throw new InvalidArgumentException( 'Yuu must specify filters in request' );
+        throw new InvalidArgumentException( 'You must specify filters in request' );
       }
 
       return $this->authorizedRequest( $endpoint . '?' . $filters->getParams(), null, $method );
