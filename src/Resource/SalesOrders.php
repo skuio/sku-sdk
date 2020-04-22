@@ -145,4 +145,85 @@ class SalesOrders extends Sdk
     return $this->authorizedRequest( "{$this->endpoint}/{$id}/unarchived", null, self::METHOD_PUT );
 
   }
+
+  /**
+   * Bulk archive sales orders
+   *
+   * @param Request|null $filters
+   * @param array|null $salesOrdersIds
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function bulkArchive( Request $filters = null, array $salesOrdersIds = null )
+  {
+    return $this->bulkOperation( "{$this->endpoint}/archive", self::METHOD_PUT, $filters, $salesOrdersIds );
+  }
+
+
+  /**
+   * Bulk un archive sales orders
+   *
+   * @param Request|null $filters
+   * @param array|null $salesOrdersIds
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function bulkunArchive( Request $filters = null, array $salesOrdersIds = null )
+  {
+    return $this->bulkOperation( "{$this->endpoint}/unarchive", self::METHOD_PUT, $filters, $salesOrdersIds );
+  }
+
+
+  /**
+   * Bulk delete sales orders
+   *
+   * @param Request|null $filters
+   * @param array|null $salesOrdersIds
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function bulkDelete( Request $filters = null, array $salesOrdersIds = null )
+  {
+    return $this->bulkOperation( $this->endpoint, self::METHOD_DELETE, $filters, $salesOrdersIds );
+  }
+
+  /**
+   * Bulk operation
+   *
+   * @param string $endpoint
+   * @param string $method
+   * @param Request|null $filters
+   * @param array|null $salesOrdersIds
+   *
+   * @return Response
+   * @throws Exception
+   */
+  private function bulkOperation( string $endpoint, string $method, Request $filters = null, array $salesOrdersIds = null )
+  {
+    if ( ( $filters && ! empty( $salesOrdersIds ) ) || ( ! $filters && empty( $salesOrdersIds ) ) )
+    {
+      throw new InvalidArgumentException( 'You must specify either filters or salesOrdersIds parameters, but not both.' );
+    }
+
+    // bulk operation by request filters
+    if ( $filters )
+    {
+      if ( empty( $filters->toArray()['filters'] ) )
+      {
+        throw new InvalidArgumentException( 'You must specify filters in request' );
+      }
+
+      return $this->authorizedRequest( $endpoint . '?' . $filters->getParams(), null, $method );
+    }
+
+    echo $endpoint;
+
+    // bulk operation by salesOrdersIds ids
+    return $this->authorizedRequest( $endpoint, json_encode( [ 'ids' => $salesOrdersIds ] ), $method );
+  }
+
+
 }

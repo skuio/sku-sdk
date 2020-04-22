@@ -351,6 +351,22 @@ class Products extends Sdk
     return $this->bulkOperation( "{$this->endpoint}/archive", self::METHOD_PUT, $filters, $productIds );
   }
 
+
+  /**
+   * Bulk un archive products
+   *
+   * @param Request|null $filters
+   * @param array|null $productIds
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function bulkunArchive( Request $filters = null, array $productIds = null )
+  {
+    return $this->bulkOperation( "{$this->endpoint}/unarchive", self::METHOD_PUT, $filters, $productIds );
+  }
+
+
   /**
    * Bulk delete products
    *
@@ -393,6 +409,8 @@ class Products extends Sdk
 
       return $this->authorizedRequest( $endpoint . '?' . $filters->getParams(), null, $method );
     }
+
+    echo $endpoint;
 
     // bulk operation by product ids
     return $this->authorizedRequest( $endpoint, json_encode( [ 'ids' => $productIds ] ), $method );

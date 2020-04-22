@@ -65,7 +65,7 @@ function bulkArchive( array $productIds )
 {
   $product = new Products();
 
-  $response = $product->bulkArchive( null, [ 1, 2 ] );
+  $response = $product->bulkArchive( null, $productIds );
 
   echo $response->getStatusCode() . '<br>';
   print_r( $response->getResponse() );
@@ -164,11 +164,9 @@ function createSalesOrder()
   $salesOrder = new \Skuio\Sdk\Model\SalesOrder();
 
   $salesOrder->sales_channel_id   = 1;
-  $salesOrder->customer_reference = '211149608634-2142855203013';
+  $salesOrder->customer_reference = '211149608634-2142858820773553';
   $salesOrder->status             = 'open';
   $salesOrder->currency_code      = 'USD';
-  $salesOrder->total_shipping     = 20.5;
-  $salesOrder->total_tax          = 0.2;
   $salesOrder->order_date         = '2019-06-19T06:46:27+00:00';
   $salesOrder->receive_by_date    = '2019-06-19T06:46:27+00:00';
 
@@ -196,17 +194,28 @@ function createSalesOrder()
   $customer_address->country_code = 'PS';
   $customer_address->country      = 'Palestine';
 
-  $sales_order_line              = new \Skuio\Sdk\Model\SalesOrderLine();
-  $sales_order_line->description = 'item 1';
-  $sales_order_line->sku         = 'wompro30ct';
-  $sales_order_line->amount      = 12;
-  $sales_order_line->quantity    = 3;
-  $sales_order_line->tax         = 0.2;
+  $sales_order_line                        = new \Skuio\Sdk\Model\SalesOrderLine();
+  $sales_order_line->description           = 'item 1';
+  $sales_order_line->sales_channel_line_id = 'wompro30ct';
+  $sales_order_line->amount                = 12;
+  $sales_order_line->quantity              = 3;
+  $sales_order_line->tax                   = 0.2;
+  $sales_order_line->discount              = 20;
+  $sales_order_line->product_id            = 2;
+
+  $sales_order_line2                        = new \Skuio\Sdk\Model\SalesOrderLine();
+  $sales_order_line2->description           = 'item 1';
+  $sales_order_line2->sales_channel_line_id = 'wompro30ct';
+  $sales_order_line2->amount                = 12;
+  $sales_order_line2->quantity              = 3;
+  $sales_order_line2->tax                   = 0.2;
+  $sales_order_line2->discount              = 20;
+  $sales_order_line2->sku                   = '2packprobiotic-child890';
 
   $salesOrder->billing_address   = $billing_address;
   $salesOrder->shipping_address  = $shipping_address;
   $salesOrder->customer_address  = $customer_address;
-  $salesOrder->sales_order_lines = [ $sales_order_line ];
+  $salesOrder->sales_order_lines = [ $sales_order_line, $sales_order_line2 ];
 
   $salesOrders = new \Skuio\Sdk\Resource\SalesOrders();
 
@@ -273,12 +282,12 @@ $inventoryMovements = $products->get();
 //echo "\n";
 //print_r( $inventoryMovements->getErrors() );
 
-//createSalesOrder();
+createSalesOrder();
 //salesOrderConstants();
 
 //archiveSalesOrder( 35 );
 //showSalesOrder( 35 );
 
-bulkArchive( [ 1, 2 ] );
+//bulkArchive( [ 1, 2 ] );
 echo '<br>----------------<br>';
 //importProducts( $username, $password );

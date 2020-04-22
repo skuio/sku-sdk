@@ -2,6 +2,7 @@
 
 namespace Skuio\Sdk\Model;
 
+use Carbon\Carbon;
 use Skuio\Sdk\Model;
 
 /**
@@ -10,23 +11,23 @@ use Skuio\Sdk\Model;
  * @package Skuio\Sdk\Model
  *
  * @property int $id
- * @property int $sales_channel_id
  * @property string $customer_reference
+ * @property int $sales_channel_id
  * @property string $status
+ * @property int|null $customer_id
+ * @property int|null $shipping_address_id
+ * @property int|null $billing_address_id
+ * @property float|null $discount
+ * @property float|null $total
+ * @property int|null $warehouse_id
+ * @property int|null $shipping_method_id
  * @property string $currency_code
- * @property string $order_date
- * @property string $receive_by_date
- * @property string $payment_date
- * @property string $ship_by_date
- * @property float $total_tax
- * @property float $total_shipping
- * @property float $total_shipping_tax
- * @property float $total_discount
- * @property SalesOrderLine[] $sales_order_lines
- * @property Address $shipping_address
- * @property Address $billing_address
- * @property int $customer_id
- * @property Address $customer_address
+ * @property string|null $payment_status
+ * @property Carbon $order_date
+ * @property Carbon|null $payment_date
+ * @property Carbon|null $ship_by_date
+ * @property Carbon|null $receive_by_date
+ * @property Carbon|null $archived_at
  */
 class SalesOrder extends Model
 {
