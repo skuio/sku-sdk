@@ -410,8 +410,6 @@ class Products extends Sdk
       return $this->authorizedRequest( $endpoint . '?' . $filters->getParams(), null, $method );
     }
 
-    echo $endpoint;
-
     // bulk operation by product ids
     return $this->authorizedRequest( $endpoint, json_encode( [ 'ids' => $productIds ] ), $method );
   }

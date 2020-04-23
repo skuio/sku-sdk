@@ -201,7 +201,7 @@ function createSalesOrder()
   $sales_order_line->quantity              = 3;
   $sales_order_line->tax                   = 0.2;
   $sales_order_line->discount              = 20;
-  $sales_order_line->product_id            = 2;
+  $sales_order_line->sku                   = "2packprobiotic-child890";
 
   $sales_order_line2                        = new \Skuio\Sdk\Model\SalesOrderLine();
   $sales_order_line2->description           = 'item 1';
@@ -222,7 +222,7 @@ function createSalesOrder()
   $salesOrderStore = $salesOrders->store( $salesOrder );
 
   echo $salesOrderStore->getStatusCode() . '<br>';
-  print_r( $salesOrderStore->getResponse() );
+  print_r( $salesOrderStore->getData() );
 
 }
 
@@ -270,9 +270,27 @@ function showSalesOrder( $id )
 
 }
 
-$products = new \Skuio\Sdk\Resource\VendorPricingTiers();
+/**
+ * @param $name
+ * @param $zip
+ * @param $address1
+ *
+ * @throws Exception
+ */
+function findMatchCustomers( $name, $zip, $address1 )
+{
+  $customersInstance = new \Skuio\Sdk\Resource\Customers();
 
-$inventoryMovements = $products->get();
+  $customers = $customersInstance->findMatch( $name, $zip, $address1 );
+
+  echo $customers->getCurlError() . '<br>';
+  print_r( $customers->getData() );
+
+}
+
+//$products = new \Skuio\Sdk\Resource\VendorPricingTiers();
+//
+//$inventoryMovements = $products->get();
 
 //print_r( $inventoryMovements->getStatusCode() );
 //echo "\n";
@@ -282,12 +300,14 @@ $inventoryMovements = $products->get();
 //echo "\n";
 //print_r( $inventoryMovements->getErrors() );
 
-createSalesOrder();
+//createSalesOrder();
 //salesOrderConstants();
 
 //archiveSalesOrder( 35 );
 //showSalesOrder( 35 );
 
+findMatchCustomers('Ayesha', 'ghghgfftghj', '660 EBERSOLE RD');
+
 //bulkArchive( [ 1, 2 ] );
-echo '<br>----------------<br>';
+//echo '<br>----------------<br>';
 //importProducts( $username, $password );
