@@ -2,7 +2,6 @@
 
 namespace Skuio\Sdk\Model;
 
-use Carbon\Carbon;
 use Skuio\Sdk\Model;
 
 /**
@@ -23,11 +22,11 @@ use Skuio\Sdk\Model;
  * @property int|null $shipping_method_id
  * @property string $currency_code
  * @property string|null $payment_status
- * @property Carbon $order_date
- * @property Carbon|null $payment_date
- * @property Carbon|null $ship_by_date
- * @property Carbon|null $receive_by_date
- * @property Carbon|null $archived_at
+ * @property string $order_date
+ * @property string|null $payment_date
+ * @property string|null $ship_by_date
+ * @property string|null $receive_by_date
+ * @property string|null $archived_at
  */
 class SalesOrder extends Model
 {
@@ -44,7 +43,6 @@ class SalesOrder extends Model
     self::STATUS_CLOSED,
   ];
 
-
   /**
    * Set shipping address
    *
@@ -52,8 +50,10 @@ class SalesOrder extends Model
    *
    * @return $this
    */
-  public function setShippingAddress(Address $shippingAddress){
+  public function setShippingAddress( Address $shippingAddress )
+  {
     $this->shipping_address = $shippingAddress;
+
     return $this;
   }
 
@@ -64,8 +64,10 @@ class SalesOrder extends Model
    *
    * @return $this
    */
-  public function setBillingAddress(Address $billingAddress){
+  public function setBillingAddress( Address $billingAddress )
+  {
     $this->billing_address = $billingAddress;
+
     return $this;
   }
 
@@ -76,8 +78,10 @@ class SalesOrder extends Model
    *
    * @return $this
    */
-  public function setCustomerAddress(Address $customerAddress){
+  public function setCustomerAddress( Address $customerAddress )
+  {
     $this->customer_address = $customerAddress;
+
     return $this;
   }
 

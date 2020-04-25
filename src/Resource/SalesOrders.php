@@ -160,7 +160,6 @@ class SalesOrders extends Sdk
     return $this->bulkOperation( "{$this->endpoint}/archive", self::METHOD_PUT, $filters, $salesOrdersIds );
   }
 
-
   /**
    * Bulk un archive sales orders
    *
@@ -174,7 +173,6 @@ class SalesOrders extends Sdk
   {
     return $this->bulkOperation( "{$this->endpoint}/unarchive", self::METHOD_PUT, $filters, $salesOrdersIds );
   }
-
 
   /**
    * Bulk delete sales orders
@@ -224,6 +222,5 @@ class SalesOrders extends Sdk
     // bulk operation by salesOrdersIds ids
     return $this->authorizedRequest( $endpoint, json_encode( [ 'ids' => $salesOrdersIds ] ), $method );
   }
-
 
 }
