@@ -167,8 +167,11 @@ function createSalesOrder()
   $salesOrder->customer_reference = '211149608634-2142858820773553';
   $salesOrder->status             = 'open';
   $salesOrder->currency_code      = 'USD';
+  $salesOrder->discount           = 10;
   $salesOrder->order_date         = '2019-06-19T06:46:27+00:00';
   $salesOrder->receive_by_date    = '2019-06-19T06:46:27+00:00';
+  $salesOrder->warehouse_id       = 1;
+  $salesOrder->shipping_method_id = 1;
 
   $billing_address               = new \Skuio\Sdk\Model\Address();
   $billing_address->name         = 'Ahmed';
@@ -201,7 +204,7 @@ function createSalesOrder()
   $sales_order_line->quantity              = 3;
   $sales_order_line->tax                   = 0.2;
   $sales_order_line->discount              = 20;
-  $sales_order_line->sku                   = "2packprobiotic-child890";
+  $sales_order_line->product_id            = 1;
 
   $sales_order_line2                        = new \Skuio\Sdk\Model\SalesOrderLine();
   $sales_order_line2->description           = 'item 1';
@@ -210,7 +213,7 @@ function createSalesOrder()
   $sales_order_line2->quantity              = 3;
   $sales_order_line2->tax                   = 0.2;
   $sales_order_line2->discount              = 20;
-  $sales_order_line2->sku                   = '2packprobiotic-child890';
+  $sales_order_line2->nominal_code_id       = 1;
 
   $salesOrder->billing_address   = $billing_address;
   $salesOrder->shipping_address  = $shipping_address;
@@ -306,7 +309,7 @@ function findMatchCustomers( $name, $zip, $address1 )
 //archiveSalesOrder( 35 );
 //showSalesOrder( 35 );
 
-findMatchCustomers('Ayesha', 'ghghgfftghj', '660 EBERSOLE RD');
+findMatchCustomers( 'Ayesha', 'ghghgfftghj', '660 EBERSOLE RD' );
 
 //bulkArchive( [ 1, 2 ] );
 //echo '<br>----------------<br>';

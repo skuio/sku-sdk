@@ -27,6 +27,10 @@ use Skuio\Sdk\Model;
  * @property string|null $ship_by_date
  * @property string|null $receive_by_date
  * @property string|null $archived_at
+ * @property array $shipping_address
+ * @property array billing_address
+ * @property array customer_address
+ * @property array sales_order_lines
  */
 class SalesOrder extends Model
 {
