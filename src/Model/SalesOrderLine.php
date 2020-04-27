@@ -9,8 +9,9 @@ use Skuio\Sdk\Model;
  *
  * @package Skuio\Sdk\Model
  *
- * @property string sales_channel_line_id
- * @property int product_id
+ * @property int $id
+ * @property string $sales_channel_line_id
+ * @property int $product_id
  * @property string $description
  * @property float $amount
  * @property float $quantity
