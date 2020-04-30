@@ -11,7 +11,8 @@ use Skuio\Sdk\Model;
  *
  * @property int $id
  * @property string $customer_reference
- * @property int $sales_channel_id
+ * @property int|null $sales_channel_brand_id
+ * @property string|null $sales_channel_brand_name
  * @property string $status
  * @property int|null $customer_id
  * @property int|null $shipping_address_id
@@ -26,7 +27,6 @@ use Skuio\Sdk\Model;
  * @property string|null $payment_date
  * @property string|null $ship_by_date
  * @property string|null $receive_by_date
- * @property string|null $archived_at
  * @property array $shipping_address
  * @property array $billing_address
  * @property array $customer_address
