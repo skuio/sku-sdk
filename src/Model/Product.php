@@ -226,7 +226,22 @@ class Product extends Model
   }
 
   /**
-   * Set/Add tags to the product
+   * Set tags to the product
+   *
+   * @param string|array $tags
+   *
+   * @return Product
+   */
+  public function setTags( $tags )
+  {
+    $this->tags           = is_array( $tags ) ? $tags : [ $tags ];
+    $this->tags_operation = 'set';
+
+    return $this;
+  }
+
+  /**
+   * Add tags to the product
    *
    * @param string|array $tags
    *
@@ -239,7 +254,23 @@ class Product extends Model
       $this->tags = [];
     }
 
-    $this->tags = array_unique( array_merge( $this->tags, is_array( $tags ) ? $tags : [ $tags ] ) );
+    $this->tags           = array_unique( array_merge( $this->tags, is_array( $tags ) ? $tags : [ $tags ] ) );
+    $this->tags_operation = isset( $this->tags_operation ) ? ( $this->tags_operation == 'set' ? $this->tags_operation : 'append' ) : 'append';
+
+    return $this;
+  }
+
+  /**
+   * Add tags to the product
+   *
+   * @param string|array $tags
+   *
+   * @return Product
+   */
+  public function deleteTags( $tags )
+  {
+    $this->tags           = is_array( $tags ) ? $tags : [ $tags ];
+    $this->tags_operation = 'delete';
 
     return $this;
   }
@@ -276,6 +307,39 @@ class Product extends Model
     {
       $this->vendors = [];
     }
+    $vendorProduct->operation = 'updateOrCreate';
+
+    $this->vendors[] = $vendorProduct;
+
+    return $this;
+  }
+
+  /**
+   * Update vendor product
+   *
+   * @param VendorProduct $vendorProduct
+   *
+   * @return $this
+   */
+  public function updateVendor( VendorProduct $vendorProduct )
+  {
+    return $this->addVendor( $vendorProduct );
+  }
+
+  /**
+   * Delete vendor product
+   *
+   * @param VendorProduct $vendorProduct
+   *
+   * @return $this
+   */
+  public function deleteVendor( VendorProduct $vendorProduct )
+  {
+    if ( ! isset( $this->vendors ) )
+    {
+      $this->vendors = [];
+    }
+    $vendorProduct->operation = 'delete';
 
     $this->vendors[] = $vendorProduct;
 

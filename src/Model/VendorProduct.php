@@ -13,10 +13,10 @@ use Skuio\Sdk\Model;
  * @property int $product_id
  * @property int $vendor_id
  * @property string $vendor_name
- * @property bool $is_default
- * @property string $supplier_sku
- * @property int $leadtime
- * @property float $minimum_order_quantity
+ * @property bool|null $is_default
+ * @property string|null $supplier_sku
+ * @property int|null $leadtime
+ * @property float|null $minimum_order_quantity
  * @property VendorProductPricing[] $pricing
  */
 class VendorProduct extends Model
@@ -34,6 +34,39 @@ class VendorProduct extends Model
     {
       $this->pricing = [];
     }
+    $pricing->operation = 'updateOrCreate';
+
+    $this->pricing[] = $pricing;
+
+    return $this;
+  }
+
+  /**
+   * Add pricing
+   *
+   * @param VendorProductPricing $pricing
+   *
+   * @return $this
+   */
+  public function updatePrice( VendorProductPricing $pricing )
+  {
+    return $this->addPrice( $pricing );
+  }
+
+  /**
+   * Delete pricing
+   *
+   * @param VendorProductPricing $pricing
+   *
+   * @return $this
+   */
+  public function deletePrice( VendorProductPricing $pricing )
+  {
+    if ( ! isset( $this->pricing ) )
+    {
+      $this->pricing = [];
+    }
+    $pricing->operation = 'delete';
 
     $this->pricing[] = $pricing;
 
