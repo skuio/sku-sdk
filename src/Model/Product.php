@@ -360,7 +360,7 @@ class Product extends Model
     {
       $this->vendors = [];
     }
-    $vendorProduct->operation = 'updateOrCreate';
+    $vendorProduct->operation = self::OPERATION_UPDATE_CREATE;
 
     $this->vendors[] = $vendorProduct;
 
@@ -392,7 +392,7 @@ class Product extends Model
     {
       $this->vendors = [];
     }
-    $vendorProduct->operation = 'delete';
+    $vendorProduct->operation = self::OPERATION_DELETE;
 
     $this->vendors[] = $vendorProduct;
 
@@ -412,6 +412,7 @@ class Product extends Model
     {
       $this->categories = [];
     }
+    $category->operation = self::OPERATION_UPDATE_CREATE;
 
     $this->categories[] = $category;
 
@@ -433,7 +434,30 @@ class Product extends Model
       $this->categories = [];
     }
 
-    $this->categories[] = [ 'category_id' => $categoryId, 'is_primary' => $isPrimary ];
+    $this->categories[] = [
+      'category_id' => $categoryId,
+      'is_primary'  => $isPrimary,
+      'operation'   => self::OPERATION_UPDATE_CREATE,
+    ];
+
+    return $this;
+  }
+
+  /**
+   * Delete category
+   *
+   * @param int $categoryId
+   *
+   * @return $this
+   */
+  public function deleteCategory( int $categoryId )
+  {
+    if ( ! isset( $this->categories ) )
+    {
+      $this->categories = [];
+    }
+
+    $this->categories[] = [ 'category_id' => $categoryId, 'operation' => self::OPERATION_DELETE ];
 
     return $this;
   }
