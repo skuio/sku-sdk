@@ -308,6 +308,39 @@ class Product extends Model
     {
       $this->pricing = [];
     }
+    $pricing->operation = self::OPERATION_UPDATE_CREATE;
+
+    $this->pricing[] = $pricing;
+
+    return $this;
+  }
+
+  /**
+   * Update pricing
+   *
+   * @param ProductPricing $pricing
+   *
+   * @return $this
+   */
+  public function updatePrice( ProductPricing $pricing )
+  {
+    return $this->addPrice( $pricing );
+  }
+
+  /**
+   * Add pricing
+   *
+   * @param ProductPricing $pricing
+   *
+   * @return $this
+   */
+  public function deletePrice( ProductPricing $pricing )
+  {
+    if ( ! isset( $this->pricing ) )
+    {
+      $this->pricing = [];
+    }
+    $pricing->operation = self::OPERATION_DELETE;
 
     $this->pricing[] = $pricing;
 
