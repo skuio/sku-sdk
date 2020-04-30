@@ -178,7 +178,7 @@ class Product extends Model
     {
       $this->images = [];
     }
-
+    $productImage->operation = self::OPERATION_UPDATE_CREATE;
     // set as primary image
     $productImage->is_primary = true;
 
@@ -200,8 +200,28 @@ class Product extends Model
     {
       $this->images = [];
     }
+    $productImage->operation = self::OPERATION_UPDATE_CREATE;
 
     $this->images[] = $productImage;
+
+    return $this;
+  }
+
+  /**
+   * Delete image
+   *
+   * @param int $productImageId
+   *
+   * @return $this
+   */
+  public function deleteProductImage( int $productImageId )
+  {
+    if ( ! isset( $this->images ) )
+    {
+      $this->images = [];
+    }
+
+    $this->images[] = [ 'id' => $productImageId, 'operation' => self::OPERATION_DELETE ];
 
     return $this;
   }
