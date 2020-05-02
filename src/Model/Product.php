@@ -240,7 +240,11 @@ class Product extends Model
       $this->attributes = [];
     }
 
-    $this->attributes[] = [ 'name' => 'description', 'value' => $description ];
+    $this->attributes[] = [
+      'name'      => 'description',
+      'value'     => $description,
+      'operation' => self::OPERATION_UPDATE_CREATE,
+    ];
 
     return $this;
   }
@@ -527,6 +531,7 @@ class Product extends Model
     {
       $this->attributes = [];
     }
+    $attribute->operation = self::OPERATION_UPDATE_CREATE;
 
     $this->attributes[] = $attribute;
 
@@ -548,7 +553,27 @@ class Product extends Model
       $this->attributes = [];
     }
 
-    $this->attributes[] = [ 'id' => $attributeId, 'value' => $value ];
+    $this->attributes[] = [ 'id' => $attributeId, 'value' => $value, 'operation' => self::OPERATION_UPDATE_CREATE ];
+
+    return $this;
+  }
+
+  /**
+   * Delete an attribute
+   *
+   * @param int $attributeId
+   * @param $value
+   *
+   * @return $this
+   */
+  public function deleteAttribute( int $attributeId )
+  {
+    if ( ! isset( $this->attributes ) )
+    {
+      $this->attributes = [];
+    }
+
+    $this->attributes[] = [ 'id' => $attributeId, 'operation' => self::OPERATION_DELETE ];
 
     return $this;
   }
