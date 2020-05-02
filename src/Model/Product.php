@@ -255,7 +255,7 @@ class Product extends Model
   public function setTags( $tags )
   {
     $this->tags           = is_array( $tags ) ? $tags : [ $tags ];
-    $this->tags_operation = 'set';
+    $this->tags_operation = self::OPERATION_SET;
 
     return $this;
   }
@@ -275,7 +275,7 @@ class Product extends Model
     }
 
     $this->tags           = array_unique( array_merge( $this->tags, is_array( $tags ) ? $tags : [ $tags ] ) );
-    $this->tags_operation = isset( $this->tags_operation ) ? ( $this->tags_operation == 'set' ? $this->tags_operation : 'append' ) : 'append';
+    $this->tags_operation = isset( $this->tags_operation ) ? ( $this->tags_operation == self::OPERATION_SET ? $this->tags_operation : self::OPERATION_APPEND ) : self::OPERATION_APPEND;
 
     return $this;
   }
@@ -290,7 +290,7 @@ class Product extends Model
   public function deleteTags( $tags )
   {
     $this->tags           = is_array( $tags ) ? $tags : [ $tags ];
-    $this->tags_operation = 'delete';
+    $this->tags_operation = self::OPERATION_DELETE;
 
     return $this;
   }
@@ -463,7 +463,7 @@ class Product extends Model
   }
 
   /**
-   * Set/Add attribute groups by id
+   * Set attribute groups by id
    *
    * @param int|array $attributeGroups
    *
@@ -471,12 +471,45 @@ class Product extends Model
    */
   public function setAttributeGroups( $attributeGroups )
   {
+    $this->attribute_groups = is_array( $attributeGroups ) ? $attributeGroups : [ $attributeGroups ];
+
+    $this->attribute_groups_operation = self::OPERATION_SET;
+
+    return $this;
+  }
+
+  /**
+   * Add attribute groups by id
+   *
+   * @param int|array $attributeGroups
+   *
+   * @return Product
+   */
+  public function addAttributeGroups( $attributeGroups )
+  {
     if ( ! isset( $this->attribute_groups ) )
     {
       $this->attribute_groups = [];
     }
 
-    $this->attribute_groups = array_unique( array_merge( $this->attribute_groups, is_array( $attributeGroups ) ? $attributeGroups : [ $attributeGroups ] ) );
+    $this->attribute_groups           = array_unique( array_merge( $this->attribute_groups, is_array( $attributeGroups ) ? $attributeGroups : [ $attributeGroups ] ) );
+    $this->attribute_groups_operation = isset( $this->attribute_groups_operation ) ? ( $this->attribute_groups_operation == self::OPERATION_SET ? $this->attribute_groups_operation : self::OPERATION_APPEND ) : self::OPERATION_APPEND;
+
+    return $this;
+  }
+
+  /**
+   * Delete attribute groups by id
+   *
+   * @param int|array $attributeGroups
+   *
+   * @return Product
+   */
+  public function deleteAttributeGroups( $attributeGroups )
+  {
+    $this->attribute_groups = is_array( $attributeGroups ) ? $attributeGroups : [ $attributeGroups ];
+
+    $this->attribute_groups_operation = self::OPERATION_DELETE;
 
     return $this;
   }
