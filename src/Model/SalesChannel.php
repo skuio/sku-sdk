@@ -13,7 +13,7 @@ use Skuio\Sdk\Model;
  * @property int $type_id
  * @property string $name
  * @property string|null $country
- * @property int|null $sales_channel_brand_id
+ * @property int|null $store_id
  * @property array|null $options
  * @property array|null $credentials
  */

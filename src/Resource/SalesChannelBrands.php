@@ -3,7 +3,7 @@
 namespace Skuio\Sdk\Resource;
 
 use Exception;
-use Skuio\Sdk\Model\SalesChannelBrand;
+use Skuio\Sdk\Model\Store;
 use Skuio\Sdk\Request;
 use Skuio\Sdk\Sdk;
 use Skuio\Sdk\Response;
@@ -50,12 +50,12 @@ class SalesChannelBrands extends Sdk
   /**
    * Create a new sales channel brand
    *
-   * @param SalesChannelBrand $salesChannelBrand
+   * @param Store $salesChannelBrand
    *
    * @return Response
    * @throws Exception
    */
-  public function store( SalesChannelBrand $salesChannelBrand )
+  public function store( Store $salesChannelBrand )
   {
     return $this->authorizedRequest( $this->endpoint, $salesChannelBrand->toJson(), self::METHOD_POST );
   }
@@ -63,12 +63,12 @@ class SalesChannelBrands extends Sdk
   /**
    * Update sales channel brand by id
    *
-   * @param SalesChannelBrand $salesChannelBrand
+   * @param Store $salesChannelBrand
    *
    * @return Response
    * @throws Exception
    */
-  public function update( SalesChannelBrand $salesChannelBrand )
+  public function update( Store $salesChannelBrand )
   {
     if ( empty( $salesChannelBrand->id ) )
     {

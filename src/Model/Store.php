@@ -4,9 +4,8 @@ namespace Skuio\Sdk\Model;
 
 use Skuio\Sdk\Model;
 
-
 /**
- * Class SalesChannelBrand
+ * Class Store
  *
  * @package Skuio\Sdk\Model
  *
@@ -18,8 +17,7 @@ use Skuio\Sdk\Model;
  * @property string $logo_url
  * @property string $archived_at
  */
-
-class SalesChannelBrand extends Model
+class Store extends Model
 {
 
 }

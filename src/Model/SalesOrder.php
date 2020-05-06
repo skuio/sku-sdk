@@ -11,8 +11,8 @@ use Skuio\Sdk\Model;
  *
  * @property int $id
  * @property string $customer_reference
- * @property int|null $sales_channel_brand_id
- * @property string|null $sales_channel_brand_name
+ * @property int|null $store_id
+ * @property string|null $store_name
  * @property string $status
  * @property int|null $customer_id
  * @property int|null $shipping_address_id
