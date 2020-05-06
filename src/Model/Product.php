@@ -50,6 +50,10 @@ use Skuio\Sdk\Model;
  */
 class Product extends Model
 {
+  // for arrays
+  const OPERATION_SET    = 'set';
+  const OPERATION_APPEND = 'append';
+
   /**
    * Product Types
    */
@@ -178,7 +182,7 @@ class Product extends Model
     {
       $this->images = [];
     }
-    $productImage->operation = self::OPERATION_UPDATE_CREATE;
+    $productImage->operation = self::OPERATION_ADD;
     // set as primary image
     $productImage->is_primary = true;
 
@@ -191,16 +195,17 @@ class Product extends Model
    * Add image
    *
    * @param ProductImage $productImage
+   * @param string $operation
    *
    * @return $this
    */
-  public function addProductImage( ProductImage $productImage )
+  public function addProductImage( ProductImage $productImage, $operation = self::OPERATION_ADD )
   {
     if ( ! isset( $this->images ) )
     {
       $this->images = [];
     }
-    $productImage->operation = self::OPERATION_UPDATE_CREATE;
+    $productImage->operation = $operation;
 
     $this->images[] = $productImage;
 
@@ -243,7 +248,7 @@ class Product extends Model
     $this->attributes[] = [
       'name'      => 'description',
       'value'     => $description,
-      'operation' => self::OPERATION_UPDATE_CREATE,
+      'operation' => self::OPERATION_ADD,
     ];
 
     return $this;
@@ -303,16 +308,17 @@ class Product extends Model
    * Add pricing
    *
    * @param ProductPricing $pricing
+   * @param string $operation
    *
    * @return $this
    */
-  public function addPrice( ProductPricing $pricing )
+  public function addPrice( ProductPricing $pricing, string $operation = self::OPERATION_ADD )
   {
     if ( ! isset( $this->pricing ) )
     {
       $this->pricing = [];
     }
-    $pricing->operation = self::OPERATION_UPDATE_CREATE;
+    $pricing->operation = $operation;
 
     $this->pricing[] = $pricing;
 
@@ -320,15 +326,30 @@ class Product extends Model
   }
 
   /**
-   * Update pricing
+   * Replace All prices
    *
-   * @param ProductPricing $pricing
+   * @param ProductPricing|ProductPricing[] $prices
    *
    * @return $this
    */
-  public function updatePrice( ProductPricing $pricing )
+  public function replaceAllPrices( $prices )
   {
-    return $this->addPrice( $pricing );
+    $prices = is_array( $prices ) ? $prices : [ $prices ];
+    // unset operation property from vendors
+    foreach ( $prices as $index => $pricing )
+    {
+      if ( $pricing instanceof ProductPricing )
+      {
+        unset( $pricing->operation );
+      } else if ( is_array( $pricing ) )
+      {
+        unset( $prices[ $index ]['operation'] );
+      }
+    }
+
+    $this->pricing = $prices;
+
+    return $this;
   }
 
   /**
@@ -355,16 +376,17 @@ class Product extends Model
    * Add a vendor product
    *
    * @param VendorProduct $vendorProduct
+   * @param string $operation
    *
    * @return $this
    */
-  public function addVendor( VendorProduct $vendorProduct )
+  public function addVendor( VendorProduct $vendorProduct, string $operation = self::OPERATION_ADD )
   {
     if ( ! isset( $this->vendors ) )
     {
       $this->vendors = [];
     }
-    $vendorProduct->operation = self::OPERATION_UPDATE_CREATE;
+    $vendorProduct->operation = $operation;
 
     $this->vendors[] = $vendorProduct;
 
@@ -372,15 +394,30 @@ class Product extends Model
   }
 
   /**
-   * Update vendor product
+   * Replace All vendor products
    *
-   * @param VendorProduct $vendorProduct
+   * @param VendorProduct|VendorProduct[] $vendorProducts
    *
    * @return $this
    */
-  public function updateVendor( VendorProduct $vendorProduct )
+  public function replaceAllVendors( $vendorProducts )
   {
-    return $this->addVendor( $vendorProduct );
+    $vendorProducts = is_array( $vendorProducts ) ? $vendorProducts : [ $vendorProducts ];
+    // unset operation property from vendors
+    foreach ( $vendorProducts as $index => $vendorProduct )
+    {
+      if ( $vendorProduct instanceof VendorProduct )
+      {
+        unset( $vendorProduct->operation );
+      } else if ( is_array( $vendorProduct ) )
+      {
+        unset( $vendorProducts[ $index ]['operation'] );
+      }
+    }
+
+    $this->vendors = $vendorProducts;
+
+    return $this;
   }
 
   /**
@@ -407,16 +444,17 @@ class Product extends Model
    * Add a category
    *
    * @param ProductToCategory $category
+   * @param string $operation
    *
    * @return $this
    */
-  public function addToCategory( ProductToCategory $category )
+  public function addToCategory( ProductToCategory $category, $operation = self::OPERATION_ADD )
   {
     if ( ! isset( $this->categories ) )
     {
       $this->categories = [];
     }
-    $category->operation = self::OPERATION_UPDATE_CREATE;
+    $category->operation = $operation;
 
     $this->categories[] = $category;
 
@@ -428,10 +466,11 @@ class Product extends Model
    *
    * @param int $categoryId
    * @param bool $isPrimary
+   * @param string $operation
    *
    * @return $this
    */
-  public function addCategory( int $categoryId, bool $isPrimary = false )
+  public function addCategory( int $categoryId, bool $isPrimary = false, $operation = self::OPERATION_ADD )
   {
     if ( ! isset( $this->categories ) )
     {
@@ -441,7 +480,7 @@ class Product extends Model
     $this->categories[] = [
       'category_id' => $categoryId,
       'is_primary'  => $isPrimary,
-      'operation'   => self::OPERATION_UPDATE_CREATE,
+      'operation'   => $operation,
     ];
 
     return $this;
@@ -462,6 +501,33 @@ class Product extends Model
     }
 
     $this->categories[] = [ 'category_id' => $categoryId, 'operation' => self::OPERATION_DELETE ];
+
+    return $this;
+  }
+
+  /**
+   * Replace All categories
+   *
+   * @param ProductToCategory|ProductToCategory[] $categories
+   *
+   * @return $this
+   */
+  public function replaceAllCategories( $categories )
+  {
+    $categories = is_array( $categories ) ? $categories : [ $categories ];
+    // unset operation property from vendors
+    foreach ( $categories as $index => $category )
+    {
+      if ( $category instanceof ProductToCategory )
+      {
+        unset( $category->operation );
+      } else if ( is_array( $category ) )
+      {
+        unset( $categories[ $index ]['operation'] );
+      }
+    }
+
+    $this->categories = $categories;
 
     return $this;
   }
@@ -522,16 +588,17 @@ class Product extends Model
    * Add an attribute
    *
    * @param ProductAttribute $attribute
+   * @param string $operation
    *
    * @return $this
    */
-  public function addProductAttribute( ProductAttribute $attribute )
+  public function addProductAttribute( ProductAttribute $attribute, string $operation = self::OPERATION_ADD )
   {
     if ( ! isset( $this->attributes ) )
     {
       $this->attributes = [];
     }
-    $attribute->operation = self::OPERATION_UPDATE_CREATE;
+    $attribute->operation = $operation;
 
     $this->attributes[] = $attribute;
 
@@ -543,17 +610,18 @@ class Product extends Model
    *
    * @param int $attributeId
    * @param $value
+   * @param string $operation
    *
    * @return $this
    */
-  public function addAttribute( int $attributeId, $value )
+  public function addAttribute( int $attributeId, $value, string $operation = self::OPERATION_ADD )
   {
     if ( ! isset( $this->attributes ) )
     {
       $this->attributes = [];
     }
 
-    $this->attributes[] = [ 'id' => $attributeId, 'value' => $value, 'operation' => self::OPERATION_UPDATE_CREATE ];
+    $this->attributes[] = [ 'id' => $attributeId, 'value' => $value, 'operation' => $operation ];
 
     return $this;
   }
@@ -574,6 +642,33 @@ class Product extends Model
     }
 
     $this->attributes[] = [ 'id' => $attributeId, 'operation' => self::OPERATION_DELETE ];
+
+    return $this;
+  }
+
+  /**
+   * Replace All attributes
+   *
+   * @param ProductAttribute|ProductAttribute[]|array $attributes
+   *
+   * @return $this
+   */
+  public function replaceAllAttributes( $attributes )
+  {
+    $attributes = is_array( $attributes ) ? $attributes : [ $attributes ];
+    // unset operation property from vendors
+    foreach ( $attributes as $index => $attribute )
+    {
+      if ( $attribute instanceof ProductAttribute )
+      {
+        unset( $attribute->operation );
+      } else if ( is_array( $attribute ) )
+      {
+        unset( $attributes[ $index ]['operation'] );
+      }
+    }
+
+    $this->attributes = $attributes;
 
     return $this;
   }

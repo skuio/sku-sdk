@@ -8,11 +8,9 @@ abstract class Model
    * Operations
    */
   // for array of objects
-  const OPERATION_UPDATE_CREATE = 'updateOrCreate';
-  const OPERATION_DELETE        = 'delete';
-  // for arrays
-  const OPERATION_SET    = 'set';
-  const OPERATION_APPEND = 'append';
+  const OPERATION_ADD     = 'updateOrCreate';
+  const OPERATION_REPLACE = 'updateOrCreate';
+  const OPERATION_DELETE  = 'delete';
 
   public function __construct( array $attributes = null )
   {
