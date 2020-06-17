@@ -14,12 +14,11 @@ use Skuio\Sdk\Model;
  * @property int|null $store_id
  * @property string|null $store_name
  * @property string $status
+ * @property string fulfillment_status
  * @property int|null $customer_id
  * @property int|null $shipping_address_id
  * @property int|null $billing_address_id
- * @property float|null $discount
  * @property float|null $total
- * @property int|null $warehouse_id
  * @property int|null $shipping_method_id
  * @property string $currency_code
  * @property string|null $payment_status
@@ -46,6 +45,19 @@ class SalesOrder extends Model
     self::STATUS_OPEN,
     self::STATUS_CLOSED,
   ];
+
+  /**
+   * Fulfillment Statues
+   */
+  const FULFILLMENT_STATUS_UNFULFILLED         = 'unfulfilled';
+  const FULFILLMENT_STATUS_PARTIALLY_FULFILLED = 'partially_fulfilled';
+  const FULFILLMENT_STATUS_FULFILLED           = 'fulfilled';
+  const FULFILLMENT_STATUES                    = [
+    self::FULFILLMENT_STATUS_UNFULFILLED,
+    self::FULFILLMENT_STATUS_PARTIALLY_FULFILLED,
+    self::FULFILLMENT_STATUS_FULFILLED,
+  ];
+
 
   /**
    * Set shipping address

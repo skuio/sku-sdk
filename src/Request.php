@@ -44,6 +44,7 @@ class Request
   private $tableSpecifications = self::TS_EXCLUDED;
   private $total               = self::TOTAL_EXCLUDED;
   private $params              = [];
+  private $visible_only        = 0;
 
   /**
    * Filter between columns "and" or "or"
@@ -97,6 +98,18 @@ class Request
   {
     $this->limit = $limit;
   }
+
+  /**
+   * Set Visible only
+   *
+   * @param int $visible_only
+   */
+  public function setVisibleOnly( int $visible_only )
+  {
+    $this->visible_only = $visible_only;
+  }
+
+
 
   /**
    * Set current page
@@ -214,6 +227,13 @@ class Request
     {
       $response['total'] = $this->total;
     }
+
+    if ( ! empty( $this->visible_only ) )
+    {
+      $response['visible_only'] = $this->visible_only;
+    }
+
+
 
     if ( ! empty( $this->params ) )
     {

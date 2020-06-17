@@ -166,11 +166,10 @@ function createSalesOrder()
   $salesOrder->sales_channel_id   = 1;
   $salesOrder->customer_reference = '211149608634-2142858820773553';
   $salesOrder->status             = 'open';
+  $salesOrder->fulfillment_status = 'unfulfilled';
   $salesOrder->currency_code      = 'USD';
-  $salesOrder->discount           = 10;
   $salesOrder->order_date         = '2019-06-19T06:46:27+00:00';
   $salesOrder->receive_by_date    = '2019-06-19T06:46:27+00:00';
-  $salesOrder->warehouse_id       = 1;
   $salesOrder->shipping_method_id = 1;
 
   $billing_address               = new \Skuio\Sdk\Model\Address();

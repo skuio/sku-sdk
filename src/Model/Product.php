@@ -290,7 +290,7 @@ class Product extends Model
   }
 
   /**
-   * Add tags to the product
+   * Delete tags from product
    *
    * @param string|array $tags
    *
