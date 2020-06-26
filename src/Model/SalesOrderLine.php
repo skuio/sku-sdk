@@ -22,6 +22,7 @@ use Skuio\Sdk\Model;
  * @property string|null $nominal_code_name
  * @property string|null $nominal_code
  * @property bool|null $is_product
+ * @property int $warehouse_id
  */
 class SalesOrderLine extends Model
 {

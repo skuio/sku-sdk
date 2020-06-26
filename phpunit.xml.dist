@@ -15,5 +15,8 @@
         <testsuite name="connection">
             <directory>tests/SchemaTest.php</directory>
         </testsuite>
+        <testsuite name="Feature">
+            <directory suffix="Test.php">./tests/SalesOrdersTest.php</directory>
+        </testsuite>
     </testsuites>
 </phpunit>

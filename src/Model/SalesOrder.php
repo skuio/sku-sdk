@@ -10,26 +10,26 @@ use Skuio\Sdk\Model;
  * @package Skuio\Sdk\Model
  *
  * @property int $id
- * @property string $customer_reference
+ * @property string|null $sales_order_number
  * @property int|null $store_id
  * @property string|null $store_name
- * @property string $status
- * @property string fulfillment_status
+ * @property string $order_status
+ * @property string|null $fulfillment_status
  * @property int|null $customer_id
  * @property int|null $shipping_address_id
  * @property int|null $billing_address_id
- * @property float|null $total
  * @property int|null $shipping_method_id
- * @property string $currency_code
+ * @property string|null $currency_code
  * @property string|null $payment_status
  * @property string $order_date
  * @property string|null $payment_date
  * @property string|null $ship_by_date
  * @property string|null $receive_by_date
- * @property array $shipping_address
- * @property array $billing_address
- * @property array $customer_address
+ * @property Address|null $shipping_address
+ * @property Address|null $billing_address
  * @property array $sales_order_lines
+ * @property int|null $currency_id
+ * @property Address|null $customer
  */
 class SalesOrder extends Model
 {
@@ -96,7 +96,7 @@ class SalesOrder extends Model
    */
   public function setCustomerAddress( Address $customerAddress )
   {
-    $this->customer_address = $customerAddress;
+    $this->customer = $customerAddress;
 
     return $this;
   }
