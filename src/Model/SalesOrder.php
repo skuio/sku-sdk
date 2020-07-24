@@ -55,7 +55,7 @@ class SalesOrder extends Model
   const FULFILLMENT_STATUES                    = [
     self::FULFILLMENT_STATUS_UNFULFILLED,
     self::FULFILLMENT_STATUS_PARTIALLY_FULFILLED,
-    self::FULFILLMENT_STATUS_FULFILLED, 
+    self::FULFILLMENT_STATUS_FULFILLED,
   ];
 
 
