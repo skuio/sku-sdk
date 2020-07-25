@@ -13,23 +13,25 @@ use Skuio\Sdk\Model;
  * @property string|null $sales_order_number
  * @property int|null $store_id
  * @property string|null $store_name
+ * @property int|null $shipping_method_id
  * @property string $order_status
- * @property string|null $fulfillment_status
  * @property int|null $customer_id
  * @property int|null $shipping_address_id
  * @property int|null $billing_address_id
- * @property int|null $shipping_method_id
- * @property string|null $currency_code
  * @property string|null $payment_status
+ * @property int|null $currency_id
+ * @property string|null $currency_code
  * @property string $order_date
  * @property string|null $payment_date
  * @property string|null $ship_by_date
  * @property string|null $receive_by_date
+ * @property string|null $fulfilled_at required if order_status is closed
+ * @property string|null $tracking_number only used if order_status is closed
+ *
+ * @property Address|null $customer
  * @property Address|null $shipping_address
  * @property Address|null $billing_address
- * @property array $sales_order_lines
- * @property int|null $currency_id
- * @property Address|null $customer
+ * @property SalesOrderLine[]|null $sales_order_lines
  */
 class SalesOrder extends Model
 {
@@ -45,19 +47,6 @@ class SalesOrder extends Model
     self::STATUS_OPEN,
     self::STATUS_CLOSED,
   ];
-
-  /**
-   * Fulfillment Statues
-   */
-  const FULFILLMENT_STATUS_UNFULFILLED         = 'unfulfilled';
-  const FULFILLMENT_STATUS_PARTIALLY_FULFILLED = 'partially_fulfilled';
-  const FULFILLMENT_STATUS_FULFILLED           = 'fulfilled';
-  const FULFILLMENT_STATUES                    = [
-    self::FULFILLMENT_STATUS_UNFULFILLED,
-    self::FULFILLMENT_STATUS_PARTIALLY_FULFILLED,
-    self::FULFILLMENT_STATUS_FULFILLED, 
-  ];
-
 
   /**
    * Set shipping address

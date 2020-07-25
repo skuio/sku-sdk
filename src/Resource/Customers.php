@@ -2,14 +2,12 @@
 
 namespace Skuio\Sdk\Resource;
 
-use Skuio\Sdk\Model\Address;
-use Skuio\Sdk\Model\Product;
-use Skuio\Sdk\Request;
-use Skuio\Sdk\Sdk;
 use Exception;
 use InvalidArgumentException;
+use Skuio\Sdk\Model\Address;
+use Skuio\Sdk\Request;
 use Skuio\Sdk\Response;
-use function Couchbase\defaultDecoder;
+use Skuio\Sdk\Sdk;
 
 class Customers extends Sdk
 {

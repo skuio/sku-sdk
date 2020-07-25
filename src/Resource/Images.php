@@ -2,10 +2,9 @@
 
 namespace Skuio\Sdk\Resource;
 
+use Exception;
 use Skuio\Sdk\Response;
 use Skuio\Sdk\Sdk;
-use Exception;
-use InvalidArgumentException;
 
 class Images extends Sdk
 {

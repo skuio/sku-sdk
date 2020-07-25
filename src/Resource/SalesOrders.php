@@ -7,6 +7,7 @@ use InvalidArgumentException;
 use Skuio\Sdk\Model\Import;
 use Skuio\Sdk\Model\SalesOrder;
 use Skuio\Sdk\Request;
+use Skuio\Sdk\Request\FulfillSalesOrderRequest;
 use Skuio\Sdk\Response;
 use Skuio\Sdk\Sdk;
 
@@ -129,7 +130,6 @@ class SalesOrders extends Sdk
   public function archive( int $id )
   {
     return $this->authorizedRequest( "{$this->endpoint}/{$id}/archive", null, self::METHOD_PUT );
-
   }
 
   /**
@@ -143,7 +143,6 @@ class SalesOrders extends Sdk
   public function unarchived( int $id )
   {
     return $this->authorizedRequest( "{$this->endpoint}/{$id}/unarchived", null, self::METHOD_PUT );
-
   }
 
   /**
@@ -189,6 +188,24 @@ class SalesOrders extends Sdk
   }
 
   /**
+   * Fulfill sales order
+   *
+   * @param FulfillSalesOrderRequest $request
+   *
+   * @return Response
+   * @throws Exception
+   */
+  public function fulfill( FulfillSalesOrderRequest $request )
+  {
+    if ( empty( $request->sales_order_id ) )
+    {
+      throw new InvalidArgumentException( 'The "sales_order_id" field is required' );
+    }
+
+    return $this->authorizedRequest( "{$this->endpoint}/{$request->sales_order_id}/fulfill", $request->toJson(), self::METHOD_POST );
+  }
+
+  /**
    * Bulk operation
    *
    * @param string $endpoint
@@ -216,8 +233,6 @@ class SalesOrders extends Sdk
 
       return $this->authorizedRequest( $endpoint . '?' . $filters->getParams(), null, $method );
     }
-
-    echo $endpoint;
 
     // bulk operation by salesOrdersIds ids
     return $this->authorizedRequest( $endpoint, json_encode( [ 'ids' => $salesOrdersIds ] ), $method );

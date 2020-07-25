@@ -9,10 +9,11 @@ use Skuio\Sdk\Model;
  *
  * @package Skuio\Sdk\Model
  *
- * @property string $name
  * @property string $company
+ * @property string $name
  * @property string $email
  * @property string $phone
+ * @property string $fax
  * @property string $address1
  * @property string $address2
  * @property string $address3
@@ -22,6 +23,7 @@ use Skuio\Sdk\Model;
  * @property string $zip
  * @property string $country
  * @property string $country_code
+ * @property string $label
  */
 class Address extends Model
 {
