@@ -1,0 +1,118 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: brightantwiboasiako
+ * Date: 7/24/20
+ * Time: 8:52 AM
+ */
+
+namespace Skuio\Sdk\Model;
+
+
+use Carbon\Carbon;
+use Skuio\Sdk\Model;
+
+/**
+ * Class PurchaseOrder
+ * @package Skuio\Sdk\Model
+ *
+ * @property int $id
+ * @property Carbon $purchase_order_date
+ * @property string $purchase_order_number
+ * @property string $submission_format
+ * @property string $approval_status
+ * @property int $payment_term_id
+ * @property int $incoterm_id
+ * @property int $shipping_method_id
+ * @property int $vendor_id
+ * @property int $vendor_warehouse_id
+ * @property int $destination_warehouse_id
+ * @property int $currency_id
+ * @property string $currency_code
+ * @property Carbon $estimated_delivery_date
+ * @property string $vendor_notes
+ * @property array $purchase_order_lines
+ */
+class PurchaseOrder extends Model
+{
+
+    /**
+     * Order Statuses
+     */
+    const STATUS_DRAFT  = 'draft';
+    const STATUS_OPEN   = 'open';
+    const STATUS_CLOSED = 'closed';
+    const STATUS        = [
+        self::STATUS_DRAFT,
+        self::STATUS_OPEN,
+        self::STATUS_CLOSED,
+    ];
+
+    // Approval Statuses
+    const APPROVAL_STATUS_PENDING  = 'pending';
+    const APPROVAL_STATUS_APPROVED = 'approved';
+    const APPROVAL_STATUS          = [ self::APPROVAL_STATUS_PENDING, self::APPROVAL_STATUS_APPROVED ];
+
+    /**
+     * Submission Statuses
+     */
+    const SUBMISSION_STATUS_UNSUBMITTED           = 'unsubmitted';
+    const SUBMISSION_STATUS_SUBMITTED             = 'submitted';
+    const SUBMISSION_STATUS_CHANGE_REQUEST_VENDOR = 'Change Request - Vendor Initiated';
+    const SUBMISSION_STATUS_CHANGE_REQUEST_BUYER  = 'Change Request - Buyer Initiated';
+    const SUBMISSION_STATUS_FINALIZED             = 'finalized';
+    const SUBMISSION_STATUS_CANCELED              = 'canceled'; // by Vendor (After Submission)
+    const SUBMISSION_STATUS_VOIDED                = 'voided '; // by Buyer (Before Submission)
+    const SUBMISSION_STATUS                       = [
+        self::SUBMISSION_STATUS_UNSUBMITTED,
+        self::SUBMISSION_STATUS_SUBMITTED,
+        self::SUBMISSION_STATUS_CHANGE_REQUEST_BUYER,
+        self::SUBMISSION_STATUS_CHANGE_REQUEST_VENDOR,
+        self::SUBMISSION_STATUS_FINALIZED,
+        self::SUBMISSION_STATUS_CANCELED,
+        self::SUBMISSION_STATUS_VOIDED,
+    ];
+
+    /**
+     * Receipt Statuses
+     */
+    const RECEIPT_STATUS_UNRECEIVED         = 'unreceived';
+    const RECEIPT_STATUS_RECEIVED           = 'received';
+    const RECEIPT_STATUS_PARTIALLY_RECEIVED = 'partially_received';
+    const RECEIPT_STATUS_DROPSHIP           = 'Dropship';
+    const RECEIPT_STATUS                    = [
+        self::RECEIPT_STATUS_UNRECEIVED,
+        self::RECEIPT_STATUS_RECEIVED,
+        self::RECEIPT_STATUS_PARTIALLY_RECEIVED,
+        self::RECEIPT_STATUS_DROPSHIP,
+    ];
+
+//
+//    const SHIPMENT_STATUS_UNSHIPPED         = 'unshipped';
+//    const SHIPMENT_STATUS_SHIPPED_WAREHOUSE = 'shipped_to_warehouse';
+//    const SHIPMENT_STATUS_SHIPPED_CUSTOMER  = 'shipped_to_customer'; // In the case of dropship orders
+//    const SHIPMENT_STATUS                   = [
+//        self::SHIPMENT_STATUS_UNSHIPPED,
+//        self::SHIPMENT_STATUS_SHIPPED_WAREHOUSE,
+//        self::SHIPMENT_STATUS_SHIPPED_CUSTOMER,
+//    ];
+//
+//    const INVOICE_STATUS_UNINVOICED         = 'uninvoiced';
+//    const INVOICE_STATUS_PARTIALLY_INVOICED = 'partially_invoiced';
+//    const INVOICE_STATUS_INVOICED           = 'invoiced'; // Ready to submit to Accounting Software
+//    const INVOICE_STATUS_INVOICED_AND_PAID  = 'invoiced_and_paid'; // Can be determined by pulling status from Accounting Software
+//    const INVOICE_STATUS                    = [
+//        self::INVOICE_STATUS_UNINVOICED,
+//        self::INVOICE_STATUS_PARTIALLY_INVOICED,
+//        self::INVOICE_STATUS_INVOICED,
+//        self::INVOICE_STATUS_INVOICED_AND_PAID,
+//    ];
+//
+//    const SUBMISSION_FORMAT_PDF_ATTACHMENT = 'email_pdf_attachment';
+//    const SUBMISSION_FORMAT_MANUAL         = 'manual';
+//    const SUBMISSION_FORMATS               = [
+//        self::SUBMISSION_FORMAT_PDF_ATTACHMENT,
+//        self::SUBMISSION_FORMAT_MANUAL,
+//    ];
+
+}
