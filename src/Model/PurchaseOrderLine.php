@@ -18,6 +18,7 @@ use Skuio\Sdk\Model;
  *
  * @property int $id
  * @property int $product_id
+ * @property string|null $sku
  * @property string $description
  * @property int $quantity
  * @property float $amount

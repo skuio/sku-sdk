@@ -115,4 +115,23 @@ class PurchaseOrder extends Model
 //        self::SUBMISSION_FORMAT_MANUAL,
 //    ];
 
+  /**
+   * Add sales order line
+   *
+   * @param SalesOrderLine $salesOrderLine
+   *
+   * @return $this
+   */
+  public function addPurchaseOrderLine( PurchaseOrderLine $purchaseOrderLine )
+  {
+    if ( ! isset( $this->purchase_order_lines ) )
+    {
+      $this->purchaes_order_lines = [];
+    }
+
+    $this->purchase_order_lines[] = $purchaseOrderLine;
+
+    return $this;
+  }
+
 }
