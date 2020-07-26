@@ -21,6 +21,7 @@ use Skuio\Sdk\Model;
  * @property float|null $minimum_order_quantity
  * @property float|null $minimum_purchase_order
  * @property bool $is_supplier
+ * @property Warehouse $warehouse
  */
 class Vendor extends Model
 {

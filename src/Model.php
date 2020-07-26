@@ -23,7 +23,7 @@ abstract class Model
   /**
    * Properties to array
    *
-   * @return mixed
+   * @return array
    */
   public function toArray()
   {

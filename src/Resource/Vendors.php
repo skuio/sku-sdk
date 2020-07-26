@@ -6,6 +6,7 @@ use Exception;
 use InvalidArgumentException;
 use Skuio\Sdk\Model\Vendor;
 use Skuio\Sdk\Model\VendorProduct;
+use Skuio\Sdk\Model\Warehouse;
 use Skuio\Sdk\Request;
 use Skuio\Sdk\Response;
 use Skuio\Sdk\Sdk;
@@ -42,7 +43,14 @@ class Vendors extends Sdk
    */
   public function store( Vendor $vendor )
   {
-    return $this->authorizedRequest( $this->endpoint, $vendor->toJson(), Sdk::METHOD_POST );
+    // Create the vendor
+    $response = $this->authorizedRequest( $this->endpoint, $vendor->toJson(), Sdk::METHOD_POST );
+    // If warehouse is provided, we create the warehouse for the vendor
+    if(isset($vendor->warehouse)){
+        $this->createWarehouse($response->getData()['id'], $vendor->warehouse);
+    }
+
+    return $response;
   }
 
   /**
@@ -132,4 +140,27 @@ class Vendors extends Sdk
 
     return $this->authorizedRequest( "vendor-products/{$vendorProduct->id}", $vendorProduct->toJson(), Sdk::METHOD_PUT );
   }
+
+    /**
+     * @param $vendorId
+     * @param Warehouse $warehouse
+     * @return Response
+     */
+  public function createWarehouse($vendorId, Warehouse $warehouse){
+      return $this->authorizedRequest("{$this->endpoint}/{$vendorId}/warehouses", $warehouse->toJson(), Sdk::METHOD_POST);
+  }
+
+    /**
+     * Delete a vendor by id
+     *
+     * @param int $id
+     *
+     * @return Response
+     * @throws Exception
+     */
+    public function delete( int $id )
+    {
+        return $this->authorizedRequest( $this->endpoint . '/' . $id, null, self::METHOD_DELETE );
+    }
+
 }

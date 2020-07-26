@@ -44,7 +44,7 @@ class PurchaseOrdersTest extends TestCase
 
         $purchaseOrderLine              = new PurchaseOrderLine();
         $purchaseOrderLine->description = 'Walbro GSL392 255 LPH High Pressure Inline Fuel Pump (NO KIT INCLUDED)';
-        $purchaseOrderLine->product_id         = 1712;
+        $purchaseOrderLine->sku         = "GSL392";
         $purchaseOrderLine->quantity    = 2;
         $purchaseOrderLine->amount      = 130.5;
         $purchaseOrderLine->tax         = 0;

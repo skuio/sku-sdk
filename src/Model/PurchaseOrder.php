@@ -87,38 +87,11 @@ class PurchaseOrder extends Model
         self::RECEIPT_STATUS_DROPSHIP,
     ];
 
-//
-//    const SHIPMENT_STATUS_UNSHIPPED         = 'unshipped';
-//    const SHIPMENT_STATUS_SHIPPED_WAREHOUSE = 'shipped_to_warehouse';
-//    const SHIPMENT_STATUS_SHIPPED_CUSTOMER  = 'shipped_to_customer'; // In the case of dropship orders
-//    const SHIPMENT_STATUS                   = [
-//        self::SHIPMENT_STATUS_UNSHIPPED,
-//        self::SHIPMENT_STATUS_SHIPPED_WAREHOUSE,
-//        self::SHIPMENT_STATUS_SHIPPED_CUSTOMER,
-//    ];
-//
-//    const INVOICE_STATUS_UNINVOICED         = 'uninvoiced';
-//    const INVOICE_STATUS_PARTIALLY_INVOICED = 'partially_invoiced';
-//    const INVOICE_STATUS_INVOICED           = 'invoiced'; // Ready to submit to Accounting Software
-//    const INVOICE_STATUS_INVOICED_AND_PAID  = 'invoiced_and_paid'; // Can be determined by pulling status from Accounting Software
-//    const INVOICE_STATUS                    = [
-//        self::INVOICE_STATUS_UNINVOICED,
-//        self::INVOICE_STATUS_PARTIALLY_INVOICED,
-//        self::INVOICE_STATUS_INVOICED,
-//        self::INVOICE_STATUS_INVOICED_AND_PAID,
-//    ];
-//
-//    const SUBMISSION_FORMAT_PDF_ATTACHMENT = 'email_pdf_attachment';
-//    const SUBMISSION_FORMAT_MANUAL         = 'manual';
-//    const SUBMISSION_FORMATS               = [
-//        self::SUBMISSION_FORMAT_PDF_ATTACHMENT,
-//        self::SUBMISSION_FORMAT_MANUAL,
-//    ];
 
   /**
-   * Add sales order line
+   * Add purchase order line
    *
-   * @param SalesOrderLine $salesOrderLine
+   * @param PurchaseOrderLine $purchaseOrderLine
    *
    * @return $this
    */
@@ -126,7 +99,7 @@ class PurchaseOrder extends Model
   {
     if ( ! isset( $this->purchase_order_lines ) )
     {
-      $this->purchaes_order_lines = [];
+      $this->purchase_order_lines = [];
     }
 
     $this->purchase_order_lines[] = $purchaseOrderLine;
