@@ -5,6 +5,7 @@ use Skuio\Sdk\Model\Vendor;
 use Skuio\Sdk\Resource\Vendors;
 use Skuio\Sdk\Sdk;
 use Skuio\Sdk\Model\Warehouse;
+use Skuio\Sdk\Model\WarehouseLocation;
 
 class VendorsTest extends TestCase
 {
@@ -54,7 +55,7 @@ class VendorsTest extends TestCase
       $warehouse->name = 'Default Vendor Warehouse API';
 
       // Add to vendor
-      $vendor->warehouse = $warehouse;
+      $vendor->addWarehouse($warehouse);
 
       $vendors = new Vendors();
       $response = $vendors->store($vendor);

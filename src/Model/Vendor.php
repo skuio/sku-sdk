@@ -26,4 +26,14 @@ use Skuio\Sdk\Model;
 class Vendor extends Model
 {
 
+    /**
+     * @param Warehouse $warehouse
+     * @return $this
+     */
+    public function addWarehouse(Warehouse $warehouse )
+    {
+        $this->warehouse = $warehouse;
+        return $this;
+    }
+    
 }
