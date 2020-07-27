@@ -53,6 +53,9 @@ class VendorsTest extends TestCase
 
       $warehouse = new Warehouse();
       $warehouse->name = 'Default Vendor Warehouse API';
+      $warehouse->address_name = 'Vendor Address Name';
+      $warehouse->address1 = '123 High St';
+      $warehouse->zip = '12345';
 
       // Add to vendor
       $vendor->addWarehouse($warehouse);
