@@ -25,4 +25,19 @@ use Skuio\Sdk\Model;
 class PurchaseOrderShipment extends Model
 {
 
+    /**
+     * @param int $lineId
+     * @param int $quantity
+     */
+    public function addShipmentLine(int $lineId, int $quantity){
+        if(!isset($this->shipment_lines)){
+            $this->shipment_lines = [];
+        }
+
+        $this->shipment_lines[] = [
+            'purchase_order_line_id' => $lineId,
+            'quantity' => $quantity
+        ];
+    }
+
 }

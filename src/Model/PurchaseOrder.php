@@ -58,8 +58,8 @@ class PurchaseOrder extends Model
      */
     const SUBMISSION_STATUS_UNSUBMITTED           = 'unsubmitted';
     const SUBMISSION_STATUS_SUBMITTED             = 'submitted';
-    const SUBMISSION_STATUS_CHANGE_REQUEST_VENDOR = 'Change Request - Vendor Initiated';
-    const SUBMISSION_STATUS_CHANGE_REQUEST_BUYER  = 'Change Request - Buyer Initiated';
+    const SUBMISSION_STATUS_CHANGE_REQUEST_SUPPLIER = 'change_supplier';
+    const SUBMISSION_STATUS_CHANGE_REQUEST_BUYER  = 'change_buyer';
     const SUBMISSION_STATUS_FINALIZED             = 'finalized';
     const SUBMISSION_STATUS_CANCELED              = 'canceled'; // by Vendor (After Submission)
     const SUBMISSION_STATUS_VOIDED                = 'voided '; // by Buyer (Before Submission)
@@ -67,7 +67,7 @@ class PurchaseOrder extends Model
         self::SUBMISSION_STATUS_UNSUBMITTED,
         self::SUBMISSION_STATUS_SUBMITTED,
         self::SUBMISSION_STATUS_CHANGE_REQUEST_BUYER,
-        self::SUBMISSION_STATUS_CHANGE_REQUEST_VENDOR,
+        self::SUBMISSION_STATUS_CHANGE_REQUEST_SUPPLIER,
         self::SUBMISSION_STATUS_FINALIZED,
         self::SUBMISSION_STATUS_CANCELED,
         self::SUBMISSION_STATUS_VOIDED,
@@ -87,6 +87,32 @@ class PurchaseOrder extends Model
         self::RECEIPT_STATUS_DROPSHIP,
     ];
 
+
+    /**
+     * Shipment Status
+     */
+    const SHIPMENT_STATUS_UNSHIPPED         = 'unshipped';
+    const SHIPMENT_STATUS_SHIPPED_WAREHOUSE = 'shipped_to_warehouse';
+    const SHIPMENT_STATUS_SHIPPED_CUSTOMER  = 'shipped_to_customer'; // In the case of dropship orders
+    const SHIPMENT_STATUS                   = [
+        self::SHIPMENT_STATUS_UNSHIPPED,
+        self::SHIPMENT_STATUS_SHIPPED_WAREHOUSE,
+        self::SHIPMENT_STATUS_SHIPPED_CUSTOMER,
+    ];
+
+    /**
+     * Invoice statuses
+     */
+    const INVOICE_STATUS_UNINVOICED         = 'uninvoiced';
+    const INVOICE_STATUS_PARTIALLY_INVOICED = 'partially_invoiced';
+    const INVOICE_STATUS_INVOICED           = 'invoiced'; // Ready to submit to Accounting Software
+    const INVOICE_STATUS_INVOICE_PAID  = 'invoice_paid'; // Can be determined by pulling status from Accounting Software
+    const INVOICE_STATUS                    = [
+        self::INVOICE_STATUS_UNINVOICED,
+        self::INVOICE_STATUS_PARTIALLY_INVOICED,
+        self::INVOICE_STATUS_INVOICED,
+        self::INVOICE_STATUS_INVOICE_PAID,
+    ];
 
   /**
    * Add purchase order line

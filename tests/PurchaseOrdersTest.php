@@ -13,6 +13,9 @@ use Skuio\Sdk\Resource\PurchaseOrders;
 use Skuio\Sdk\Sdk;
 use Skuio\Sdk\Model\PurchaseOrder;
 use Carbon\Carbon;
+use Skuio\Sdk\Model\PurchaseOrderReceipt;
+use Skuio\Sdk\Model\PurchaseOrderShipment;
+use Skuio\Sdk\Model\PurchaseOrderInvoice;
 
 class PurchaseOrdersTest extends TestCase
 {
@@ -141,6 +144,87 @@ class PurchaseOrdersTest extends TestCase
         $this->deletePurchaseOrderById($response->getData()['id']);
 
     }
+
+    public function testShipPurchaseOrder(){
+        Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
+        $purchaseOrder = $this->makePurchaseOrder();
+
+        $purchaseOrders = new PurchaseOrders();
+        $response = $purchaseOrders->store($purchaseOrder);
+
+        $purchaseOrder->id = $response->getData()['id'];
+
+        // Submit purchase order
+        $purchaseOrders->submit( $purchaseOrder );
+
+        // Get items/lines
+        $lines = $response->getData()['item_info'];
+
+        // Create shipment
+        $shipment = new PurchaseOrderShipment();
+        $shipment->purchase_order_id = $purchaseOrder->id;
+        $shipment->shipment_date = Carbon::now();
+        $shipment->addShipmentLine($lines[0]['id'], $lines[0]['item_quantity']);
+
+        $response = $purchaseOrders->createShipment($shipment);
+        $this->assertEquals( 200, $response->getStatusCode(), json_encode( $response->getResponse() ) );
+        $this->assertEquals($response->getData()['shipment_status'], PurchaseOrder::SHIPMENT_STATUS_SHIPPED_WAREHOUSE);
+
+
+        // Clean up
+        $this->deletePurchaseOrderById($purchaseOrder->id);
+
+    }
+
+
+    public function testReceivePurchaseOrder(){
+        Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
+        $purchaseOrder = $this->makePurchaseOrder();
+
+        $purchaseOrders = new PurchaseOrders();
+        $response = $purchaseOrders->store($purchaseOrder);
+
+        $purchaseOrder->id = $response->getData()['id'];
+
+        // Submit purchase order
+        $purchaseOrders->submit( $purchaseOrder );
+
+        // Get items/lines
+        $lines = $response->getData()['item_info'];
+
+        // Create shipment
+        $shipment = new PurchaseOrderShipment();
+        $shipment->purchase_order_id = $purchaseOrder->id;
+        $shipment->shipment_date = Carbon::now();
+        $shipment->addShipmentLine($lines[0]['id'], $lines[0]['item_quantity']);
+
+        $response = $purchaseOrders->createShipment($shipment);
+        $this->assertEquals( 200, $response->getStatusCode(), json_encode( $response->getResponse() ) );
+        $this->assertEquals($response->getData()['shipment_status'], PurchaseOrder::SHIPMENT_STATUS_SHIPPED_WAREHOUSE);
+
+
+        $fulfillments = $response->getData()['fulfillment_info'];
+
+        // Receive Shipment
+        $receipt = new PurchaseOrderReceipt();
+        $receipt->purchase_order_shipment_id = $fulfillments[0]['id'];
+        $receipt->received_at = Carbon::now();
+        $receipt->addReceiptLine($lines[0]['id'], $fulfillments[0]['shipment_item_quantity']);
+
+        $response = $purchaseOrders->receive($receipt);
+
+        $this->assertEquals( 200, $response->getStatusCode(), json_encode( $response->getResponse() ) );
+        $this->assertEquals($response->getData()['receipt_status'], PurchaseOrder::RECEIPT_STATUS_RECEIVED);
+
+
+        // Clean up
+        $this->deletePurchaseOrderById($purchaseOrder->id);
+
+    }
+
+
 
 
 }

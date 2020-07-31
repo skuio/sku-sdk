@@ -67,7 +67,8 @@ class Warehouse extends Model
      * @param WarehouseLocation $location
      * @return $this
      */
-    public function setDefaultLocation(WarehouseLocation $location){
+    public function setDefaultLocation(WarehouseLocation $location)
+    {
       $this->default_location = $location;
       return $this;
   }

@@ -11,12 +11,19 @@ namespace Skuio\Sdk\Resource;
 
 use Skuio\Sdk\Model\Import;
 use Skuio\Sdk\Model\PurchaseOrder;
+use Skuio\Sdk\Model\PurchaseOrderInvoice;
+use Skuio\Sdk\Model\PurchaseOrderShipment;
 use Skuio\Sdk\Request;
 use Skuio\Sdk\Response;
 use Exception;
 use InvalidArgumentException;
 use Skuio\Sdk\Sdk;
+use Skuio\Sdk\Model\PurchaseOrderReceipt;
 
+/**
+ * Class PurchaseOrders
+ * @package Skuio\Sdk\Resource
+ */
 class PurchaseOrders extends Sdk
 {
 
@@ -246,5 +253,70 @@ class PurchaseOrders extends Sdk
         // bulk operation by purchaseOrdersIds ids
         return $this->authorizedRequest( $endpoint, json_encode( [ 'ids' => $purchaseOrdersIds ] ), $method );
     }
+
+
+
+
+    /**
+     * @param PurchaseOrderShipment $shipment
+     * @return Response
+     */
+    public function createShipment(PurchaseOrderShipment $shipment )
+    {
+        if ( empty( $shipment->purchase_order_id ) )
+        {
+            throw new InvalidArgumentException( 'The "purchase order id" field is required.' );
+        }else if(empty($shipment->shipment_date)) {
+            throw new InvalidArgumentException( 'The "shipment date" field is required.' );
+        }else if(empty($shipment->shipment_lines)){
+            throw new InvalidArgumentException( 'The "shipment lines" field is required.' );
+        }
+
+        return $this->authorizedRequest( "purchase-order-shipments", $shipment->toJson(), self::METHOD_POST );
+    }
+
+
+    /**
+     * @param PurchaseOrderReceipt $request
+     * @return Response
+     */
+    public function receive(PurchaseOrderReceipt $request )
+    {
+        if ( empty( $request->purchase_order_shipment_id ) )
+        {
+            throw new InvalidArgumentException( 'The "purchase order shipment id" field is required.' );
+        }else if(empty($request->received_at)) {
+            throw new InvalidArgumentException( 'The "received at" field is required.' );
+        }else if(empty($request->receipt_lines)){
+            throw new InvalidArgumentException( 'The "receipt lines" field is required.' );
+        }
+
+        return $this->authorizedRequest( "purchase-order-shipments/receipt", $request->toJson(), self::METHOD_POST );
+    }
+
+
+    /**
+     * @param PurchaseOrderInvoice $invoice
+     * @return Response
+     */
+    public function invoice( PurchaseOrderInvoice $invoice )
+    {
+        if ( empty( $invoice->purchase_order_id ) )
+        {
+            throw new InvalidArgumentException( 'The "purchase order id" field is required.' );
+        }else if(empty($invoice->purchase_invoice_date)) {
+            throw new InvalidArgumentException( 'The "purchase invoice date" field is required.' );
+        }else if(empty($invoice->supplier_invoice_number)){
+            throw new InvalidArgumentException( 'The "supplier invoice number" field is required.' );
+        }
+        else if(empty($invoice->purchase_invoice_lines)){
+            throw new InvalidArgumentException( 'The "purchase invoice lines" field is required.' );
+        }
+
+        return $this->authorizedRequest( "purchase-invoices", $invoice->toJson(), self::METHOD_POST );
+    }
+
+
+
 
 }
