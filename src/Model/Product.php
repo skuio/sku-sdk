@@ -694,27 +694,17 @@ class Product extends Model
   }
 
     /**
-     * @param float $cost
-     */
-  public function setInventoryUnitCost(float $cost){
-      if(!isset($this->initial_inventory)){
-          $this->initial_inventory = [];
-          $this->initial_inventory['warehouses'] = [];
-      }
-      $this->initial_inventory['unit_cost'] = $cost;
-  }
-
-    /**
      * @param int $warehouseId
      * @param int $quantity
+     * @param float $unitCost
      */
-  public function addWarehouseInventory(int $warehouseId, int $quantity){
+  public function setInitialInventory(int $warehouseId, int $quantity, float $unitCost){
       if(!isset($this->initial_inventory)){
           $this->initial_inventory = [];
           $this->initial_inventory['warehouses'] = [];
       }
 
-      $this->initial_inventory['warehouses'][] = ['id' => $warehouseId, 'quantity' => $quantity];
+      $this->initial_inventory['warehouses'][] = ['id' => $warehouseId, 'quantity' => $quantity, 'unit_cost' => $unitCost];
   }
 
   public function __set( $name, $value )

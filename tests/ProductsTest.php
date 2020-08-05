@@ -155,9 +155,8 @@ class ProductsTest extends TestCase
         $product         = new Product();
         $product->id     = 1712;
 
-        $product->setInventoryUnitCost(10);
-        $product->addWarehouseInventory(1, 200);
-        $product->addWarehouseInventory(2, 200);
+        $product->setInitialInventory(1, 200, 10);
+        $product->setInitialInventory(2, 200, 5);
 
         $products = new Products();
 
