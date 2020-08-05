@@ -13,7 +13,8 @@ namespace Skuio\Sdk\Model;
  * Class PurchaseOrderShipmentLine
  * @package Skuio\Sdk\Model
  *
- * @property int $purchase_order_line_id
+ * @property int|null $purchase_order_line_id
+ * @property string|mixed|null $line_reference
  * @property int $quantity
  */
 class PurchaseOrderShipmentLine

@@ -26,6 +26,7 @@ use Skuio\Sdk\Model;
  * @property float $discount
  * @property Carbon $estimated_delivery_date
  * @property int $nominal_code_id
+ * @property string|mixed|null $line_reference
  */
 class PurchaseOrderLine extends Model
 {

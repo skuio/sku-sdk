@@ -40,4 +40,19 @@ class PurchaseOrderShipment extends Model
         ];
     }
 
+    /**
+     * @param $lineReference
+     * @param int $quantity
+     */
+    public function addShipmentLineByReference($lineReference, int $quantity){
+        if(!isset($this->shipment_lines)){
+            $this->shipment_lines = [];
+        }
+
+        $this->shipment_lines[] = [
+            'line_reference' => $lineReference,
+            'quantity' => $quantity
+        ];
+    }
+
 }
