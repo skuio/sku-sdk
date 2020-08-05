@@ -38,16 +38,16 @@ class PurchaseOrderReceipt extends Model
     }
 
     /**
-     * @param $lineReference
+     * @param $reference
      * @param int $quantity
      */
-    public function addShipmentReceiptLineByReference($lineReference, int $quantity){
+    public function addShipmentReceiptLineByReference($reference, int $quantity){
         if ( ! isset( $this->receipt_lines ) )
         {
             $this->receipt_lines = [];
         }
 
-        $this->receipt_lines[] = [ 'purchase_order_line_reference' => $lineReference, 'quantity' => $quantity ];
+        $this->receipt_lines[] = [ 'purchase_order_line_reference' => $reference, 'quantity' => $quantity ];
     }
 
 

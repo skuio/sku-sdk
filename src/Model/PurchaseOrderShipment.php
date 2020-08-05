@@ -26,31 +26,31 @@ class PurchaseOrderShipment extends Model
 {
 
     /**
-     * @param int $lineId
+     * @param int $purchaseOrderLineId
      * @param int $quantity
      */
-    public function addShipmentLine(int $lineId, int $quantity){
+    public function addShipmentLine(int $purchaseOrderLineId, int $quantity){
         if(!isset($this->shipment_lines)){
             $this->shipment_lines = [];
         }
 
         $this->shipment_lines[] = [
-            'purchase_order_line_id' => $lineId,
+            'purchase_order_line_id' => $purchaseOrderLineId,
             'quantity' => $quantity
         ];
     }
 
     /**
-     * @param $lineReference
+     * @param $reference
      * @param int $quantity
      */
-    public function addShipmentLineByReference($lineReference, int $quantity){
+    public function addShipmentLineByReference($reference, int $quantity){
         if(!isset($this->shipment_lines)){
             $this->shipment_lines = [];
         }
 
         $this->shipment_lines[] = [
-            'line_reference' => $lineReference,
+            'line_reference' => $reference,
             'quantity' => $quantity
         ];
     }
