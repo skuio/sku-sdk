@@ -34,6 +34,7 @@ use Skuio\Sdk\Model;
  * @property string $name
  * @property ProductImage[] $images
  * @property string[] $tags
+ * @property array $initial_inventory
  *
  * Pricing
  * @property ProductPricing[] $pricing
@@ -690,6 +691,30 @@ class Product extends Model
     $this->variations[] = $variant;
 
     return $this;
+  }
+
+    /**
+     * @param float $cost
+     */
+  public function setInventoryUnitCost(float $cost){
+      if(!isset($this->initial_inventory)){
+          $this->initial_inventory = [];
+          $this->initial_inventory['warehouses'] = [];
+      }
+      $this->initial_inventory['unit_cost'] = $cost;
+  }
+
+    /**
+     * @param int $warehouseId
+     * @param int $quantity
+     */
+  public function addWarehouseInventory(int $warehouseId, int $quantity){
+      if(!isset($this->initial_inventory)){
+          $this->initial_inventory = [];
+          $this->initial_inventory['warehouses'] = [];
+      }
+
+      $this->initial_inventory['warehouses'][] = ['id' => $warehouseId, 'quantity' => $quantity];
   }
 
   public function __set( $name, $value )
