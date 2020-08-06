@@ -191,16 +191,16 @@ class Products extends Sdk
   }
 
   /**
-   * Display product vendors
+   * Display product suppliers
    *
    * @param int $id
    *
    * @return Response
    * @throws Exception
    */
-  public function vendors( int $id )
+  public function suppliers( int $id )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/$id/vendors" );
+    return $this->authorizedRequest( "{$this->endpoint}/$id/suppliers" );
   }
 
   /**
@@ -244,18 +244,18 @@ class Products extends Sdk
   }
 
   /**
-   * Set default vendor to the product
+   * Set default supplier to the product
    *
    * @param int $id
    *
-   * @param int $vendorId
+   * @param int $supplierId
    *
    * @return Response
    * @throws Exception
    */
-  public function setDefaultVendor( int $id, int $vendorId )
+  public function setDefaultSupplier( int $id, int $supplierId )
   {
-    return $this->authorizedRequest( "{$this->endpoint}/{$id}/set-default-vendor/{$vendorId}", null, self::METHOD_PUT );
+    return $this->authorizedRequest( "{$this->endpoint}/{$id}/set-default-supplier/{$supplierId}", null, self::METHOD_PUT );
   }
 
   /**

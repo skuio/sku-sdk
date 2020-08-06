@@ -41,7 +41,7 @@ class PurchaseOrdersTest extends TestCase
         $purchaseOrder->approval_status       = $status;
         $purchaseOrder->currency_id      = 39;
         $purchaseOrder->purchase_order_date         = Carbon::now()->toDateTimeString();
-        $purchaseOrder->vendor_id = 1;
+        $purchaseOrder->supplier_id = 1;
         $purchaseOrder->currency_code = 'USD';
 
         $purchaseOrderLine              = new PurchaseOrderLine();

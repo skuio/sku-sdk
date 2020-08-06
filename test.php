@@ -6,7 +6,7 @@ use Skuio\Sdk\Model\Import;
 use Skuio\Sdk\Model\Product;
 use Skuio\Sdk\Model\SalesChannelBrand;
 use Skuio\Sdk\Resource\ProductCategories;
-use Skuio\Sdk\Resource\VendorPricingTiers;
+use Skuio\Sdk\Resource\SupplierPricingTiers;
 use Skuio\Sdk\Resource\Products;
 use Skuio\Sdk\Sdk;
 

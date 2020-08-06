@@ -9,12 +9,12 @@ use Skuio\Sdk\Request;
 use Skuio\Sdk\Response;
 use Skuio\Sdk\Sdk;
 
-class VendorPricingTiers extends Sdk
+class SupplierPricingTiers extends Sdk
 {
-  protected $endpoint = 'vendor-pricing-tiers';
+  protected $endpoint = 'supplier-pricing-tiers';
 
   /**
-   * Retrieve a list of vendor pricing tiers
+   * Retrieve a list of supplier pricing tiers
    *
    * @param Request|null $request
    *
@@ -81,7 +81,7 @@ class VendorPricingTiers extends Sdk
   }
 
   /**
-   * Mark a vendor pricing tier as default tier
+   * Mark a supplier pricing tier as default tier
    *
    * @param int $id
    *

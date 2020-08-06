@@ -24,13 +24,13 @@ use Skuio\Sdk\Model;
  * @property int $payment_term_id
  * @property int $incoterm_id
  * @property int $shipping_method_id
- * @property int $vendor_id
- * @property int $vendor_warehouse_id
+ * @property int $supplier_id
+ * @property int $supplier_warehouse_id
  * @property int $destination_warehouse_id
  * @property int $currency_id
  * @property string $currency_code
  * @property Carbon $estimated_delivery_date
- * @property string $vendor_notes
+ * @property string $supplier_notes
  * @property array $purchase_order_lines
  */
 class PurchaseOrder extends Model
@@ -61,7 +61,7 @@ class PurchaseOrder extends Model
     const SUBMISSION_STATUS_CHANGE_REQUEST_SUPPLIER = 'change_supplier';
     const SUBMISSION_STATUS_CHANGE_REQUEST_BUYER  = 'change_buyer';
     const SUBMISSION_STATUS_FINALIZED             = 'finalized';
-    const SUBMISSION_STATUS_CANCELED              = 'canceled'; // by Vendor (After Submission)
+    const SUBMISSION_STATUS_CANCELED              = 'canceled'; // by Supplier (After Submission)
     const SUBMISSION_STATUS_VOIDED                = 'voided '; // by Buyer (Before Submission)
     const SUBMISSION_STATUS                       = [
         self::SUBMISSION_STATUS_UNSUBMITTED,

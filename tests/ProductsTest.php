@@ -5,8 +5,8 @@ use Skuio\Sdk\Model\Import;
 use Skuio\Sdk\Model\Product;
 use Skuio\Sdk\Model\ProductAttribute;
 use Skuio\Sdk\Model\ProductPricing;
-use Skuio\Sdk\Model\VendorProduct;
-use Skuio\Sdk\Model\VendorProductPricing;
+use Skuio\Sdk\Model\SupplierProduct;
+use Skuio\Sdk\Model\SupplierProductPricing;
 use Skuio\Sdk\Request;
 use Skuio\Sdk\Resource\Products;
 use Skuio\Sdk\Response;
@@ -110,13 +110,13 @@ class ProductsTest extends TestCase
 //    $product->pricing = [ new ProductPricing( [ 'product_pricing_tier_name' => 'Retail', 'price' => 58.5 ] ) ];
 //
 //    // Source
-//    $vendorProduct               = new VendorProduct();
-//    $vendorProduct->vendor_id    = 1;
-//    $vendorProduct->is_default   = true;
-//    $vendorProduct->supplier_sku = 'AABB1';
-//    $vendorProduct->pricing      = [ new VendorProductPricing( [ 'vendor_pricing_tier_id' => 1, 'price' => 50.5 ] ) ];
+//    $supplierProduct               = new SupplierProduct();
+//    $supplierProduct->supplier_id    = 1;
+//    $supplierProduct->is_default   = true;
+//    $supplierProduct->supplier_sku = 'AABB1';
+//    $supplierProduct->pricing      = [ new SupplierProductPricing( [ 'supplier_pricing_tier_id' => 1, 'price' => 50.5 ] ) ];
 //
-//    $product->vendors = [ $vendorProduct ];
+//    $product->suppliers = [ $supplierProduct ];
 //
 //    // Taxonomy
 //    $attribute              = new ProductAttribute();

@@ -5,30 +5,30 @@ namespace Skuio\Sdk\Model;
 use Skuio\Sdk\Model;
 
 /**
- * Class VendorProduct
+ * Class SupplierProduct
  *
  * @package Skuio\Sdk\Model
  *
  * @property int $id
  * @property int $product_id
- * @property int $vendor_id
- * @property string $vendor_name
+ * @property int $supplier_id
+ * @property string $supplier_name
  * @property bool|null $is_default
  * @property string|null $supplier_sku
  * @property int|null $leadtime
  * @property float|null $minimum_order_quantity
- * @property VendorProductPricing[] $pricing
+ * @property SupplierProductPricing[] $pricing
  */
-class VendorProduct extends Model
+class SupplierProduct extends Model
 {
   /**
    * Add pricing
    *
-   * @param VendorProductPricing $pricing
+   * @param SupplierProductPricing $pricing
    *
    * @return $this
    */
-  public function addPrice( VendorProductPricing $pricing )
+  public function addPrice(SupplierProductPricing $pricing )
   {
     if ( ! isset( $this->pricing ) )
     {
@@ -44,11 +44,11 @@ class VendorProduct extends Model
   /**
    * Add pricing
    *
-   * @param VendorProductPricing $pricing
+   * @param SupplierProductPricing $pricing
    *
    * @return $this
    */
-  public function updatePrice( VendorProductPricing $pricing )
+  public function updatePrice(SupplierProductPricing $pricing )
   {
     return $this->addPrice( $pricing );
   }
@@ -56,11 +56,11 @@ class VendorProduct extends Model
   /**
    * Delete pricing
    *
-   * @param VendorProductPricing $pricing
+   * @param SupplierProductPricing $pricing
    *
    * @return $this
    */
-  public function deletePrice( VendorProductPricing $pricing )
+  public function deletePrice(SupplierProductPricing $pricing )
   {
     if ( ! isset( $this->pricing ) )
     {

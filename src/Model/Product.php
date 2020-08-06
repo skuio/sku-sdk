@@ -40,7 +40,7 @@ use Skuio\Sdk\Model;
  * @property ProductPricing[] $pricing
  *
  * Source
- * @property VendorProduct[] $vendors
+ * @property SupplierProduct[] $suppliers
  *
  * Taxonomy
  * @property ProductToCategory[] $categories
@@ -336,7 +336,7 @@ class Product extends Model
   public function replaceAllPrices( $prices )
   {
     $prices = is_array( $prices ) ? $prices : [ $prices ];
-    // unset operation property from vendors
+    // unset operation property from suppliers
     foreach ( $prices as $index => $pricing )
     {
       if ( $pricing instanceof ProductPricing )
@@ -374,69 +374,69 @@ class Product extends Model
   }
 
   /**
-   * Add a vendor product
+   * Add a supplier product
    *
-   * @param VendorProduct $vendorProduct
+   * @param SupplierProduct $supplierProduct
    * @param string $operation
    *
    * @return $this
    */
-  public function addVendor( VendorProduct $vendorProduct, string $operation = self::OPERATION_ADD )
+  public function addSupplier(SupplierProduct $supplierProduct, string $operation = self::OPERATION_ADD )
   {
-    if ( ! isset( $this->vendors ) )
+    if ( ! isset( $this->suppliers ) )
     {
-      $this->vendors = [];
+      $this->suppliers = [];
     }
-    $vendorProduct->operation = $operation;
+    $supplierProduct->operation = $operation;
 
-    $this->vendors[] = $vendorProduct;
+    $this->suppliers[] = $supplierProduct;
 
     return $this;
   }
 
   /**
-   * Replace All vendor products
+   * Replace All supplier products
    *
-   * @param VendorProduct|VendorProduct[] $vendorProducts
+   * @param SupplierProduct|SupplierProduct[] $supplierProducts
    *
    * @return $this
    */
-  public function replaceAllVendors( $vendorProducts )
+  public function replaceAllSuppliers( $supplierProducts )
   {
-    $vendorProducts = is_array( $vendorProducts ) ? $vendorProducts : [ $vendorProducts ];
-    // unset operation property from vendors
-    foreach ( $vendorProducts as $index => $vendorProduct )
+    $supplierProducts = is_array( $supplierProducts ) ? $supplierProducts : [ $supplierProducts ];
+    // unset operation property from suppliers
+    foreach ( $supplierProducts as $index => $supplierProduct )
     {
-      if ( $vendorProduct instanceof VendorProduct )
+      if ( $supplierProduct instanceof SupplierProduct )
       {
-        unset( $vendorProduct->operation );
-      } else if ( is_array( $vendorProduct ) )
+        unset( $supplierProduct->operation );
+      } else if ( is_array( $supplierProduct ) )
       {
-        unset( $vendorProducts[ $index ]['operation'] );
+        unset( $supplierProducts[ $index ]['operation'] );
       }
     }
 
-    $this->vendors = $vendorProducts;
+    $this->suppliers = $supplierProducts;
 
     return $this;
   }
 
   /**
-   * Delete vendor product
+   * Delete supplier product
    *
-   * @param VendorProduct $vendorProduct
+   * @param SupplierProduct $supplierProduct
    *
    * @return $this
    */
-  public function deleteVendor( VendorProduct $vendorProduct )
+  public function deleteSupplier(SupplierProduct $supplierProduct )
   {
-    if ( ! isset( $this->vendors ) )
+    if ( ! isset( $this->suppliers ) )
     {
-      $this->vendors = [];
+      $this->suppliers = [];
     }
-    $vendorProduct->operation = self::OPERATION_DELETE;
+    $supplierProduct->operation = self::OPERATION_DELETE;
 
-    $this->vendors[] = $vendorProduct;
+    $this->suppliers[] = $supplierProduct;
 
     return $this;
   }
@@ -516,7 +516,7 @@ class Product extends Model
   public function replaceAllCategories( $categories )
   {
     $categories = is_array( $categories ) ? $categories : [ $categories ];
-    // unset operation property from vendors
+    // unset operation property from suppliers
     foreach ( $categories as $index => $category )
     {
       if ( $category instanceof ProductToCategory )
@@ -657,7 +657,7 @@ class Product extends Model
   public function replaceAllAttributes( $attributes )
   {
     $attributes = is_array( $attributes ) ? $attributes : [ $attributes ];
-    // unset operation property from vendors
+    // unset operation property from suppliers
     foreach ( $attributes as $index => $attribute )
     {
       if ( $attribute instanceof ProductAttribute )

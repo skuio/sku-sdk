@@ -4,19 +4,18 @@ namespace Skuio\Sdk\Resource;
 
 use Exception;
 use InvalidArgumentException;
-use Skuio\Sdk\Model\Vendor;
-use Skuio\Sdk\Model\VendorProduct;
-use Skuio\Sdk\Model\Warehouse;
+use Skuio\Sdk\Model\Supplier;
+use Skuio\Sdk\Model\SupplierProduct;
 use Skuio\Sdk\Request;
 use Skuio\Sdk\Response;
 use Skuio\Sdk\Sdk;
 
-class Vendors extends Sdk
+class Suppliers extends Sdk
 {
-  protected $endpoint = 'vendors';
+  protected $endpoint = 'suppliers';
 
   /**
-   * Retrieve vendors
+   * Retrieve suppliers
    *
    * @param Request|null $request
    *
@@ -34,45 +33,39 @@ class Vendors extends Sdk
   }
 
   /**
-   * Create a new vendor
+   * Create a new supplier
    *
-   * @param Vendor $vendor
+   * @param Supplier $supplier
    *
    * @return Response
    * @throws Exception
    */
-  public function store( Vendor $vendor )
+  public function store(Supplier $supplier )
   {
-    // Create the vendor
-    $response = $this->authorizedRequest( $this->endpoint, $vendor->toJson(), Sdk::METHOD_POST );
-    // If warehouse is provided, we create the warehouse for the vendor
-    if(isset($vendor->warehouse)){
-        $this->createWarehouse($response->getData()['id'], $vendor->warehouse);
-    }
-
-    return $response;
+    // Create the supplier
+    return $this->authorizedRequest( $this->endpoint, $supplier->toJson(), Sdk::METHOD_POST );
   }
 
   /**
-   * Update a vendor
+   * Update a supplier
    *
-   * @param Vendor $vendor
+   * @param Supplier $supplier
    *
    * @return Response
    * @throws Exception
    */
-  public function update( Vendor $vendor )
+  public function update(Supplier $supplier )
   {
-    if ( empty( $vendor->id ) )
+    if ( empty( $supplier->id ) )
     {
       throw new InvalidArgumentException( 'The "id" field is required' );
     }
 
-    return $this->authorizedRequest( "{$this->endpoint}/$vendor->id", $vendor->toJson(), Sdk::METHOD_PUT );
+    return $this->authorizedRequest( "{$this->endpoint}/$supplier->id", $supplier->toJson(), Sdk::METHOD_PUT );
   }
 
   /**
-   * Archive a vendor
+   * Archive a supplier
    *
    * @param int $id
    *
@@ -85,7 +78,7 @@ class Vendors extends Sdk
   }
 
   /**
-   * Unarchived a vendor
+   * Unarchived a supplier
    *
    * @param int $id
    *
@@ -98,9 +91,9 @@ class Vendors extends Sdk
   }
 
   /**
-   * View a list of vendor products
+   * View a list of supplier products
    *
-   * @param int $id vendor id
+   * @param int $id supplier id
    *
    * @return Response
    * @throws Exception
@@ -111,47 +104,38 @@ class Vendors extends Sdk
   }
 
   /**
-   * Create a new vendor product
+   * Create a new supplier product
    *
-   * @param VendorProduct $vendorProduct
+   * @param SupplierProduct $supplierProduct
    *
    * @return Response
    * @throws Exception
    */
-  public function storeVendorProduct( VendorProduct $vendorProduct )
+  public function storeSupplierProduct(SupplierProduct $supplierProduct )
   {
-    return $this->authorizedRequest( "vendor-products", $vendorProduct->toJson(), Sdk::METHOD_POST );
+    return $this->authorizedRequest( "supplier-products", $supplierProduct->toJson(), Sdk::METHOD_POST );
   }
 
   /**
-   * Update a vendor product
+   * Update a supplier product
    *
-   * @param VendorProduct $vendorProduct
+   * @param SupplierProduct $supplierProduct
    *
    * @return Response
    * @throws Exception
    */
-  public function updateVendorProduct( VendorProduct $vendorProduct )
+  public function updateSupplierProduct(SupplierProduct $supplierProduct )
   {
-    if ( empty( $vendorProduct->id ) )
+    if ( empty( $supplierProduct->id ) )
     {
       throw new InvalidArgumentException( 'The "id" field is required' );
     }
 
-    return $this->authorizedRequest( "vendor-products/{$vendorProduct->id}", $vendorProduct->toJson(), Sdk::METHOD_PUT );
+    return $this->authorizedRequest( "supplier-products/{$supplierProduct->id}", $supplierProduct->toJson(), Sdk::METHOD_PUT );
   }
 
     /**
-     * @param $vendorId
-     * @param Warehouse $warehouse
-     * @return Response
-     */
-  public function createWarehouse($vendorId, Warehouse $warehouse){
-      return $this->authorizedRequest("{$this->endpoint}/{$vendorId}/warehouses", $warehouse->toJson(), Sdk::METHOD_POST);
-  }
-
-    /**
-     * Delete a vendor by id
+     * Delete a supplier by id
      *
      * @param int $id
      *
