@@ -268,8 +268,6 @@ class PurchaseOrders extends Sdk
             throw new InvalidArgumentException( 'The "purchase order id" field is required.' );
         }else if(empty($shipment->shipment_date)) {
             throw new InvalidArgumentException( 'The "shipment date" field is required.' );
-        }else if(empty($shipment->shipment_lines)){
-            throw new InvalidArgumentException( 'The "shipment lines" field is required.' );
         }
 
         return $this->authorizedRequest( "purchase-order-shipments", $shipment->toJson(), self::METHOD_POST );

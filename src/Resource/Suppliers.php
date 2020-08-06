@@ -6,6 +6,7 @@ use Exception;
 use InvalidArgumentException;
 use Skuio\Sdk\Model\Supplier;
 use Skuio\Sdk\Model\SupplierProduct;
+use Skuio\Sdk\Model\Warehouse;
 use Skuio\Sdk\Request;
 use Skuio\Sdk\Response;
 use Skuio\Sdk\Sdk;
@@ -43,7 +44,13 @@ class Suppliers extends Sdk
   public function store(Supplier $supplier )
   {
     // Create the supplier
-    return $this->authorizedRequest( $this->endpoint, $supplier->toJson(), Sdk::METHOD_POST );
+    $response = $this->authorizedRequest( $this->endpoint, $supplier->toJson(), Sdk::METHOD_POST );
+    // If warehouse is provided, we create the warehouse for the supplier
+    if(isset($supplier->warehouse)){
+        $this->createWarehouse($response->getData()['id'], $supplier->warehouse);
+    }
+
+    return $response;
   }
 
   /**
@@ -132,6 +139,15 @@ class Suppliers extends Sdk
     }
 
     return $this->authorizedRequest( "supplier-products/{$supplierProduct->id}", $supplierProduct->toJson(), Sdk::METHOD_PUT );
+  }
+
+    /**
+     * @param $supplierId
+     * @param Warehouse $warehouse
+     * @return Response
+     */
+  public function createWarehouse($supplierId, Warehouse $warehouse){
+      return $this->authorizedRequest("{$this->endpoint}/{$supplierId}/warehouses", $warehouse->toJson(), Sdk::METHOD_POST);
   }
 
     /**
