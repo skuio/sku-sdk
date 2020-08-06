@@ -4,7 +4,6 @@ use PHPUnit\Framework\TestCase;
 use Skuio\Sdk\Model\Supplier;
 use Skuio\Sdk\Resource\Suppliers;
 use Skuio\Sdk\Sdk;
-use Skuio\Sdk\Model\Warehouse;
 
 class SuppliersTest extends TestCase
 {
@@ -33,7 +32,6 @@ class SuppliersTest extends TestCase
 
       $supplier = new Supplier();
       $supplier->name = 'Default Supplier API';
-      $supplier->is_supplier = false;
 
       $suppliers = new Suppliers();
       $response = $suppliers->store($supplier);

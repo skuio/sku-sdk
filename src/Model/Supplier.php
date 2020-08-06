@@ -20,7 +20,6 @@ use Skuio\Sdk\Model;
  * @property float|null $leadtime
  * @property float|null $minimum_order_quantity
  * @property float|null $minimum_purchase_order
- * @property bool $is_supplier
  */
 class Supplier extends Model
 {
