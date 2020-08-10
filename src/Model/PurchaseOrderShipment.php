@@ -50,7 +50,7 @@ class PurchaseOrderShipment extends Model
         }
 
         $this->shipment_lines[] = [
-            'line_reference' => $reference,
+            'purchase_order_line_reference' => $reference,
             'quantity' => $quantity
         ];
     }

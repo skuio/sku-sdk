@@ -280,13 +280,8 @@ class PurchaseOrders extends Sdk
      */
     public function receive(PurchaseOrderReceipt $request )
     {
-        if ( empty( $request->purchase_order_shipment_id ) )
-        {
-            throw new InvalidArgumentException( 'The "purchase order shipment id" field is required.' );
-        }else if(empty($request->received_at)) {
+        if(empty($request->received_at)) {
             throw new InvalidArgumentException( 'The "received at" field is required.' );
-        }else if(empty($request->receipt_lines)){
-            throw new InvalidArgumentException( 'The "receipt lines" field is required.' );
         }
 
         return $this->authorizedRequest( "purchase-order-shipments/receipt", $request->toJson(), self::METHOD_POST );

@@ -71,6 +71,7 @@ class Sdk
       CURLOPT_CUSTOMREQUEST  => $method,
       CURLOPT_POSTFIELDS     => $body,
       CURLOPT_SSL_VERIFYHOST => 0,
+      CURLOPT_SSL_VERIFYPEER => 0,
       CURLOPT_FOLLOWLOCATION => true,
       CURLOPT_HTTPHEADER     => array_filter( [
                                                 "Accept: application/json",
