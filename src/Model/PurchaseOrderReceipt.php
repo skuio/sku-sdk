@@ -16,6 +16,7 @@ use Skuio\Sdk\Model;
  * Class ReceivePurchaseOrderRequest
  * @package Skuio\Sdk\Request
  *
+ * @property int $purchase_order_id
  * @property int $purchase_order_shipment_id
  * @property Carbon $received_at
  * @property int $warehouse_id
