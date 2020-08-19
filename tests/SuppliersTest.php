@@ -1,10 +1,10 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Skuio\Sdk\Model\Supplier;
-use Skuio\Sdk\Resource\Suppliers;
+use Skuio\Sdk\DataType\Supplier;
+use Skuio\Sdk\Service\Suppliers;
 use Skuio\Sdk\Sdk;
-use Skuio\Sdk\Model\Warehouse;
+use Skuio\Sdk\DataType\Warehouse;
 
 class SuppliersTest extends TestCase
 {

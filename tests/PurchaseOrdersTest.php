@@ -7,14 +7,14 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use Skuio\Sdk\Model\PurchaseOrderLine;
-use Skuio\Sdk\Request;
-use Skuio\Sdk\Resource\PurchaseOrders;
+use Skuio\Sdk\DataType\PurchaseOrderLine;
+use Skuio\Sdk\Query;
+use Skuio\Sdk\Service\PurchaseOrders;
 use Skuio\Sdk\Sdk;
-use Skuio\Sdk\Model\PurchaseOrder;
+use Skuio\Sdk\DataType\PurchaseOrder;
 use Carbon\Carbon;
-use Skuio\Sdk\Model\PurchaseOrderReceipt;
-use Skuio\Sdk\Model\PurchaseOrderShipment;
+use Skuio\Sdk\DataType\PurchaseOrderReceipt;
+use Skuio\Sdk\DataType\PurchaseOrderShipment;
 
 class PurchaseOrdersTest extends TestCase
 {
@@ -70,7 +70,7 @@ class PurchaseOrdersTest extends TestCase
     {
         Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
 
-        $request = new Request();
+        $request = new Query();
 
         $purchaseOrders = new PurchaseOrders();
         $response = $purchaseOrders->get( $request );

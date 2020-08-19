@@ -1,10 +1,10 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Skuio\Sdk\Model\Attribute;
-use Skuio\Sdk\Model\AttributeValue;
-use Skuio\Sdk\Request;
-use Skuio\Sdk\Resource\Attributes;
+use Skuio\Sdk\DataType\Attribute;
+use Skuio\Sdk\DataType\AttributeValue;
+use Skuio\Sdk\Query;
+use Skuio\Sdk\Service\Attributes;
 use Skuio\Sdk\Sdk;
 
 class AttributesTest extends TestCase
@@ -16,7 +16,7 @@ class AttributesTest extends TestCase
   {
     Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
 
-    $request = new Request();
+    $request = new Query();
 
     $attributes = new Attributes();
     $attributes = $attributes->get( $request );

@@ -71,7 +71,6 @@ class Sdk
       CURLOPT_CUSTOMREQUEST  => $method,
       CURLOPT_POSTFIELDS     => $body,
       CURLOPT_SSL_VERIFYHOST => 0,
-      CURLOPT_SSL_VERIFYPEER => 0,
       CURLOPT_FOLLOWLOCATION => true,
       CURLOPT_HTTPHEADER     => array_filter( [
                                                 "Accept: application/json",
@@ -114,4 +113,20 @@ class Sdk
   {
     self::$config = array_merge( self::$config, $config );
   }
+
+    /**
+     * @param DataType $dataType
+     * @param Response $response
+     * @return Response
+     */
+  protected function afterStore(DataType $dataType, Response $response){
+      // After storing data, we may want to perform some tasks,
+      // such as re-writing some data, etc.
+      if($response->isSuccess()){
+          $dataType->id = $response->getData()['id'];
+      }
+
+      return $response;
+  }
+
 }

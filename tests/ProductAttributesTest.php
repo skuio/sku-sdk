@@ -1,8 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Skuio\Sdk\Model\ProductAttribute;
-use Skuio\Sdk\Resource\ProductAttributes;
+use Skuio\Sdk\DataType\ProductAttribute;
+use Skuio\Sdk\Service\ProductAttributes;
 use Skuio\Sdk\Sdk;
 
 class ProductAttributesTest extends TestCase

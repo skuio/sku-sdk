@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Skuio\Sdk\Resource\NominalCodes;
+use Skuio\Sdk\Service\NominalCodes;
 use Skuio\Sdk\Sdk;
 
 class NominalCodesTest extends TestCase

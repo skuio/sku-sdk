@@ -2,12 +2,12 @@
 
 include 'vendor/autoload.php';
 
-use Skuio\Sdk\Model\Import;
-use Skuio\Sdk\Model\Product;
-use Skuio\Sdk\Model\SalesChannelBrand;
-use Skuio\Sdk\Resource\ProductCategories;
-use Skuio\Sdk\Resource\SupplierPricingTiers;
-use Skuio\Sdk\Resource\Products;
+use Skuio\Sdk\DataType\Import;
+use Skuio\Sdk\DataType\Product;
+use Skuio\Sdk\DataType\SalesChannelBrand;
+use Skuio\Sdk\Service\ProductCategories;
+use Skuio\Sdk\Service\SupplierPricingTiers;
+use Skuio\Sdk\Service\Products;
 use Skuio\Sdk\Sdk;
 
 /*
@@ -89,7 +89,7 @@ function createSalesChannelBrand()
   $salesChannelBrand->name  = 'test name';
   $salesChannelBrand->email = 'dev@sku.io';
 
-  $salesChannelBrands = new \Skuio\Sdk\Resource\SalesChannelBrands();
+  $salesChannelBrands = new \Skuio\Sdk\Service\SalesChannelBrands();
 
   $salesChannelBrands = $salesChannelBrands->store( $salesChannelBrand );
 
@@ -107,7 +107,7 @@ function createSalesChannelBrand()
  */
 function showSalesChannelBrandById( $id )
 {
-  $salesChannelBrandInstance = new \Skuio\Sdk\Resource\SalesChannelBrands();
+  $salesChannelBrandInstance = new \Skuio\Sdk\Service\SalesChannelBrands();
 
   $salesChannelBrand = $salesChannelBrandInstance->show( $id );
 
@@ -144,7 +144,7 @@ function updateSalesChannelBrand()
   $salesChannelBrand->province_code = "NN";
   $salesChannelBrand->phone         = "759862118589";
 
-  $salesChannelBrands = new \Skuio\Sdk\Resource\SalesChannelBrands();
+  $salesChannelBrands = new \Skuio\Sdk\Service\SalesChannelBrands();
 
   $salesChannelBrands = $salesChannelBrands->update( $salesChannelBrand );
 
@@ -161,7 +161,7 @@ function updateSalesChannelBrand()
 
 function createSalesOrder()
 {
-  $salesOrder = new \Skuio\Sdk\Model\SalesOrder();
+  $salesOrder = new \Skuio\Sdk\DataType\SalesOrder();
 
   $salesOrder->sales_channel_id   = 1;
   $salesOrder->customer_reference = '211149608634-2142858820773553';
@@ -172,7 +172,7 @@ function createSalesOrder()
   $salesOrder->receive_by_date    = '2019-06-19T06:46:27+00:00';
   $salesOrder->shipping_method_id = 1;
 
-  $billing_address               = new \Skuio\Sdk\Model\Address();
+  $billing_address               = new \Skuio\Sdk\DataType\Address();
   $billing_address->name         = 'Ahmed';
   $billing_address->email        = 'ahmed@sku.io';
   $billing_address->address1     = 'Gaza';
@@ -180,7 +180,7 @@ function createSalesOrder()
   $billing_address->country_code = 'PS';
   $billing_address->country      = 'Palestine';
 
-  $shipping_address               = new \Skuio\Sdk\Model\Address();
+  $shipping_address               = new \Skuio\Sdk\DataType\Address();
   $shipping_address->name         = 'Ahmed';
   $shipping_address->email        = 'ahmed@sku.io';
   $shipping_address->address1     = 'Gaza';
@@ -188,7 +188,7 @@ function createSalesOrder()
   $shipping_address->country_code = 'PS';
   $shipping_address->country      = 'Palestine';
 
-  $customer_address               = new \Skuio\Sdk\Model\Address();
+  $customer_address               = new \Skuio\Sdk\DataType\Address();
   $customer_address->name         = 'Ahmed';
   $customer_address->email        = 'ahmed@sku.io';
   $customer_address->address1     = 'Gaza';
@@ -196,7 +196,7 @@ function createSalesOrder()
   $customer_address->country_code = 'PS';
   $customer_address->country      = 'Palestine';
 
-  $sales_order_line                        = new \Skuio\Sdk\Model\SalesOrderLine();
+  $sales_order_line                        = new \Skuio\Sdk\DataType\SalesOrderLine();
   $sales_order_line->description           = 'item 1';
   $sales_order_line->sales_channel_line_id = 'wompro30ct';
   $sales_order_line->amount                = 12;
@@ -205,7 +205,7 @@ function createSalesOrder()
   $sales_order_line->discount              = 20;
   $sales_order_line->product_id            = 1;
 
-  $sales_order_line2                        = new \Skuio\Sdk\Model\SalesOrderLine();
+  $sales_order_line2                        = new \Skuio\Sdk\DataType\SalesOrderLine();
   $sales_order_line2->description           = 'item 1';
   $sales_order_line2->sales_channel_line_id = 'wompro30ct';
   $sales_order_line2->amount                = 12;
@@ -219,7 +219,7 @@ function createSalesOrder()
   $salesOrder->customer_address  = $customer_address;
   $salesOrder->sales_order_lines = [ $sales_order_line, $sales_order_line2 ];
 
-  $salesOrders = new \Skuio\Sdk\Resource\SalesOrders();
+  $salesOrders = new \Skuio\Sdk\Service\SalesOrders();
 
   $salesOrderStore = $salesOrders->store( $salesOrder );
 
@@ -230,7 +230,7 @@ function createSalesOrder()
 
 function salesOrderConstants()
 {
-  $constants = new \Skuio\Sdk\Resource\SalesOrders();
+  $constants = new \Skuio\Sdk\Service\SalesOrders();
 
   $constantsData = $constants->constants();
 
@@ -241,7 +241,7 @@ function salesOrderConstants()
 
 function archiveSalesOrder( $id )
 {
-  $salesOrder = new \Skuio\Sdk\Resource\SalesOrders();
+  $salesOrder = new \Skuio\Sdk\Service\SalesOrders();
 
   $response = $salesOrder->archive( $id );
 
@@ -252,7 +252,7 @@ function archiveSalesOrder( $id )
 
 function unArchiveSalesOrder( $id )
 {
-  $salesOrder = new \Skuio\Sdk\Resource\SalesOrders();
+  $salesOrder = new \Skuio\Sdk\Service\SalesOrders();
 
   $response = $salesOrder->unarchived( $id );
 
@@ -263,7 +263,7 @@ function unArchiveSalesOrder( $id )
 
 function showSalesOrder( $id )
 {
-  $salesOrder = new \Skuio\Sdk\Resource\SalesOrders();
+  $salesOrder = new \Skuio\Sdk\Service\SalesOrders();
 
   $response = $salesOrder->show( $id );
 
@@ -281,7 +281,7 @@ function showSalesOrder( $id )
  */
 function findMatchCustomers( $name, $zip, $address1 )
 {
-  $customersInstance = new \Skuio\Sdk\Resource\Customers();
+  $customersInstance = new \Skuio\Sdk\Service\Customers();
 
   $customers = $customersInstance->findMatch( $name, $zip, $address1 );
 

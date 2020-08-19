@@ -1,14 +1,14 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Skuio\Sdk\Model\Import;
-use Skuio\Sdk\Model\Product;
-use Skuio\Sdk\Model\ProductAttribute;
-use Skuio\Sdk\Model\ProductPricing;
-use Skuio\Sdk\Model\SupplierProduct;
-use Skuio\Sdk\Model\SupplierProductPricing;
-use Skuio\Sdk\Request;
-use Skuio\Sdk\Resource\Products;
+use Skuio\Sdk\DataType\Import;
+use Skuio\Sdk\DataType\Product;
+use Skuio\Sdk\DataType\ProductAttribute;
+use Skuio\Sdk\DataType\ProductPricing;
+use Skuio\Sdk\DataType\SupplierProduct;
+use Skuio\Sdk\DataType\SupplierProductPricing;
+use Skuio\Sdk\Query;
+use Skuio\Sdk\Service\Products;
 use Skuio\Sdk\Response;
 use Skuio\Sdk\Sdk;
 

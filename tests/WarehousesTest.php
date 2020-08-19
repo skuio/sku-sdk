@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Skuio\Sdk\Resource\Warehouses;
+use Skuio\Sdk\Service\Warehouses;
 use Skuio\Sdk\Sdk;
 
 class WarehousesTest extends TestCase

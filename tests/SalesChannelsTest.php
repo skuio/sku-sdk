@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Skuio\Sdk\Resource\SalesChannels;
+use Skuio\Sdk\Service\SalesChannels;
 use Skuio\Sdk\Sdk;
 
 class SalesChannelsTest extends TestCase

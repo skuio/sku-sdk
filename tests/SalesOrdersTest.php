@@ -1,12 +1,12 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Skuio\Sdk\Model\Address;
-use Skuio\Sdk\Model\SalesOrder;
-use Skuio\Sdk\Model\SalesOrderLine;
-use Skuio\Sdk\Request;
+use Skuio\Sdk\DataType\Address;
+use Skuio\Sdk\DataType\SalesOrder;
+use Skuio\Sdk\DataType\SalesOrderLine;
+use Skuio\Sdk\Query;
 use Skuio\Sdk\Request\FulfillSalesOrderRequest;
-use Skuio\Sdk\Resource\SalesOrders;
+use Skuio\Sdk\Service\SalesOrders;
 use Skuio\Sdk\Sdk;
 
 class SalesOrdersTest extends TestCase
@@ -63,7 +63,7 @@ class SalesOrdersTest extends TestCase
   {
     Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
 
-    $request = new Request();
+    $request = new Query();
 
     $salesOrders = new SalesOrders();
     $salesOrders = $salesOrders->get( $request );
