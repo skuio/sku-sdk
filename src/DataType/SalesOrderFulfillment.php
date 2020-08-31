@@ -16,23 +16,23 @@ use Skuio\Sdk\DataType;
  * @property string $fulfilled_at
  * @property float|null $cost
  * @property string|null $tracking_number
- * @property array $sales_order_lines
+ * @property array $fulfillment_lines
  */
 class SalesOrderFulfillment extends DataType
 {
   /**
    * Add line to fulfill
    *
-   * @param int $salesOrderId
+   * @param int $salesOrderLineId
    * @param int $quantity
    */
-  public function addFulfillmentLine( int $salesOrderId, int $quantity )
+  public function addFulfillmentLine( int $salesOrderLineId, int $quantity )
   {
-    if ( ! isset( $this->sales_order_lines ) )
+    if ( ! isset( $this->fulfillment_lines ) )
     {
-      $this->sales_order_lines = [];
+      $this->fulfillment_lines = [];
     }
 
-    $this->sales_order_lines[] = [ 'id' => $salesOrderId, 'quantity' => $quantity ];
+    $this->fulfillment_lines[] = [ 'sales_order_line_id' => $salesOrderLineId, 'quantity' => $quantity ];
   }
 }

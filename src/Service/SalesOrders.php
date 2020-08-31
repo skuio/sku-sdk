@@ -6,6 +6,7 @@ use Exception;
 use InvalidArgumentException;
 use Skuio\Sdk\DataType\Import;
 use Skuio\Sdk\DataType\SalesOrder;
+use Skuio\Sdk\DataType\SalesOrderFulfillment;
 use Skuio\Sdk\Query;
 use Skuio\Sdk\Request\FulfillSalesOrderRequest;
 use Skuio\Sdk\Response;
@@ -193,19 +194,19 @@ class SalesOrders extends Sdk
   /**
    * Fulfill sales order
    *
-   * @param FulfillSalesOrderRequest $request
+   * @param SalesOrderFulfillment $orderFulfillment
    *
    * @return Response
    * @throws Exception
    */
-  public function fulfill( FulfillSalesOrderRequest $request )
+  public function fulfill( SalesOrderFulfillment $orderFulfillment )
   {
-    if ( empty( $request->sales_order_id ) )
+    if ( empty( $orderFulfillment->sales_order_id ) )
     {
       throw new InvalidArgumentException( 'The "sales_order_id" field is required' );
     }
 
-    return $this->authorizedRequest( "{$this->endpoint}/{$request->sales_order_id}/fulfill", $request->toJson(), self::METHOD_POST );
+    return $this->authorizedRequest( "{$this->endpoint}/{$orderFulfillment->sales_order_id}/fulfill", $orderFulfillment->toJson(), self::METHOD_POST );
   }
 
   /**
