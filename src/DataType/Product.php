@@ -103,8 +103,8 @@ class Product extends DataType
      */
     public function setProductType(string $type)
     {
-        if (!in_array($type, [self::TYPE_STANDARD, self::TYPE_VIRTUAL])) {
-            throw new InvalidArgumentException('The type field must be ' . self::TYPE_STANDARD . ' or ' . self::TYPE_VIRTUAL);
+        if (!in_array($type, [self::TYPE_STANDARD, self::TYPE_VIRTUAL, self::TYPE_BUNDLE])) {
+            throw new InvalidArgumentException('The type field must be ' . self::TYPE_STANDARD . ', ' . self::TYPE_VIRTUAL . ', or ' . self::TYPE_BUNDLE);
         }
 
         $this->type = $type;
