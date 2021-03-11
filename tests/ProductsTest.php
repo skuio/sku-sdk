@@ -217,6 +217,26 @@ class ProductsTest extends TestCase
     }
 
 
+    public function testItCanAddComponentsWhenCreatingProduct() {
+        Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
+        $product = new Product;
+        $product->type = Product::TYPE_BUNDLE;
+        $product->sku = 'Test-SKU';
+        $product->name = 'Test SKU';
+
+        // Add a new bundle
+        $newComponentId = 556270;
+        $product->addBundleComponent($newComponentId, 4);
+
+        $products = new Products();
+
+        $request = $products->store($product);
+
+        $this->assertEquals( 200, $request->getStatusCode(), json_encode( $request->getResponse() ) );
+    }
+
+
     public function testItCanRemoveProductComponents() {
         Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
 
