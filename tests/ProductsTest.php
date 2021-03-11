@@ -165,6 +165,85 @@ class ProductsTest extends TestCase
         $this->assertEquals( 200, $products->getStatusCode(), json_encode( $products->getResponse() ) );
     }
 
+
+    public function testItCanGetProductBundles() {
+        Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
+        $productId     = 1712;
+
+        $products = new Products();
+
+        $products = $products->bundles( $productId );
+
+        $this->assertEquals( 200, $products->getStatusCode(), json_encode( $products->getResponse() ) );
+    }
+
+    public function testItCanGetProductComponents() {
+        Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
+        $productId     = 556298;
+
+        $products = new Products();
+
+        $products = $products->components( $productId );
+
+        $this->assertEquals( 200, $products->getStatusCode(), json_encode( $products->getResponse() ) );
+    }
+
+
+    public function testItCanAddProductComponents() {
+        Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
+        $product = new Product;
+        $product->id = $productId = 556298;
+
+        $products = new Products();
+
+        $request = $products->components( $productId );
+        $components = $request->getResponse();
+        $this->assertNotEmpty($components);
+
+        // Add existing components
+        $product->addBundleComponents($components);
+
+        // Add a new bundle
+        $newComponentId = 556270;
+        $product->addBundleComponent($newComponentId, 4);
+
+
+        $request = $products->update($product);
+
+        $this->assertEquals( 200, $request->getStatusCode(), json_encode( $request->getResponse() ) );
+    }
+
+
+    public function testItCanRemoveProductComponents() {
+        Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );
+
+        $product = new Product;
+        $product->id = $productId = 556298;
+
+        $products = new Products();
+
+        $request = $products->components( $productId );
+        $components = $request->getResponse();
+        $this->assertNotEmpty($components);
+
+        // Add existing components
+        $product->addBundleComponents($components);
+
+        // Remove 1 bundle item
+        $componentId = 556270;
+        $product->removeBundleComponent($componentId);
+
+
+        $request = $products->update($product);
+
+        $this->assertEquals( 200, $request->getStatusCode(), json_encode( $request->getResponse() ) );
+    }
+
+
+
 //  public function testArchiveProduct()
 //  {
 //    Sdk::config( [ 'username' => $this->username, 'password' => $this->password, 'environment' => Sdk::DEVELOPMENT ] );

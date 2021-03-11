@@ -3,12 +3,9 @@ let phpunit = require('gulp-phpunit');
 
 gulp.task('test', function() {
 
-    return gulp.src('tests/*.php')
-        .pipe(phpunit('', { notify: true, clear: true }), function(err, _){
-            if(err){
-                console.log('Error: ' + err);
-            }
-        });
+    const filter = 'testItCanRemoveProductComponents ./tests/ProductsTest.php';
+    return gulp.src('tests/**/*.php')
+        .pipe(phpunit('./vendor/bin/phpunit', { notify: true, clear: true, filter: filter }));
 });
 
 gulp.task('watch', function() {
