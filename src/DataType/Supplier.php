@@ -20,6 +20,7 @@ use Skuio\Sdk\DataType;
  * @property float|null $leadtime
  * @property float|null $minimum_order_quantity
  * @property float|null $minimum_purchase_order
+ * @property array|null $address
  * @property Warehouse $warehouse
  */
 class Supplier extends DataType
@@ -34,5 +35,30 @@ class Supplier extends DataType
         $this->warehouse = $warehouse;
         return $this;
     }
+
+
+    /**
+     * Sets the office address
+     *
+     * @param array $address
+     */
+    public function setOfficeAddress(array $address){
+        $this->address = $address;
+    }
+
+
+    /**
+     * @param string $field
+     * @param string $value
+     * @return $this
+     */
+    public function addOfficeAddressField(string $field, string $value){
+        if(!isset($this->address)){
+            $this->address = [];
+        }
+        $this->address[$field] = $value;
+        return $this;
+    }
+
     
 }

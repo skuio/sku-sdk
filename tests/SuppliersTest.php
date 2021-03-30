@@ -34,6 +34,13 @@ class SuppliersTest extends TestCase
       $supplier = new Supplier();
       $supplier->name = 'Default Supplier API';
 
+      $supplier->setOfficeAddress([
+         'label' => 'Address Name',
+         'email' => 'office@supplier.com',
+         'country_code' => 'US',
+         'province_code' => '90210'
+      ]);
+
       $suppliers = new Suppliers();
       $response = $suppliers->store($supplier);
       $this->assertEquals(200, $response->getStatusCode(), json_encode($response->getResponse()));

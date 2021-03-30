@@ -3,7 +3,7 @@ let phpunit = require('gulp-phpunit');
 
 gulp.task('test', function() {
 
-    const filter = 'testItCanAddComponentsWhenCreatingProduct ./tests/ProductsTest.php';
+    const filter = 'testCreateSupplier ./tests/SuppliersTest.php';
     return gulp.src('tests/**/*.php')
         .pipe(phpunit('./vendor/bin/phpunit', { notify: true, clear: true, filter: filter }));
 });
