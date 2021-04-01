@@ -1,6 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use Skuio\Sdk\DataType\Address;
 use Skuio\Sdk\DataType\Supplier;
 use Skuio\Sdk\Service\Suppliers;
 use Skuio\Sdk\Sdk;
@@ -34,12 +35,27 @@ class SuppliersTest extends TestCase
       $supplier = new Supplier();
       $supplier->name = 'Default Supplier API';
 
-      $supplier->setOfficeAddress([
-         'label' => 'Address Name',
-         'email' => 'office@supplier.com',
-         'country_code' => 'US',
-         'province_code' => '90210'
-      ]);
+      // Add address with Address object
+      $address = new Address();
+//      $address->name = 'Office Address';
+      $address->address1 = '123 High St.';
+      $address->address2 = 'Unit 4483';
+      $address->address3 = 'Left Lane';
+      $address->country_code = 'US';
+      $address->zip = '90210';
+      $address->city = 'Los Angeles';
+      $address->province = 'California';
+      $address->province_code = 'CA';
+      $supplier->addOfficeAddress($address);
+
+
+      // Add address with array
+//      $supplier->addOfficeAddress([
+//         'label' => 'Address Name',
+//         'email' => 'office@supplier.com',
+//         'country_code' => 'US',
+//         'zip' => '90210'
+//      ]);
 
       $suppliers = new Suppliers();
       $response = $suppliers->store($supplier);

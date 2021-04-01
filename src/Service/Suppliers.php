@@ -48,9 +48,11 @@ class Suppliers extends Sdk
         $supplier,
         $this->authorizedRequest( $this->endpoint, $supplier->toJson(), Sdk::METHOD_POST )
     );
+
+    $supplierId = $response->getData()['id'];
     // If warehouse is provided, we create the warehouse for the supplier
     if(isset($supplier->warehouse)){
-        $this->createWarehouse($supplier->id, $supplier->warehouse);
+        $this->createWarehouse($supplierId, $supplier->warehouse);
     }
 
     return $response;

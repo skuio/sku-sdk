@@ -25,6 +25,7 @@ use Skuio\Sdk\DataType;
  */
 class Supplier extends DataType
 {
+    const OFFICE_ADDRESS_LABEL = 'Office';
 
     /**
      * @param Warehouse $warehouse
@@ -36,27 +37,25 @@ class Supplier extends DataType
         return $this;
     }
 
-
     /**
-     * Sets the office address
-     *
-     * @param array $address
-     */
-    public function setOfficeAddress(array $address){
-        $this->address = $address;
-    }
-
-
-    /**
-     * @param string $field
-     * @param string $value
+     * @param $address
      * @return $this
      */
-    public function addOfficeAddressField(string $field, string $value){
-        if(!isset($this->address)){
-            $this->address = [];
+    public function addOfficeAddress($address){
+        if(is_array($address)){
+            $this->address = array_merge([
+                'label' => self::OFFICE_ADDRESS_LABEL
+            ], $address);
+        }else if($address instanceof Address){
+            if(!isset($address->label) && isset($address->name)){
+                $address->label = $address->name;
+            }else if(!isset($address->label)){
+                $address->label = $address->name = self::OFFICE_ADDRESS_LABEL;
+            }
+            $this->address = $address;
+        }else{
+            $this->address = $address;
         }
-        $this->address[$field] = $value;
         return $this;
     }
 
