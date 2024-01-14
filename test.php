@@ -15,8 +15,8 @@ use Skuio\Sdk\Sdk;
  | Config Credentials API
  |--------------------------------------------------------------------------
  */
-$username = '2ba55486ae905bd900b402cbee5aba18';
-$password = '11a2f00d5c99b3b1c4d148b07b182e7c';
+$username = 'test@sku.io';
+$password = 'testtest';
 
 Sdk::config( [ 'username' => $username, 'password' => $password, 'environment' => Sdk::DEVELOPMENT ] );
 

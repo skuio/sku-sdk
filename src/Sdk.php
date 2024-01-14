@@ -56,11 +56,20 @@ class Sdk
    * @return Response
    * @throws Exception
    */
-  public function authorizedRequest( string $endpoint, $body = null, string $method = self::METHOD_GET )
+  public function authorizedRequest( string $endpoint, $body = null, string $method = self::METHOD_GET, $withCredentials = true )
   {
     $baseUrl = self::$config['environment'] == self::PRODUCTION ? self::$config['url'] : self::$config['dev_url'];
 
     $curl = curl_init();
+
+    $headers = [
+      "Accept: application/json",
+      is_array( $body ) ? null : "Content-type: application/json",
+    ];
+
+    if ($withCredentials) {
+      $headers[] = "Authorization: Bearer " . $this->getBasicToken();
+    }
 
     curl_setopt_array( $curl, [
       CURLOPT_URL            => $baseUrl . '/' . ltrim( $endpoint, '/' ),
@@ -72,11 +81,7 @@ class Sdk
       CURLOPT_POSTFIELDS     => $body,
       CURLOPT_SSL_VERIFYHOST => 0,
       CURLOPT_FOLLOWLOCATION => true,
-      CURLOPT_HTTPHEADER     => array_filter( [
-                                                "Accept: application/json",
-                                                is_array( $body ) ? null : "Content-type: application/json",
-                                                "Authorization: Basic " . $this->getBasicToken(),
-                                              ] ),
+      CURLOPT_HTTPHEADER     => $headers,
     ] );
 
     $response  = curl_exec( $curl );
@@ -101,7 +106,22 @@ class Sdk
       throw new Exception( 'The username and password fields are required. Set on SDK config' );
     }
 
-    return base64_encode( self::$config['username'] . ':' . self::$config['password'] );
+    $response = $this->authorizedRequest('auth/login', [
+        'email' => self::$config['username'],
+        'password' => self::$config['password'],
+        ],
+        self::METHOD_POST,
+        false
+    );
+
+    $accessToken = @$response->getResponse()['access_token'];
+
+    if (!$accessToken) {
+      print_r($response->getResponse());
+      exit;
+    }
+
+    return $response->getResponse()['access_token'];
   }
 
   /**
