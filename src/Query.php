@@ -168,7 +168,7 @@ class Query
    */
   public function setTotalStatus( int $total ): void
   {
-    if ( $total < 1 && $total > 2 )
+    if ( $total < 1 || $total > 2 )
     {
       throw new InvalidArgumentException( 'invalid total status' );
     }
